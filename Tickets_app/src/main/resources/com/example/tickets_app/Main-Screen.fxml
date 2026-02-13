@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="520.0" prefWidth="333.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.MainController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+       <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
+           <Circle fill="WHITE" radius="19.0" stroke="BLACK" strokeType="INSIDE"/>
+       </VBox>
+      <Button fx:id="btnCreateU" mnemonicParsing="false" onAction="#onCreateUClick" prefHeight="51.0" prefWidth="184.0" text="Create User">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnManageU" mnemonicParsing="false" onAction="#onManageUClick" prefHeight="51.0" prefWidth="184.0" text="Manage Users">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnEvent" mnemonicParsing="false" onAction="#onEventClick" prefHeight="51.0" prefWidth="184.0" text="Events">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCreateE" mnemonicParsing="false" onAction="#onCreateEClick" prefHeight="51.0" prefWidth="184.0" text="Create Events">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCreateT" mnemonicParsing="false" onAction="#onCreateTClick" prefHeight="51.0" prefWidth="184.0" text="Create Ticket">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnLogOut" mnemonicParsing="false" onAction="#onLogOutClick" prefHeight="51.0" prefWidth="184.0" text="Log Out">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Label />
+      <Label />
+   </children>
+</VBox>
