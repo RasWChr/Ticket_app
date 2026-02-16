@@ -23,12 +23,12 @@
          <children>
             <HBox prefHeight="30.0" prefWidth="278.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -37,12 +37,12 @@
             </HBox>
             <HBox prefHeight="96.0" prefWidth="180.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -61,12 +61,12 @@
          <children>
             <HBox prefHeight="30.0" prefWidth="278.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -75,12 +75,12 @@
             </HBox>
             <HBox prefHeight="96.0" prefWidth="180.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -99,12 +99,12 @@
          <children>
             <HBox prefHeight="30.0" prefWidth="278.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -113,12 +113,12 @@
             </HBox>
             <HBox prefHeight="96.0" prefWidth="180.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -128,7 +128,7 @@
          </children>
       </HBox>
       <Label />
-      <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="155.0" text="Back">
+      <Button fx:id="btnBackUsers" mnemonicParsing="false" onAction="#onBackClick" prefHeight="35.0" prefWidth="155.0" text="Back">
          <font>
             <Font size="16.0" />
          </font>

@@ -30,43 +30,12 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Extra:" />
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteEventClick" prefHeight="50.0" prefWidth="90.0" text="Delete">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Manage">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <VBox prefHeight="22.0" prefWidth="290.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name of Event">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Text>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5484b2" height="89.0" stroke="BLACK" strokeType="INSIDE" width="364.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <VBox prefHeight="50.0" prefWidth="153.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time:" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Location:" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Extra:" />
-                     </children>
-                  </VBox>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="Delete">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Manage">
+                  <Button mnemonicParsing="false" onAction="#onManageEventClick" prefHeight="50.0" prefWidth="102.0" text="Manage">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -92,12 +61,43 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Extra:" />
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteEventClick" prefHeight="50.0" prefWidth="90.0" text="Delete">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Manage">
+                  <Button mnemonicParsing="false" onAction="#onManageEventClick" prefHeight="50.0" prefWidth="102.0" text="Manage">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="22.0" prefWidth="290.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name of Event">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5484b2" height="89.0" stroke="BLACK" strokeType="INSIDE" width="364.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <VBox prefHeight="50.0" prefWidth="153.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time:" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Location:" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Extra:" />
+                     </children>
+                  </VBox>
+                  <Button mnemonicParsing="false" onAction="#onDeleteEventClick" prefHeight="50.0" prefWidth="90.0" text="Delete">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onManageEventClick" prefHeight="50.0" prefWidth="102.0" text="Manage">
                      <font>
                         <Font size="20.0" />
                      </font>

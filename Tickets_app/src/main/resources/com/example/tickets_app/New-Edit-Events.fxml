@@ -21,40 +21,40 @@
          </font>
       </Text>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name of event" wrappingWidth="242.13671875" />
-      <TextField />
+      <TextField fx:id="txtEventName" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time start                       Time End (Optional)" wrappingWidth="247.13671875" />
       <HBox prefHeight="0.0" prefWidth="248.0" spacing="10.0">
          <children>
-            <ChoiceBox prefHeight="25.0" prefWidth="61.0" />
-            <ChoiceBox prefHeight="25.0" prefWidth="61.0" />
-            <ChoiceBox prefHeight="25.0" prefWidth="61.0" />
-            <ChoiceBox prefHeight="25.0" prefWidth="61.0" />
+            <ChoiceBox fx:id="cBoxStartTime" prefHeight="25.0" prefWidth="61.0" />
+            <ChoiceBox fx:id="cBoxEndTime" prefHeight="25.0" prefWidth="61.0" />
+            <ChoiceBox fx:id="cBoxDay" prefHeight="25.0" prefWidth="61.0" />
+            <ChoiceBox fx:id="cBoxMonth" prefHeight="25.0" prefWidth="61.0" />
          </children>
       </HBox>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="242.13671875" />
-      <TextField />
+      <TextField fx:id="txtLocation" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Location guidance (Optional)" wrappingWidth="242.13671875" />
-      <TextField />
+      <TextField fx:id="txtLocationGuidance" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Extra" wrappingWidth="242.13671875" />
-      <TextField />
+      <TextField fx:id="txtExtra" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Information" wrappingWidth="242.13671875" />
-      <TextField prefHeight="67.0" prefWidth="248.0" />
+      <TextField fx:id="txtInformation" prefHeight="67.0" prefWidth="248.0" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Assign coordinators" wrappingWidth="242.13671875" />
       <VBox prefHeight="0.0" prefWidth="248.0">
          <children>
-            <ChoiceBox prefWidth="150.0" />
+            <ChoiceBox fx:id="cBoxCoordinator" prefWidth="150.0" />
          </children>
       </VBox>
       <Label />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Banner Upload" wrappingWidth="242.13671875" />
-      <TextField prefHeight="67.0" prefWidth="248.0" />
+      <TextField fx:id="txtBannerPath" prefHeight="67.0" prefWidth="248.0" />
       <Label />
-      <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="189.0" text="Create Event/Save Changes">
+      <Button fx:id="btnSaveEvent" mnemonicParsing="false" onAction="#onSaveEventClick" prefHeight="44.0" prefWidth="189.0" text="Create Event/Save Changes">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="190.0" text="Cancel">
+      <Button fx:id="btnCancelEvent" mnemonicParsing="false" onAction="#onCancelEventClick" prefHeight="44.0" prefWidth="190.0" text="Cancel">
          <font>
             <Font size="20.0" />
          </font>
