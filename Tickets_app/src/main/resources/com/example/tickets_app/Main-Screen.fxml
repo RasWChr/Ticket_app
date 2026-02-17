@@ -7,40 +7,40 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="520.0" prefWidth="333.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.MainController">
+<VBox alignment="CENTER" prefHeight="520.0" prefWidth="333.0" spacing="20.0" style="-fx-background-color: #20262D;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.MainController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <children>
        <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
-           <Circle fill="WHITE" radius="19.0" stroke="BLACK" strokeType="INSIDE"/>
+           <Circle fill="WHITE" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
        </VBox>
-      <Button fx:id="btnCreateU" mnemonicParsing="false" onAction="#onCreateUClick" prefHeight="51.0" prefWidth="184.0" text="Create User">
+      <Button fx:id="btnCreateU" mnemonicParsing="false" onAction="#onCreateUClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369F97;" text="Create User" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="btnManageU" mnemonicParsing="false" onAction="#onManageUClick" prefHeight="51.0" prefWidth="184.0" text="Manage Users">
+      <Button fx:id="btnManageU" mnemonicParsing="false" onAction="#onManageUClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369F97;" text="Manage Users" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="btnEvent" mnemonicParsing="false" onAction="#onEventClick" prefHeight="51.0" prefWidth="184.0" text="Events">
+      <Button fx:id="btnEvent" mnemonicParsing="false" onAction="#onEventClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369F97;" text="Events" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="btnCreateE" mnemonicParsing="false" onAction="#onCreateEClick" prefHeight="51.0" prefWidth="184.0" text="Create Events">
+      <Button fx:id="btnCreateE" mnemonicParsing="false" onAction="#onCreateEClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369F97;" text="Create Events" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="btnCreateT" mnemonicParsing="false" onAction="#onCreateTClick" prefHeight="51.0" prefWidth="184.0" text="Create Ticket">
+      <Button fx:id="btnCreateT" mnemonicParsing="false" onAction="#onCreateTClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369F97;" text="Create Ticket" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="btnLogOut" mnemonicParsing="false" onAction="#onLogOutClick" prefHeight="51.0" prefWidth="184.0" text="Log Out">
+      <Button fx:id="btnLogOut" mnemonicParsing="false" onAction="#onLogOutClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369F97;" text="Log Out" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>

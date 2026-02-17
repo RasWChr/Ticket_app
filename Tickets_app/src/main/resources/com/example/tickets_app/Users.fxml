@@ -8,27 +8,27 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="505.0" prefWidth="380.0" spacing="10.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.UserController">
+<VBox alignment="CENTER" prefHeight="505.0" prefWidth="380.0" spacing="10.0" style="-fx-background-color: #20262D;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.UserController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <children>
       <HBox prefHeight="120.0" prefWidth="274.0" spacing="100.0">
          <children>
-            <Circle fill="DODGERBLUE" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#f8f8f8" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#f8f8f8" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </HBox>
       <HBox prefHeight="26.0" prefWidth="340.0">
          <children>
             <HBox prefHeight="30.0" prefWidth="278.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" style="-fx-background-color: #369F97;" text="Edit" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" style="-fx-background-color: #369F97;" text="Delete" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -37,12 +37,12 @@
             </HBox>
             <HBox prefHeight="96.0" prefWidth="180.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" style="-fx-background-color: #369F97;" text="Edit" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" style="-fx-background-color: #369F97;" text="Delete" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -53,20 +53,20 @@
       </HBox>
       <HBox prefHeight="120.0" prefWidth="274.0" spacing="100.0">
          <children>
-            <Circle fill="DODGERBLUE" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#f8f8f8" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#f8f8f8" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </HBox>
       <HBox prefHeight="26.0" prefWidth="340.0">
          <children>
             <HBox prefHeight="30.0" prefWidth="278.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" style="-fx-background-color: #369F97;" text="Edit" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" style="-fx-background-color: #369F97;" text="Delete" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -75,12 +75,12 @@
             </HBox>
             <HBox prefHeight="96.0" prefWidth="180.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" style="-fx-background-color: #369F97;" text="Edit" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" style="-fx-background-color: #369F97;" text="Delete" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -91,20 +91,20 @@
       </HBox>
       <HBox prefHeight="120.0" prefWidth="274.0" spacing="100.0">
          <children>
-            <Circle fill="DODGERBLUE" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#f8f8f8" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#f8f8f8" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </HBox>
       <HBox prefHeight="26.0" prefWidth="340.0">
          <children>
             <HBox prefHeight="30.0" prefWidth="278.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" style="-fx-background-color: #369F97;" text="Edit" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" style="-fx-background-color: #369F97;" text="Delete" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -113,12 +113,12 @@
             </HBox>
             <HBox prefHeight="96.0" prefWidth="180.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onEditUserClick" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditUserClick" style="-fx-background-color: #369F97;" text="Edit" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteUserClick" style="-fx-background-color: #369F97;" text="Delete" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -128,7 +128,7 @@
          </children>
       </HBox>
       <Label />
-      <Button fx:id="btnBackUsers" mnemonicParsing="false" onAction="#onBackClick" prefHeight="35.0" prefWidth="155.0" text="Back">
+      <Button fx:id="btnBackUsers" mnemonicParsing="false" onAction="#onBackClick" prefHeight="35.0" prefWidth="155.0" style="-fx-background-color: #369F97;" text="Back" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
