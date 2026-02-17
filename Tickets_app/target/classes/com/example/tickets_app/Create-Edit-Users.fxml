@@ -48,8 +48,8 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button fx:id="btnCoordinator" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Coordinatior" />
-                  <Button fx:id="btnAdmin" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Admin" />
+                  <Button fx:id="btnCoordinator" mnemonicParsing="false" onAction="#onCoordinatorClick" prefHeight="25.0" prefWidth="91.0" text="Coordinatior" />
+                  <Button fx:id="btnAdmin" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="25.0" prefWidth="91.0" text="Admin" />
                </children>
             </HBox>
             <Label />
