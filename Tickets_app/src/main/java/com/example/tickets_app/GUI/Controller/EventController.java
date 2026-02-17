@@ -37,4 +37,18 @@ public class EventController {
             e.printStackTrace();
         }
     }
+
+    public void onReturnClick(ActionEvent actionEvent) {
+        // Cancel and go back to main screen.
+        try {
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("Main-Screen.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

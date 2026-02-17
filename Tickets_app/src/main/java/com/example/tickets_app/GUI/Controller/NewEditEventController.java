@@ -74,8 +74,17 @@ public class NewEditEventController {
 
     @FXML
     public void onCancelEventClick(ActionEvent actionEvent) {
-        // Cancel and go back to Events overview.
-        navigateToEvents(actionEvent);
+        // Cancel and go back to main screen.
+        try {
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("Main-Screen.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void navigateToEvents(ActionEvent actionEvent) {
