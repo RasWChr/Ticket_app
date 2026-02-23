@@ -1,6 +1,6 @@
 package com.example.tickets_app.GUI.Controller;
 
-import com.example.tickets_app.HelloApplication;
+import com.example.tickets_app.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,7 +14,7 @@ public class MainController {
 
     private void switchScene(ActionEvent event, String fxmlName) {
         try {
-            Parent root = FXMLLoader.load(HelloApplication.class.getResource(fxmlName));
+            Parent root = FXMLLoader.load(Main.class.getResource(fxmlName));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -25,26 +25,26 @@ public class MainController {
     }
 
     public void onCreateUClick(ActionEvent actionEvent) {
-        switchScene(actionEvent, "Create-Edit-Users.fxml");
+        switchScene(actionEvent, "Views/Create-Edit-Users.fxml");
     }
 
     public void onManageUClick(ActionEvent actionEvent) {
-        switchScene(actionEvent, "Users.fxml");
+        switchScene(actionEvent, "Views/Users.fxml");
     }
 
     public void onEventClick(ActionEvent actionEvent) {
-        switchScene(actionEvent, "Events.fxml");
+        switchScene(actionEvent, "Views/Events.fxml");
     }
 
     public void onCreateEClick(ActionEvent actionEvent) {
-        switchScene(actionEvent, "New-Edit-Events.fxml");
+        switchScene(actionEvent, "Views/New-Edit-Events.fxml");
     }
 
     public void onCreateTClick(ActionEvent actionEvent) {
-        switchScene(actionEvent, "Tickets.fxml");
+        switchScene(actionEvent, "Views/Tickets.fxml");
     }
 
     public void onLogOutClick(ActionEvent actionEvent) {
-        switchScene(actionEvent, "Log-in.fxml");
+        switchScene(actionEvent, "Views/Log-in.fxml");
     }
 }
