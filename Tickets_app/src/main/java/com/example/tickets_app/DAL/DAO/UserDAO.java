@@ -3,6 +3,8 @@ package com.example.tickets_app.DAL.DAO;
 import com.example.tickets_app.BE.User;
 import com.example.tickets_app.DAL.Interface.IUser;
 
+import java.sql.SQLException;
+
 public class UserDAO implements IUser {
 
 
@@ -23,6 +25,11 @@ public class UserDAO implements IUser {
 
     @Override
     public boolean validateLogin(String username, String password) {
+        return false;
+    }
+
+    @Override
+    public boolean emailExists(String email) throws SQLException {
         return false;
     }
 }
