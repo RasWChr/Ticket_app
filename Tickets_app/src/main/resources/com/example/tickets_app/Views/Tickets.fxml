@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="391.0" prefWidth="333.0" style="-fx-background-color: #20262D;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.TicketController">
+<VBox alignment="CENTER" prefHeight="391.0" prefWidth="333.0" style="-fx-background-color: #20262D;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.TicketController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -23,7 +23,7 @@
       <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Event" wrappingWidth="291.13671875" />
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <ChoiceBox fx:id="cBoxEvent" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: blue;" />
+            <ChoiceBox fx:id="cBoxEvent" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: #025AAD;" />
          </children>
       </VBox>
         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name                            Last Name" wrappingWidth="289.13671875" />
@@ -49,12 +49,12 @@
         <Label />
         <VBox alignment="CENTER" prefHeight="147.0" prefWidth="295.0" spacing="20.0">
             <children>
-                <Button fx:id="btnPTicket" mnemonicParsing="false" onAction="#onPTicketClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369f97;" text="Print Ticket" textFill="WHITE">
+                <Button fx:id="btnPTicket" mnemonicParsing="false" onAction="#onPTicketClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369F97;" text="Print Ticket" textFill="WHITE">
                     <font>
                         <Font size="24.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnSTicket" mnemonicParsing="false" onAction="#onSTicketClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369f97;" text="Cancel" textFill="WHITE">
+                <Button fx:id="btnSTicket" mnemonicParsing="false" onAction="#onSTicketClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369F97;" text="Cancel" textFill="WHITE">
                     <font>
                         <Font size="24.0" />
                     </font>

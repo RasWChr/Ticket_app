@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #20262D;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.NewEditEventController">
+<VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #20262D;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.NewEditEventController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -25,10 +25,10 @@
       <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Time start                       Time End (Optional)" wrappingWidth="247.13671875" />
       <HBox prefHeight="0.0" prefWidth="248.0" spacing="10.0">
          <children>
-            <ChoiceBox fx:id="cBoxStartTime" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: blue;" />
-            <ChoiceBox fx:id="cBoxEndTime" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: blue;" />
-            <ChoiceBox fx:id="cBoxDay" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: blue;" />
-            <ChoiceBox fx:id="cBoxMonth" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: blue;" />
+            <ChoiceBox fx:id="cBoxStartTime" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: #025AAD;" />
+            <ChoiceBox fx:id="cBoxEndTime" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: #025AAD;" />
+            <ChoiceBox fx:id="cBoxDay" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: #025AAD;" />
+            <ChoiceBox fx:id="cBoxMonth" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: #025AAD;" />
          </children>
       </HBox>
       <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="242.13671875" />
@@ -42,19 +42,19 @@
       <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Assign coordinators" wrappingWidth="242.13671875" />
       <VBox prefHeight="0.0" prefWidth="248.0">
          <children>
-            <ChoiceBox fx:id="cBoxCoordinator" prefWidth="150.0" style="-fx-background-color: blue;" />
+            <ChoiceBox fx:id="cBoxCoordinator" prefWidth="150.0" style="-fx-background-color: #025AAD;" />
          </children>
       </VBox>
       <Label />
       <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Banner Upload" wrappingWidth="242.13671875" />
       <TextField fx:id="txtBannerPath" prefHeight="67.0" prefWidth="248.0" />
       <Label />
-      <Button fx:id="btnSaveEvent" mnemonicParsing="false" onAction="#onSaveEventClick" prefHeight="44.0" prefWidth="189.0" style="-fx-background-color: #369f97;" text="Create Event/Save Changes" textFill="WHITE">
+      <Button fx:id="btnSaveEvent" mnemonicParsing="false" onAction="#onSaveEventClick" prefHeight="44.0" prefWidth="189.0" style="-fx-background-color: #369F97;" text="Create Event/Save Changes" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="btnCancelEvent" mnemonicParsing="false" onAction="#onCancelEventClick" prefHeight="44.0" prefWidth="190.0" style="-fx-background-color: #369f97;" text="Cancel" textFill="WHITE">
+      <Button fx:id="btnCancelEvent" mnemonicParsing="false" onAction="#onCancelEventClick" prefHeight="44.0" prefWidth="190.0" style="-fx-background-color: #369F97;" text="Cancel" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
