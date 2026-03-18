@@ -1,50 +1,24 @@
 package com.example.tickets_app.GUI.Controller;
 
-import com.example.tickets_app.Main;
+import com.example.tickets_app.GUI.util.AlertUtil;
+import com.example.tickets_app.GUI.util.SceneUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class UserController {
 
-    // Shared handler for all "Edit" buttons in Users.fxml
     @FXML
     public void onEditUserClick(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Edit user");
-        alert.setHeaderText(null);
-        alert.setContentText("Edit user (demo action).");
-        alert.showAndWait();
+        AlertUtil.showInfo("Edit user", "Edit user (demo action).");
     }
 
-    // Shared handler for all "Delete" buttons in Users.fxml
     @FXML
     public void onDeleteUserClick(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Delete user");
-        alert.setHeaderText(null);
-        alert.setContentText("User has been deleted (demo action).");
-        alert.showAndWait();
+        AlertUtil.showInfo("Delete user", "User has been deleted (demo action).");
     }
 
-    // Handler for the "Back" button in Users.fxml
     @FXML
     public void onBackClick(ActionEvent actionEvent) {
-        try {
-            Parent root = FXMLLoader.load(Main.class.getResource("Views/Main-Screen.fxml"));
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");
     }
 }
