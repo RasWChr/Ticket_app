@@ -19,7 +19,7 @@ public class User {
         this.role = role;
     }
 
-    public User(String firstName, String lastName, String email, String phone, String hashedPassword, String role) {
+    public User(String firstName, String lastName, String email, String phoneNumber, String password, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
