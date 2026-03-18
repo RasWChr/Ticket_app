@@ -16,13 +16,13 @@ public class UserManager implements IUserManager {
     }
 
     @Override
-    public void createUser(String firstName, String lastName, String email, String phone, String password, String role) throws ExceptionHandler {
+    public void createUser(String firstName, String lastName, String email, String phoneNumber, String password, String role) throws ExceptionHandler {
         try {
             if (userDAO.emailExists(email)) {
                 throw new IllegalArgumentException("A user with this email already exists.");
             }
             String hashedPassword = PasswordUtil.hash(password);
-            User user = new User(firstName, lastName, email, phone, hashedPassword, role);
+            User user = new User(firstName, lastName, email, phoneNumber, hashedPassword, role);
             userDAO.createUser(user);
 
         } catch (IllegalArgumentException e) {
