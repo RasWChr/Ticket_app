@@ -3,14 +3,14 @@ package com.example.tickets_app.DAL.DAO;
 import com.example.tickets_app.BE.User;
 import com.example.tickets_app.BLL.util.ExceptionHandler;
 import com.example.tickets_app.DAL.DB.DBConnector;
-import com.example.tickets_app.DAL.Interface.IUser;
+import com.example.tickets_app.DAL.Interface.IUserDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDAO implements IUser {
+public class UserDAO implements IUserDAO {
 
 
     @Override
