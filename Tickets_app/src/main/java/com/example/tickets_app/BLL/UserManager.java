@@ -49,10 +49,10 @@ public class UserManager implements IUserManager {
     @Override
     public void editUser(int userId, String firstName, String lastName, String email, String phone, String role) throws ExceptionHandler {
         if (firstName == null || firstName.isBlank()) throw new IllegalArgumentException("First name cannot be empty.");
-        if (lastName == null || lastName.isBlank())  throw new IllegalArgumentException("Last name cannot be empty.");
-        if (email == null || email.isBlank())         throw new IllegalArgumentException("Email cannot be empty.");
-        if (!email.contains("@"))                     throw new IllegalArgumentException("Email is not valid.");
-        if (role == null || role.isBlank())           throw new IllegalArgumentException("Role must be selected.");
+        if (lastName == null || lastName.isBlank()) throw new IllegalArgumentException("Last name cannot be empty.");
+        if (!ValidationUtil.isValidEmail(email)) throw new IllegalArgumentException("Please enter a valid email address.");
+        if (!ValidationUtil.isValidPhone(phone)) throw new IllegalArgumentException("Please enter a valid phone number.");
+        if (role == null || role.isBlank()) throw new IllegalArgumentException("Role must be selected.");
 
         try {
             userDAO.editUser(userId, firstName, lastName, email, phone, role);
