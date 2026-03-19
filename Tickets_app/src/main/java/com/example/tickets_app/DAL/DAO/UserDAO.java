@@ -41,19 +41,18 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public void deleteUser(int userId) {
-        String sql = "DELETE FROM Users WHERE UserId = ?";
+    public void deleteUser(int userId) throws ExceptionHandler {
+        String sql = "DELETE FROM Users WHERE Id = ?";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, userId);
             ps.executeUpdate();
-
 
         } catch (SQLException e) {
             ExceptionHandler.handleDAOException("deleteUser", e);
         }
-
     }
 
     @Override
