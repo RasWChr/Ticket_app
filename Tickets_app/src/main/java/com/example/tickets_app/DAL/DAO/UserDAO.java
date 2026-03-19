@@ -40,6 +40,17 @@ public class UserDAO implements IUserDAO {
 
     @Override
     public void deleteUser(int userId) {
+        String sql = "DELETE FROM Users WHERE UserId = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+
+
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("deleteUser", e);
+        }
 
     }
 
