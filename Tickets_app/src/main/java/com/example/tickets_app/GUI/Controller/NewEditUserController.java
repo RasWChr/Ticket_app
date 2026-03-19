@@ -55,6 +55,7 @@ public class NewEditUserController {
         try {
             userManager.createUser(firstName, lastName, email, phone, password, selectedRole);
             AlertUtil.showInfo("User created", "User " + firstName + " " + lastName + " (" + selectedRole + ") has been created.");
+            clearFields();
         } catch (IllegalArgumentException e) {
             AlertUtil.showWarning("Duplicate email", e.getMessage());
         } catch (ExceptionHandler e) {
@@ -75,5 +76,22 @@ public class NewEditUserController {
     @FXML
     public void onShowPasswordClick(ActionEvent actionEvent) {
         passwordVisible = PasswordToggleUtil.toggle(passwordVisible, txtPassword, txtPasswordVisible, btnShowPassword);
+    }
+    private void clearFields() {
+        txtFirstNU.clear();
+        txtLastNU.clear();
+        txtEmailU.clear();
+        txtPhoneU.clear();
+        txtPassword.clear();
+        txtPasswordVisible.clear();
+        selectedRole = null;
+
+        // Reset password field visibility back to hidden
+        txtPassword.setManaged(true);
+        txtPassword.setVisible(true);
+        txtPasswordVisible.setManaged(false);
+        txtPasswordVisible.setVisible(false);
+        btnShowPassword.setText("Show");
+        passwordVisible = false;
     }
 }
