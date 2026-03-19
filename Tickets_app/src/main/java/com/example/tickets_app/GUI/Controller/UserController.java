@@ -1,50 +1,58 @@
 package com.example.tickets_app.GUI.Controller;
 
-import com.example.tickets_app.Main;
+import com.example.tickets_app.BE.User;
+import com.example.tickets_app.BLL.Interface.IUserManager;
+import com.example.tickets_app.BLL.UserManager;
+import com.example.tickets_app.BLL.util.ExceptionHandler;
+import com.example.tickets_app.DAL.DAO.UserDAO;
+import com.example.tickets_app.GUI.util.AlertUtil;
+import com.example.tickets_app.GUI.util.SceneUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.stage.Stage;
-
-import java.io.IOException;
+import javafx.scene.control.ListView;
 
 public class UserController {
 
-    // Shared handler for all "Edit" buttons in Users.fxml
+    @FXML private ListView<User> listViewUsers;
+
+    private final IUserManager userManager = new UserManager(new UserDAO());
+    private final ObservableList<User> userList = FXCollections.observableArrayList();
+
     @FXML
-    public void onEditUserClick(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Edit user");
-        alert.setHeaderText(null);
-        alert.setContentText("Edit user (demo action).");
-        alert.showAndWait();
+    public void initialize() {
+        listViewUsers.setItems(userList);
+        listViewUsers.setCellFactory(lv -> new UserListCell(this::handleEdit, this::handleDelete));
+        loadUsers();
     }
 
-    // Shared handler for all "Delete" buttons in Users.fxml
-    @FXML
-    public void onDeleteUserClick(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Delete user");
-        alert.setHeaderText(null);
-        alert.setContentText("User has been deleted (demo action).");
-        alert.showAndWait();
+    private void loadUsers() {
+        try {
+            userList.setAll(userManager.getAllUsers());
+        } catch (ExceptionHandler e) {
+            AlertUtil.showError("Database error", "Could not load users: " + e.getMessage());
+        }
     }
 
-    // Handler for the "Back" button in Users.fxml
+    private void handleDelete(User user) {
+        if (AlertUtil.showConfirmation("Delete User", "Are you sure you want to delete " + user.getFirstName() + " " + user.getLastName() + "?")) {
+            try {
+                userManager.deleteUser(user.getId());
+                userList.remove(user);
+                AlertUtil.showInfo("User deleted", user.getFirstName() + " " + user.getLastName() + " has been deleted.");
+            } catch (ExceptionHandler e) {
+                AlertUtil.showError("Database error", e.getMessage());
+            }
+        }
+    }
+
+    private void handleEdit(User user) {
+        AlertUtil.showInfo("Edit user", "Edit functionality coming soon.");
+    }
+
     @FXML
     public void onBackClick(ActionEvent actionEvent) {
-        try {
-            Parent root = FXMLLoader.load(Main.class.getResource("Views/Main-Screen.fxml"));
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");
     }
 }
