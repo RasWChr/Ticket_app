@@ -4,6 +4,7 @@ import com.example.tickets_app.BE.User;
 import com.example.tickets_app.BLL.Interface.IUserManager;
 import com.example.tickets_app.BLL.util.ExceptionHandler;
 import com.example.tickets_app.BLL.util.PasswordUtil;
+import com.example.tickets_app.BLL.util.ValidationUtil;
 import com.example.tickets_app.DAL.Interface.IUserDAO;
 
 import java.util.List;
@@ -20,12 +21,22 @@ public class UserManager implements IUserManager {
     @Override
     public void createUser(String firstName, String lastName, String email, String phoneNumber, String password, String role) throws ExceptionHandler {
         try {
+            if (!ValidationUtil.isValidEmail(email)) {
+                throw new IllegalArgumentException("Please enter a valid email address.");
+            }
+
+            if (!ValidationUtil.isValidPhone(phoneNumber)) {
+                throw new IllegalArgumentException("Please enter a valid phone number (7-15 digits, optional + prefix).");
+            }
+
             if (userDAO.emailExists(email)) {
                 throw new IllegalArgumentException("A user with this email already exists.");
             }
+
             String hashedPassword = PasswordUtil.hash(password);
             User user = new User(firstName, lastName, email, phoneNumber, hashedPassword, role);
             userDAO.createUser(user);
+
 
         } catch (IllegalArgumentException e) {
             throw e;
