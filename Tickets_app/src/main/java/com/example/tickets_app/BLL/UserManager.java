@@ -6,6 +6,8 @@ import com.example.tickets_app.BLL.util.ExceptionHandler;
 import com.example.tickets_app.BLL.util.PasswordUtil;
 import com.example.tickets_app.DAL.Interface.IUserDAO;
 
+import java.util.List;
+
 
 public class UserManager implements IUserManager {
 
@@ -38,6 +40,24 @@ public class UserManager implements IUserManager {
             return userDAO.emailExists(email);
         } catch (ExceptionHandler e) {
             throw new ExceptionHandler("Could not check for duplicate Email" + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<User> getAllUsers() throws ExceptionHandler {
+        try {
+            return userDAO.getAllUsers();
+        } catch (ExceptionHandler e) {
+        throw new ExceptionHandler("Could not retrieve users: " + e.getMessage(), e);
+    }
+}
+
+    @Override
+    public void deleteUser(int userId) throws ExceptionHandler {
+        try {
+            userDAO.deleteUser(userId);
+        } catch (ExceptionHandler e) {
+            throw new ExceptionHandler("Could not delete user: " + e.getMessage(), e);
         }
     }
 }

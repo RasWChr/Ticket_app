@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO implements IUserDAO {
 
@@ -76,5 +78,33 @@ public class UserDAO implements IUserDAO {
             ExceptionHandler.handleDAOException("emailExists", e);
         }
         return false;
+    }
+
+    @Override
+    public List<User> getAllUsers() throws ExceptionHandler {
+        String sql = "SELECT Id, FirstName, LastName, Email, Phone, Password, Role FROM Users";
+        List<User> users = new ArrayList<>();
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User(
+                        rs.getInt("Id"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Phone"),
+                        rs.getString("Password"),
+                        rs.getString("Role")
+                );
+                users.add(user);
+            }
+
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("getAllUsers", e);
+        }
+        return users;
     }
 }
