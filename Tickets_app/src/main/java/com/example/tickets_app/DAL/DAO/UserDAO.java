@@ -38,7 +38,7 @@ public class UserDAO implements IUserDAO {
     //Implementerede sql editUser
     @Override
     public void editUser(int  userId, String firstName, String lastName, String email, String phone, String role) throws ExceptionHandler {
-        String sql = "Update Users set FristName = ?, LastName = ?, Email = ?, Phone = ?, Role = ?, Password = ? where Id = ?";
+        String sql = "UPDATE Users SET FirstName = ?, LastName = ?, Email = ?, Phone = ?, Role = ?, Role = ? WHERE Id = ?";
 
         try (Connection conn = DBConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
 
