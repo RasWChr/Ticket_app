@@ -34,6 +34,22 @@ public class UserManager implements IUserManager {
         }
     }
 
+    //Implementer Validation er ret stolt her
+    @Override
+    public void editUser(int userId, String firstName, String lastName, String email, String phone, String role) throws ExceptionHandler {
+        if (firstName == null || firstName.isBlank()) throw new IllegalArgumentException("First name cannot be empty.");
+        if (lastName == null || lastName.isBlank())  throw new IllegalArgumentException("Last name cannot be empty.");
+        if (email == null || email.isBlank())         throw new IllegalArgumentException("Email cannot be empty.");
+        if (!email.contains("@"))                     throw new IllegalArgumentException("Email is not valid.");
+        if (role == null || role.isBlank())           throw new IllegalArgumentException("Role must be selected.");
+
+        try {
+            userDAO.editUser(userId, firstName, lastName, email, phone, role);
+        } catch (ExceptionHandler e) {
+            throw new ExceptionHandler("Could not edit user: " + e.getMessage(), e);
+        }
+    }
+
     @Override
     public boolean emailExists(String email) throws ExceptionHandler {
         try {
