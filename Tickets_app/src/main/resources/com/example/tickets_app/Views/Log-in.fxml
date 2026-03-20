@@ -21,7 +21,7 @@
             <Image url="@../Images/Rat.png" />
         </image>
     </ImageView>
-    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="272.13671875">
+    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="272.13671875">
         <font>
             <Font size="14.0" />
         </font>
