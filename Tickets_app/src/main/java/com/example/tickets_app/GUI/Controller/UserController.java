@@ -7,11 +7,17 @@ import com.example.tickets_app.BLL.util.ExceptionHandler;
 import com.example.tickets_app.DAL.DAO.UserDAO;
 import com.example.tickets_app.GUI.util.AlertUtil;
 import com.example.tickets_app.GUI.util.SceneUtil;
+import com.example.tickets_app.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 public class UserController {
 
@@ -19,6 +25,7 @@ public class UserController {
 
     private final IUserManager userManager = new UserManager(new UserDAO());
     private final ObservableList<User> userList = FXCollections.observableArrayList();
+
 
     @FXML
     public void initialize() {
@@ -48,8 +55,10 @@ public class UserController {
     }
 
     private void handleEdit(User user) {
-        AlertUtil.showInfo("Edit user", "Edit functionality coming soon.");
+        SceneUtil.switchSceneWithController(listViewUsers, "Views/Create-Edit-Users.fxml",
+                (NewEditUserController c) -> c.setUserToEdit(user));
     }
+
 
     @FXML
     public void onBackClick(ActionEvent actionEvent) {
