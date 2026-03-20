@@ -70,11 +70,6 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public boolean validateLogin(String username, String password) {
-        return false;
-    }
-
-    @Override
     public boolean emailExists(String email) throws ExceptionHandler {
         String sql = "SELECT COUNT(*) FROM Users WHERE Email = ?";
 
@@ -119,5 +114,33 @@ public class UserDAO implements IUserDAO {
             ExceptionHandler.handleDAOException("getAllUsers", e);
         }
         return users;
+    }
+
+    @Override
+    public User getUserByEmail(String email) throws ExceptionHandler {
+        String sql = "SELECT Id, FirstName, LastName, Email, Phone, Password, Role FROM Users WHERE Email = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new User(
+                        rs.getInt("Id"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Phone"),
+                        rs.getString("Password"),
+                        rs.getString("Role")
+                );
+            }
+
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("getUserByEmail", e);
+        }
+        return null;
     }
 }
