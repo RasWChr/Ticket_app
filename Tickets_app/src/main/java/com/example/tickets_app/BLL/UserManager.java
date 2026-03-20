@@ -87,4 +87,35 @@ public class UserManager implements IUserManager {
             throw new ExceptionHandler("Could not delete user: " + e.getMessage(), e);
         }
     }
+
+    @Override
+    public User login(String email, String password) throws ExceptionHandler {
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Please enter your email.");
+        }
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Please enter your password.");
+        }
+        if (!ValidationUtil.isValidEmail(email)) {
+            throw new IllegalArgumentException("Please enter a valid email address.");
+        }
+
+        try {
+            User user = userDAO.getUserByEmail(email);
+
+            if (user == null) {
+                throw new IllegalArgumentException("No account found with this email.");
+            }
+            if (!PasswordUtil.verify(password, user.getPassword())) {
+                throw new IllegalArgumentException("Incorrect password.");
+            }
+
+            return user;
+
+        } catch (IllegalArgumentException e) {
+            throw e;
+        } catch (ExceptionHandler e) {
+            throw new ExceptionHandler("Login failed: " + e.getMessage(), e);
+        }
+    }
 }
