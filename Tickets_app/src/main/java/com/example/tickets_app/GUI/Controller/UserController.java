@@ -7,17 +7,13 @@ import com.example.tickets_app.BLL.util.ExceptionHandler;
 import com.example.tickets_app.DAL.DAO.UserDAO;
 import com.example.tickets_app.GUI.util.AlertUtil;
 import com.example.tickets_app.GUI.util.SceneUtil;
-import com.example.tickets_app.Main;
+import com.example.tickets_app.GUI.util.SessionManager;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
-import java.io.IOException;
 
 public class UserController {
 
@@ -29,6 +25,10 @@ public class UserController {
 
     @FXML
     public void initialize() {
+        if (!SessionManager.isLoggedIn()) {
+            Platform.runLater(SessionManager::redirectToLogin);
+            return;
+        }
         listViewUsers.setItems(userList);
         listViewUsers.setCellFactory(lv -> new UserListCell(this::handleEdit, this::handleDelete));
         loadUsers();

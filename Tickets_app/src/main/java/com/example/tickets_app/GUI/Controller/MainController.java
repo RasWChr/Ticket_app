@@ -1,9 +1,19 @@
 package com.example.tickets_app.GUI.Controller;
 
 import com.example.tickets_app.GUI.util.SceneUtil;
+import com.example.tickets_app.GUI.util.SessionManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 
 public class MainController {
+
+    @FXML
+    public void initialize() {
+        if (!SessionManager.isLoggedIn()){
+            Platform.runLater(SessionManager::redirectToLogin);
+        }
+    }
 
     public void onCreateUClick(ActionEvent actionEvent) {
         SceneUtil.switchScene(actionEvent, "Views/Create-Edit-Users.fxml");

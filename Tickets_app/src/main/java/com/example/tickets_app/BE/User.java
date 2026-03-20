@@ -8,8 +8,9 @@ public class User {
     private String phoneNumber;
     private String password;
     private String role;
+    private boolean isSeeded;
 
-    public User(int id, String firstName, String lastName, String email, String phoneNumber, String password, String role) {
+    public User(int id, String firstName, String lastName, String email, String phoneNumber, String password, String role, boolean isSeeded) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -17,6 +18,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.role = role;
+        this.isSeeded = isSeeded;
     }
 
     public User(String firstName, String lastName, String email, String phoneNumber, String password, String role) {
@@ -26,7 +28,11 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.role = role;
+        this.isSeeded = false;
     }
+
+    public boolean isSeeded() { return isSeeded; }
+    public void setSeeded(boolean seeded) { isSeeded = seeded; }
 
     public int getId() {
         return id;

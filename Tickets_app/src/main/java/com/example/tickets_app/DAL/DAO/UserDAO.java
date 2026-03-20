@@ -37,22 +37,22 @@ public class UserDAO implements IUserDAO {
 
     //Implementerede sql editUser
     @Override
-    public void editUser(int  userId, String firstName, String lastName, String email, String phone, String role) throws ExceptionHandler {
+    public void editUser(int userId, String firstName, String lastName, String email, String phone, String role) throws ExceptionHandler {
         String sql = "UPDATE Users SET FirstName = ?, LastName = ?, Email = ?, Phone = ?, Role = ? WHERE Id = ?";
 
-        try (Connection conn = DBConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+        try (Connection conn = DBConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1,firstName);
+            ps.setString(1, firstName);
             ps.setString(2, lastName);
-            ps.setString(3,email);
+            ps.setString(3, email);
             ps.setString(4, phone);
             ps.setString(5, role);
             ps.setInt(6, userId);
             ps.executeUpdate();
-    } catch (SQLException e){
-        ExceptionHandler.handleDAOException("editUser", e);
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("editUser", e);
+        }
     }
-}
 
     @Override
     public void deleteUser(int userId) throws ExceptionHandler {
@@ -90,7 +90,7 @@ public class UserDAO implements IUserDAO {
 
     @Override
     public List<User> getAllUsers() throws ExceptionHandler {
-        String sql = "SELECT Id, FirstName, LastName, Email, Phone, Password, Role FROM Users";
+        String sql = "SELECT Id, FirstName, LastName, Email, Phone, Password, Role, IsSeeded FROM Users WHERE IsSeeded = 0";
         List<User> users = new ArrayList<>();
 
         try (Connection conn = DBConnector.getConnection();
@@ -105,7 +105,8 @@ public class UserDAO implements IUserDAO {
                         rs.getString("Email"),
                         rs.getString("Phone"),
                         rs.getString("Password"),
-                        rs.getString("Role")
+                        rs.getString("Role"),
+                        rs.getBoolean("IsSeeded")
                 );
                 users.add(user);
             }
@@ -118,7 +119,7 @@ public class UserDAO implements IUserDAO {
 
     @Override
     public User getUserByEmail(String email) throws ExceptionHandler {
-        String sql = "SELECT Id, FirstName, LastName, Email, Phone, Password, Role FROM Users WHERE Email = ?";
+        String sql = "SELECT Id, FirstName, LastName, Email, Phone, Password, Role, IsSeeded FROM Users WHERE Email = ?";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -134,7 +135,8 @@ public class UserDAO implements IUserDAO {
                         rs.getString("Email"),
                         rs.getString("Phone"),
                         rs.getString("Password"),
-                        rs.getString("Role")
+                        rs.getString("Role"),
+                        rs.getBoolean("IsSeeded")
                 );
             }
 
