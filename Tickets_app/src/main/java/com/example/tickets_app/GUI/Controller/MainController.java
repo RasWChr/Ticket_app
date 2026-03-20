@@ -27,21 +27,19 @@ public class MainController {
         String role = user.getRole();
 
         if (role.equals("Admin")) {
-            // Admin can manage users but NOT create or manage events
             btnCreateU.setVisible(true);
             btnCreateU.setManaged(true);
             btnManageU.setVisible(true);
             btnManageU.setManaged(true);
-            btnEvent.setVisible(false);
-            btnEvent.setManaged(false);
-            btnCreateE.setVisible(false);
+            btnEvent.setVisible(true);   // Admin can see events to delete and assign coordinators
+            btnEvent.setManaged(true);
+            btnCreateE.setVisible(false); // Admin cannot create events
             btnCreateE.setManaged(false);
-            btnCreateT.setVisible(false);
+            btnCreateT.setVisible(false); // Admin cannot create tickets
             btnCreateT.setManaged(false);
 
         } else if (role.equals("Coordinator")) {
-            // Coordinator can manage events and tickets but NOT manage users
-            btnCreateU.setVisible(false);
+            btnCreateU.setVisible(false); // Coordinator cannot manage users
             btnCreateU.setManaged(false);
             btnManageU.setVisible(false);
             btnManageU.setManaged(false);
