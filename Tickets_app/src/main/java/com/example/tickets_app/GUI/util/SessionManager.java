@@ -4,6 +4,7 @@ import com.example.tickets_app.BE.User;
 import com.example.tickets_app.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -27,16 +28,23 @@ public class SessionManager {
         return loggedInUser != null;
     }
 
-    public static void redirectToLogin(){
+    public static void redirectToLogin() {
         try {
-            Stage stage = (Stage) Window.getWindows().stream().filter(Window::isShowing).findFirst().orElseThrow();
+            Stage stage = (Stage) Window.getWindows()
+                    .stream()
+                    .filter(Window::isShowing)
+                    .findFirst()
+                    .orElseThrow();
 
-            Parent root = FXMLLoader.load(Main.class.getResource("Views/Log-in.fxml"));
-            stage.setScene(new javafx.scene.Scene(root));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("Views/Log-in.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Main.class.getResource("styles.css").toExternalForm());
+            stage.setScene(scene);
             stage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

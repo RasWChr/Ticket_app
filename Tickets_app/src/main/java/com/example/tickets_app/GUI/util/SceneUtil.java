@@ -17,6 +17,7 @@ public class SceneUtil {
         try {
             Parent root = FXMLLoader.load(Main.class.getResource(fxmlPath));
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(Main.class.getResource("styles.css").toExternalForm());
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
@@ -24,17 +25,19 @@ public class SceneUtil {
             e.printStackTrace();
         }
     }
-    //Gør det muligt at have switch til edit i den samme controller som controllere de andre FXML.
+
     public static <C> void switchSceneWithController(Node source, String fxmlPath, Consumer<C> controllerSetup) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource(fxmlPath));
             Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Main.class.getResource("styles.css").toExternalForm());
 
             C controller = loader.getController();
             controllerSetup.accept(controller);
 
             Stage stage = (Stage) source.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
