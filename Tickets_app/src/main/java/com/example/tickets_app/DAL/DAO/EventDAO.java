@@ -102,7 +102,32 @@ public class EventDAO implements IEventDAO {
 
     @Override
     public List<User> getCoordinatorForEvent(int eventId) throws ExceptionHandler {
-        return List.of();
+        String sql = "SELECT u.Id, u.FirstName, u.LastName, u.Email, u.Phone, u.Password, u.Role, u.IsSeeded " +
+                "FROM Users u INNER JOIN EventCoordinators ec ON u.ID = ec.UserId WHERE ec.EventId = ?";
+        List<User> coordinators = new ArrayList<>();
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, eventId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                coordinators.add(new User(
+                        rs.getInt("Id"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Phone"),
+                        rs.getString("Password"),
+                        rs.getString("Role"),
+                        rs.getBoolean("IsSeeded")
+                ));
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("getCoordinatorForEvent", e);
+        }
+        return coordinators;
+
     }
 
     @Override
