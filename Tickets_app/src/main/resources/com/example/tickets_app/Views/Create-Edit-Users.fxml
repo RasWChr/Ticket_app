@@ -7,62 +7,44 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="391.0" prefWidth="333.0" style="-fx-background-color: #20262D;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.NewEditUserController">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="400.0" spacing="8.0"
+      xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.tickets_app.GUI.Controller.NewEditUserController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
     </padding>
     <children>
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="User Information" wrappingWidth="294.13671875">
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Text>
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name                                    Last Name" wrappingWidth="289.13671875" />
-        <HBox prefHeight="27.0" prefWidth="295.0" spacing="19.0">
-            <children>
-                <TextField fx:id="txtFirstNU" />
-                <TextField fx:id="txtLastNU" prefHeight="25.0" prefWidth="160.0" />
-            </children>
-        </HBox>
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="292.32421875" />
-        <TextField fx:id="txtEmailU" />
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" wrappingWidth="293.501953125" />
-        <TextField fx:id="txtPhoneU" />
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="293.501953125" />
-        <HBox prefHeight="25.0" prefWidth="295.0" spacing="5.0">
+        <Label text="User Information" styleClass="title" />
+        <Label text="First Name" />
+        <TextField fx:id="txtFirstNU" maxWidth="Infinity" />
+        <Label text="Last Name" />
+        <TextField fx:id="txtLastNU" maxWidth="Infinity" />
+        <Label text="Email" />
+        <TextField fx:id="txtEmailU" maxWidth="Infinity" />
+        <Label text="Phone Number" />
+        <TextField fx:id="txtPhoneU" maxWidth="Infinity" />
+        <Label text="Password" />
+        <HBox spacing="5.0">
             <children>
                 <PasswordField fx:id="txtPassword" HBox.hgrow="ALWAYS" />
                 <TextField fx:id="txtPasswordVisible" HBox.hgrow="ALWAYS" managed="false" visible="false" />
-                <Button fx:id="btnShowPassword" mnemonicParsing="false" onAction="#onShowPasswordClick" text="Show" textFill="WHITE" style="-fx-background-color: #369F97;" />
+                <Button fx:id="btnShowPassword" mnemonicParsing="false" onAction="#onShowPasswordClick" text="Show" />
             </children>
         </HBox>
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="What kind of User?" wrappingWidth="293.501953125" />
-        <HBox prefHeight="40.0" prefWidth="295.0" spacing="10.0">
+        <Label text="Role" />
+        <HBox spacing="10.0">
             <children>
-                <Button fx:id="btnCoordinator" mnemonicParsing="false" onAction="#onCoordinatorClick" prefHeight="25.0" prefWidth="91.0" text="Coordinator" textFill="WHITE" />
-                <Button fx:id="btnAdmin" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="25.0" prefWidth="91.0" text="Admin" textFill="WHITE" />
+                <Button fx:id="btnCoordinator" mnemonicParsing="false" onAction="#onCoordinatorClick"
+                        text="Coordinator" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                <Button fx:id="btnAdmin" mnemonicParsing="false" onAction="#onAdminClick"
+                        text="Admin" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile picture" />
-        <Circle fill="#f5f5f5" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
         <Label />
-        <VBox alignment="CENTER" prefHeight="147.0" prefWidth="295.0" spacing="20.0">
-            <children>
-                <Button fx:id="btnUserCE" mnemonicParsing="false" onAction="#onUserCEClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369F97;" text="Create User" textFill="WHITE">
-                    <font>
-                        <Font size="24.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnCancelU" mnemonicParsing="false" onAction="#onCancelUClick" prefHeight="51.0" prefWidth="184.0" style="-fx-background-color: #369F97;" text="Cancel" textFill="WHITE">
-                    <font>
-                        <Font size="24.0" />
-                    </font>
-                </Button>
-            </children>
-        </VBox>
+        <Button fx:id="btnUserCE" mnemonicParsing="false" onAction="#onUserCEClick"
+                text="Create User" maxWidth="Infinity" />
+        <Button fx:id="btnCancelU" mnemonicParsing="false" onAction="#onCancelUClick"
+                text="Cancel" maxWidth="Infinity" />
     </children>
 </VBox>

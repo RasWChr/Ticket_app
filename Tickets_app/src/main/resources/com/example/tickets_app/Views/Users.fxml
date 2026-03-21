@@ -5,23 +5,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="505.0" prefWidth="380.0" spacing="10.0" style="-fx-background-color: #20262D;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.UserController">
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-   <children>
-      <Label text="Manage Users" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <ListView fx:id="listViewUsers" prefHeight="350.0" prefWidth="340.0" style="-fx-background-color: #2C333B; -fx-control-inner-background: #2C333B;" />
-      <Button fx:id="btnBackUsers" mnemonicParsing="false" onAction="#onBackClick" prefHeight="35.0" prefWidth="155.0" style="-fx-background-color: #369F97;" text="Back" textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-   </children>
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="400.0" spacing="10.0"
+      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.tickets_app.GUI.Controller.UserController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <Label text="Manage Users" styleClass="title" />
+        <ListView fx:id="listViewUsers" prefHeight="450.0" maxWidth="Infinity" />
+        <Button fx:id="btnBackUsers" mnemonicParsing="false" onAction="#onBackClick"
+                text="Back" maxWidth="Infinity" />
+    </children>
 </VBox>
