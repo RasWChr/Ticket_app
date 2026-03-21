@@ -132,6 +132,20 @@ public class EventDAO implements IEventDAO {
 
     @Override
     public boolean isCoordinatorAssigned(int eventId, int userId) throws ExceptionHandler {
+        String sql = "SELECT COUNT(*) FROM EventCoordinators WHERE EventId = ? AND UserId = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, eventId);
+            ps.setInt(2, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+        }
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("isCoordinatorAssigned", e);
+        }
         return false;
     }
 }
