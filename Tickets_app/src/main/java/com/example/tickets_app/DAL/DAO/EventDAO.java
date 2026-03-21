@@ -70,11 +70,33 @@ public class EventDAO implements IEventDAO {
 
     @Override
     public void assignCoordinator(int eventId, int userId) throws ExceptionHandler {
+        String sql = "INSERT INTO EventCoordinators (EventId, UserId) VALUES (?, ?)";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, eventId);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("assignCoordinator", e);
+        }
 
     }
 
     @Override
     public void removeCoordinator(int eventId, int userId) throws ExceptionHandler {
+        String sql = "DELETE FROM EventCoordinators WHERE EventId = ? AND UserId = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, eventId);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("removeCoordinator", e);
+        }
 
     }
 
