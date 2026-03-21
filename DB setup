@@ -1,0 +1,32 @@
+-- Create Events table with IDENTITY for Id column
+CREATE TABLE felnie01_TicketApp.dbo.Events (
+                                               Id INT PRIMARY KEY IDENTITY(1,1),
+                                               Name VARCHAR(100) NOT NULL,
+                                               StartDateTime VARCHAR(50) NOT NULL,
+                                               EndDateTime VARCHAR(50),
+                                               Location VARCHAR(200) NOT NULL,
+                                               LocationGuidance VARCHAR(200),
+                                               Notes VARCHAR(2000)
+);
+
+-- Create EventCoordinators table to link events and coordinators
+CREATE TABLE felnie01_TicketApp.dbo.EventCoordinators (
+                                                          EventId INT NOT NULL,
+                                                          UserId INT NOT NULL,
+                                                          PRIMARY KEY (EventId, UserId),
+                                                          FOREIGN KEY (EventId) REFERENCES Events(Id) ON DELETE CASCADE,
+                                                          FOREIGN KEY (UserId) REFERENCES Users(ID) ON DELETE CASCADE
+);
+
+-- Create Users table
+create table felnie01_TicketApp.dbo.Users (
+
+                                              ID int primary key not null,
+                                              FirstName varchar(50),
+                                              LastName varchar(50),
+                                              Email varchar(100),
+                                              Phone varchar(20),
+                                              Password varchar(255),
+                                              Role varchar(20),
+                                              IsSeeded bit default ((0)) not null
+);
