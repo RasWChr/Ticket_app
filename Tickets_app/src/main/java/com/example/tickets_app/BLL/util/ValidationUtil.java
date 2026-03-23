@@ -11,4 +11,16 @@ public class ValidationUtil {
         if (phone == null || phone.isBlank()) return true; // phone is optional
         return phone.matches("^[+]?[0-9]{7,15}$");
     }
+
+    //valider events
+
+    public static boolean isValidEventName(String name) {
+        return name != null && !name.isBlank();
+    }
+
+    public static boolean isValidDateTime(String dateTime) {
+        if (dateTime == null || dateTime.isBlank()) return false;
+        // Expected format: dd-MM-yyyy HH:mm
+        return dateTime.matches("^\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}$");
+    }
 }

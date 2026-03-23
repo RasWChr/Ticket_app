@@ -68,6 +68,42 @@ public class EventDAO implements IEventDAO {
         return events;
     }
 
+    // Lav og slet en event
+    @Override
+    public void createEvent(Event event) throws ExceptionHandler {
+        String sql = "INSERT INTO Events (Name, StartDateTime, EndDateTime, Location, LocationGuidance, Notes) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, event.getName());
+            ps.setString(2, event.getStartDateTime());
+            ps.setString(3, event.getEndDateTime());
+            ps.setString(4, event.getLocation());
+            ps.setString(5, event.getLocationGuidance());
+            ps.setString(6, event.getNotes());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("createEvent", e);
+        }
+    }
+
+    @Override
+    public void deleteEvent(int eventId) throws ExceptionHandler {
+        String sql = "DELETE FROM Events WHERE Id = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, eventId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("deleteEvent", e);
+        }
+    }
+
     @Override
     public void assignCoordinator(int eventId, int userId) throws ExceptionHandler {
         String sql = "INSERT INTO EventCoordinators (EventId, UserId) VALUES (?, ?)";
