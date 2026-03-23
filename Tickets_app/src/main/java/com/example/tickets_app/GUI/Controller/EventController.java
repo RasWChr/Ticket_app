@@ -52,7 +52,7 @@ public class EventController {
                 eventManager.deleteEvent(event.getId());
                 eventList.remove(event);
                 AlertUtil.showInfo("Deleted", event.getName() + " has been deleted.");
-            } catch (Exception e) {
+            } catch (ExceptionHandler e) {
                 AlertUtil.showError("Database error", e.getMessage());
             }
         }
