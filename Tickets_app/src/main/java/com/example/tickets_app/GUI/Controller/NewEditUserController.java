@@ -56,7 +56,7 @@ public class NewEditUserController {
 
     @FXML
     public void onUserCEClick(ActionEvent actionEvent) {
-        String firstName = txtFirstNU.getText();
+        String firstName = txtFirstNU != null ? txtFirstNU.getText() : "";
         String lastName = txtLastNU != null ? txtLastNU.getText() : "";
         String email = txtEmailU != null ? txtEmailU.getText() : "";
         String phone = txtPhoneU != null ? txtPhoneU.getText() : "";
