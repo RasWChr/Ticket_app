@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 
 public class NewEditEventController {
 
+    @FXML private TextField txtExtra;
     @FXML private TextField txtEventName;
     @FXML private ChoiceBox<String> cBoxStartTime;
     @FXML private ChoiceBox<String> cBoxEndTime;
