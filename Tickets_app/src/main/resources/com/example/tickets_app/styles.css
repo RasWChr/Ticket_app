@@ -1,0 +1,108 @@
+/* Background */
+.root {
+    -fx-background-color: #20262d;
+}
+
+/* All labels and text */
+.label {
+    -fx-text-fill: WHITE;
+    -fx-font-size: 13px;
+}
+
+.text {
+    -fx-fill: WHITE;
+    -fx-font-size: 13px;
+}
+
+/* All text fields and password fields */
+.text-field, .password-field {
+    -fx-background-color: #20262d;
+    -fx-text-fill: WHITE;
+    -fx-prompt-text-fill: #888888;
+    -fx-border-color: #444C56;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-pref-height: 35px;
+    -fx-font-size: 13px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #369F97;
+}
+
+/* All buttons */
+.button {
+    -fx-background-color: #369F97;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 14px;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-pref-height: 40px;
+}
+
+.button:hover {
+    -fx-background-color: #2E8A82;
+}
+
+/* Danger button for delete/remove */
+.button-danger {
+    -fx-background-color: #C0392B;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 14px;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-pref-height: 40px;
+}
+
+.button-danger:hover {
+    -fx-background-color: #A93226;
+}
+
+/* Page title */
+.title {
+    -fx-text-fill: WHITE;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* List views */
+.list-view {
+    -fx-background-color: #2C333B;
+    -fx-border-color: #444C56;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.list-cell {
+    -fx-background-color: #2C333B;
+    -fx-text-fill: WHITE;
+}
+
+.list-cell:selected {
+    -fx-background-color: #369F97;
+    -fx-text-fill: WHITE;
+}
+
+.list-cell:hover {
+    -fx-background-color: #364049;
+}
+
+/* Choice boxes */
+.choice-box {
+    -fx-background-color: #2C333B;
+    -fx-border-color: #444C56;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-pref-height: 35px;
+}
+
+.choice-box .label {
+    -fx-text-fill: WHITE;
+}
+
+/* Section header labels */
+.section-label {
+    -fx-text-fill: #AAAAAA;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}

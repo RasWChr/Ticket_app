@@ -1,5 +1,6 @@
 package com.example.tickets_app.GUI.Controller;
 
+import com.example.tickets_app.BE.User;
 import com.example.tickets_app.BLL.Interface.IUserManager;
 import com.example.tickets_app.BLL.UserManager;
 import com.example.tickets_app.BLL.util.ExceptionHandler;
@@ -28,6 +29,25 @@ public class NewEditUserController {
     private String selectedRole;
     private boolean passwordVisible = false;
     private final IUserManager userManager = new UserManager(new UserDAO());
+    private User userToEdit = null; // null = create mode, non-null = edit mode
+
+    //Kaldet på af userController når man laver om på en existerene user
+    public void setUserToEdit(User user) {
+        this.userToEdit = user;
+        txtFirstNU.setText(user.getFirstName());
+        txtLastNU.setText(user.getLastName());
+        txtEmailU.setText(user.getEmail());
+        txtPhoneU.setText(user.getPhoneNumber());
+        selectedRole = user.getRole();
+
+        // Hide password field in edit mode (we're not changing the password here)
+        txtPassword.setManaged(false);
+        txtPassword.setVisible(false);
+        txtPasswordVisible.setManaged(false);
+        txtPasswordVisible.setVisible(false);
+        btnShowPassword.setManaged(false);
+        btnShowPassword.setVisible(false);
+    }
 
     @FXML
     public void onCancelUClick(ActionEvent actionEvent) {
@@ -40,24 +60,33 @@ public class NewEditUserController {
         String lastName = txtLastNU != null ? txtLastNU.getText() : "";
         String email = txtEmailU != null ? txtEmailU.getText() : "";
         String phone = txtPhoneU != null ? txtPhoneU.getText() : "";
-        String password = PasswordToggleUtil.getPassword(passwordVisible, txtPassword, txtPasswordVisible);
 
-        if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()) {
-            AlertUtil.showWarning("Missing information", "Please fill in first name, last name, email and password.");
-            return;
-        }
 
         if (selectedRole == null) {
             AlertUtil.showWarning("Missing role", "Please select a role for the user.");
             return;
         }
-
         try {
-            userManager.createUser(firstName, lastName, email, phone, password, selectedRole);
-            AlertUtil.showInfo("User created", "User " + firstName + " " + lastName + " (" + selectedRole + ") has been created.");
-            clearFields();
+            if (userToEdit == null) {
+                // CREATE mode
+                String password = PasswordToggleUtil.getPassword(passwordVisible, txtPassword, txtPasswordVisible);
+                if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()) {
+                    AlertUtil.showWarning("Missing information", "Please fill in first name, last name, email and password.");
+                    return;
+                }
+                userManager.createUser(firstName, lastName, email, phone, password, selectedRole);
+                AlertUtil.showInfo("User created", firstName + " " + lastName + " (" + selectedRole + ") has been created.");
+                clearFields();
+
+            } else {
+                // EDIT mode
+                userManager.editUser(userToEdit.getId(), firstName, lastName, email, phone, selectedRole);
+                AlertUtil.showInfo("User updated", firstName + " " + lastName + " has been updated.");
+                SceneUtil.switchScene(actionEvent, "Views/Users.fxml");
+            }
+
         } catch (IllegalArgumentException e) {
-            AlertUtil.showWarning("Duplicate email", e.getMessage());
+            AlertUtil.showWarning("Invalid input", e.getMessage());
         } catch (ExceptionHandler e) {
             AlertUtil.showError("Database error", e.getMessage());
         }

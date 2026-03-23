@@ -10,4 +10,5 @@ public interface IUserManager {
     boolean emailExists(String email) throws ExceptionHandler;
     List<User> getAllUsers() throws ExceptionHandler;
     void deleteUser(int userId) throws ExceptionHandler;
+    User login(String email, String password) throws ExceptionHandler;
 }
