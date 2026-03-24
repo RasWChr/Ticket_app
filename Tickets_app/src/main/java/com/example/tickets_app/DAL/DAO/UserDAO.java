@@ -16,7 +16,7 @@ public class UserDAO implements IUserDAO {
 
 
     @Override
-    public void createUser(User user) {
+    public void createUser(User user) throws ExceptionHandler {
         String sql = "INSERT INTO Users (FirstName, LastName, Email, Phone, Password, Role) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnector.getConnection();

@@ -48,8 +48,13 @@ public class EventController {
             return;
         }
         if (AlertUtil.showConfirmation("Delete Event", "Are you sure you want to delete " + event.getName() + "?")) {
-            AlertUtil.showInfo("Deleted", event.getName() + " has been deleted (demo action).");
-            eventList.remove(event);
+            try {
+                eventManager.deleteEvent(event.getId());
+                eventList.remove(event);
+                AlertUtil.showInfo("Deleted", event.getName() + " has been deleted.");
+            } catch (ExceptionHandler e) {
+                AlertUtil.showError("Database error", e.getMessage());
+            }
         }
     }
 
