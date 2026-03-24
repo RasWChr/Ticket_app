@@ -11,17 +11,22 @@ import com.example.tickets_app.GUI.util.SessionManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 public class UserController {
 
     @FXML private ListView<User> listViewUsers;
+    @FXML private TextField txtSearch;
+    @FXML private ChoiceBox<String> cBoxRoleFilter;
 
     private final IUserManager userManager = new UserManager(new UserDAO());
     private final ObservableList<User> userList = FXCollections.observableArrayList();
-
+    private FilteredList<User> filteredList;
 
     @FXML
     public void initialize() {
@@ -29,9 +34,35 @@ public class UserController {
             Platform.runLater(SessionManager::redirectToLogin);
             return;
         }
-        listViewUsers.setItems(userList);
+
+        cBoxRoleFilter.getItems().addAll("All", "Admin", "Coordinator");
+        cBoxRoleFilter.setValue("All");
+
+        filteredList = new FilteredList<>(userList, u -> true);
+        listViewUsers.setItems(filteredList);
         listViewUsers.setCellFactory(lv -> new UserListCell(this::handleEdit, this::handleDelete));
+
+        txtSearch.textProperty().addListener((obs, oldVal, newVal) -> applyFilter());
+        cBoxRoleFilter.valueProperty().addListener((obs, oldVal, newVal) -> applyFilter());
+
         loadUsers();
+    }
+
+    private void applyFilter() {
+        String search = txtSearch.getText() == null ? "" : txtSearch.getText().toLowerCase();
+        String role = cBoxRoleFilter.getValue();
+
+        filteredList.setPredicate(user -> {
+            boolean matchesSearch = search.isBlank()
+                    || user.getFirstName().toLowerCase().contains(search)
+                    || user.getLastName().toLowerCase().contains(search)
+                    || user.getEmail().toLowerCase().contains(search);
+
+            boolean matchesRole = role == null || role.equals("All")
+                    || user.getRole().equals(role);
+
+            return matchesSearch && matchesRole;
+        });
     }
 
     private void loadUsers() {
@@ -58,7 +89,6 @@ public class UserController {
         SceneUtil.switchSceneWithController(listViewUsers, "Views/Create-Edit-Users.fxml",
                 (NewEditUserController c) -> c.setUserToEdit(user));
     }
-
 
     @FXML
     public void onBackClick(ActionEvent actionEvent) {

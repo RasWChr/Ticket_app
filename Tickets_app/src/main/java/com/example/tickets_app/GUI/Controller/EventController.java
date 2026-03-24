@@ -11,16 +11,20 @@ import com.example.tickets_app.GUI.util.SessionManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 public class EventController {
 
     @FXML private ListView<Event> listViewEvents;
+    @FXML private TextField txtSearch;
 
     private final IEventManager eventManager = new EventManager(new EventDAO());
     private final ObservableList<Event> eventList = FXCollections.observableArrayList();
+    private FilteredList<Event> filteredList;
 
     @FXML
     public void initialize() {
@@ -29,8 +33,19 @@ public class EventController {
             return;
         }
 
-        listViewEvents.setItems(eventList);
+        filteredList = new FilteredList<>(eventList, e -> true);
+        listViewEvents.setItems(filteredList);
         listViewEvents.setCellFactory(lv -> new EventListCell(this::handleDelete, this::handleAssign));
+
+        txtSearch.textProperty().addListener((obs, oldVal, newVal) -> {
+            filteredList.setPredicate(event -> {
+                if (newVal == null || newVal.isBlank()) return true;
+                String lower = newVal.toLowerCase();
+                return event.getName().toLowerCase().contains(lower)
+                        || event.getLocation().toLowerCase().contains(lower);
+            });
+        });
+
         loadEvents();
     }
 
