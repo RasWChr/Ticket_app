@@ -3,27 +3,27 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="400.0" spacing="12.0"
-      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.tickets_app.GUI.Controller.MainController">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="400.0" spacing="12.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.MainController">
     <padding>
         <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
     </padding>
     <children>
-        <Label text="Main Menu" styleClass="title" />
-        <Button fx:id="btnCreateU" mnemonicParsing="false" onAction="#onCreateUClick"
-                text="Create User" maxWidth="Infinity" />
-        <Button fx:id="btnManageU" mnemonicParsing="false" onAction="#onManageUClick"
-                text="Manage Users" maxWidth="Infinity" />
-        <Button fx:id="btnEvent" mnemonicParsing="false" onAction="#onEventClick"
-                text="Events" maxWidth="Infinity" />
-        <Button fx:id="btnCreateE" mnemonicParsing="false" onAction="#onCreateEClick"
-                text="Create Event" maxWidth="Infinity" />
-        <Button fx:id="btnCreateT" mnemonicParsing="false" onAction="#onCreateTClick"
-                text="Create Ticket" maxWidth="Infinity" />
-        <Button fx:id="btnLogOut" mnemonicParsing="false" onAction="#onLogOutClick"
-                text="Log Out" maxWidth="Infinity" />
+        <Label fx:id="lblUser" text="User" textFill="WHITE" />
+        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../Images/Rat.png" />
+            </image>
+        </ImageView>
+        <Label styleClass="title" text="Main Menu" />
+        <Button fx:id="btnCreateU" maxWidth="Infinity" mnemonicParsing="false" onAction="#onCreateUClick" text="Create User" />
+        <Button fx:id="btnManageU" maxWidth="Infinity" mnemonicParsing="false" onAction="#onManageUClick" text="Manage Users" />
+        <Button fx:id="btnEvent" maxWidth="Infinity" mnemonicParsing="false" onAction="#onEventClick" text="Events" />
+        <Button fx:id="btnCreateE" maxWidth="Infinity" mnemonicParsing="false" onAction="#onCreateEClick" text="Create Event" />
+        <Button fx:id="btnCreateT" maxWidth="Infinity" mnemonicParsing="false" onAction="#onCreateTClick" text="Create Ticket" />
+        <Button fx:id="btnLogOut" maxWidth="Infinity" mnemonicParsing="false" onAction="#onLogOutClick" text="Log Out" />
     </children>
 </VBox>
