@@ -13,10 +13,15 @@ public class EventListCell extends ListCell<Event> {
 
     private final Consumer<Event> onDelete;
     private final Consumer<Event> onAssign;
+    private final Consumer<Event> onInfo;
+    private final Consumer<Event> onEdit;
 
-    public EventListCell(Consumer<Event> onDelete, Consumer<Event> onAssign) {
+    public EventListCell(Consumer<Event> onDelete, Consumer<Event> onAssign,
+                         Consumer<Event> onInfo, Consumer<Event> onEdit) {
         this.onDelete = onDelete;
         this.onAssign = onAssign;
+        this.onInfo = onInfo;
+        this.onEdit = onEdit;
     }
 
     @Override
@@ -28,10 +33,11 @@ public class EventListCell extends ListCell<Event> {
             setGraphic(null);
         } else {
             try {
-                FXMLLoader loader = new FXMLLoader(Main.class.getResource("Views/EventListCell.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        Main.class.getResource("Views/EventListCell.fxml"));
                 HBox root = loader.load();
                 EventListCellController controller = loader.getController();
-                controller.setEvent(event, onDelete, onAssign);
+                controller.setEvent(event, onDelete, onAssign, onInfo, onEdit);
                 setGraphic(root);
                 setText(null);
             } catch (IOException e) {

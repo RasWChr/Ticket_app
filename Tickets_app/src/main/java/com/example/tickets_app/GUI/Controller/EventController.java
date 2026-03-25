@@ -11,20 +11,16 @@ import com.example.tickets_app.GUI.util.SessionManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 
 public class EventController {
 
     @FXML private ListView<Event> listViewEvents;
-    @FXML private TextField txtSearch;
 
     private final IEventManager eventManager = new EventManager(new EventDAO());
     private final ObservableList<Event> eventList = FXCollections.observableArrayList();
-    private FilteredList<Event> filteredList;
 
     @FXML
     public void initialize() {
@@ -33,19 +29,9 @@ public class EventController {
             return;
         }
 
-        filteredList = new FilteredList<>(eventList, e -> true);
-        listViewEvents.setItems(filteredList);
-        listViewEvents.setCellFactory(lv -> new EventListCell(this::handleDelete, this::handleAssign));
-
-        txtSearch.textProperty().addListener((obs, oldVal, newVal) -> {
-            filteredList.setPredicate(event -> {
-                if (newVal == null || newVal.isBlank()) return true;
-                String lower = newVal.toLowerCase();
-                return event.getName().toLowerCase().contains(lower)
-                        || event.getLocation().toLowerCase().contains(lower);
-            });
-        });
-
+        listViewEvents.setItems(eventList);
+        listViewEvents.setCellFactory(lv ->
+                new EventListCell(this::handleDelete, this::handleAssign, this::handleInfo, this::handleEdit));
         loadEvents();
     }
 
@@ -58,28 +44,31 @@ public class EventController {
     }
 
     private void handleDelete(Event event) {
-        if (!SessionManager.getLoggedInUser().getRole().equals("Admin")) {
-            AlertUtil.showWarning("Access denied", "Only Admins can delete events.");
-            return;
-        }
-        if (AlertUtil.showConfirmation("Delete Event", "Are you sure you want to delete " + event.getName() + "?")) {
+        if (AlertUtil.showConfirmation("Delete Event",
+                "Are you sure you want to delete " + event.getName() + "?")) {
             try {
                 eventManager.deleteEvent(event.getId());
                 eventList.remove(event);
                 AlertUtil.showInfo("Deleted", event.getName() + " has been deleted.");
-            } catch (ExceptionHandler e) {
+            } catch (Exception e) {
                 AlertUtil.showError("Database error", e.getMessage());
             }
         }
     }
 
     private void handleAssign(Event event) {
-        if (!SessionManager.getLoggedInUser().getRole().equals("Admin")) {
-            AlertUtil.showWarning("Access denied", "Only Admins can assign coordinators.");
-            return;
-        }
         SceneUtil.switchSceneWithController(listViewEvents, "Views/AssignCoordinator.fxml",
                 (AssignCoordinatorController c) -> c.setEvent(event));
+    }
+
+    private void handleInfo(Event event) {
+        SceneUtil.switchSceneWithController(listViewEvents, "Views/EventDetail.fxml",
+                (EventDetailController c) -> c.setEvent(event));
+    }
+
+    private void handleEdit(Event event) {
+        //TODO: Implement edit functionality
+         AlertUtil.showInfo("Edit Event", "Edit functionality is not implemented yet.");
     }
 
     @FXML

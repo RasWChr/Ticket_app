@@ -132,3 +132,47 @@
     -fx-font-size: 11px;
     -fx-font-weight: bold;
 }
+
+/* Event status labels */
+.status-upcoming {
+    -fx-text-fill: #4CAF50;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.status-soon {
+    -fx-text-fill: #FF9800;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.status-held {
+    -fx-text-fill: #888888;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* Options context menu */
+.context-menu {
+    -fx-background-color: #2C333B;
+    -fx-border-color: #444C56;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.menu-item {
+    -fx-background-color: #2C333B;
+}
+
+.menu-item:focused {
+    -fx-background-color: #369F97;
+}
+
+.menu-item .label {
+    -fx-text-fill: WHITE;
+    -fx-font-size: 13px;
+}
+
+.separator .line {
+    -fx-border-color: #444C56;
+}
