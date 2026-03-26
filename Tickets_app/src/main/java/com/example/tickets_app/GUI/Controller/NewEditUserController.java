@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class NewEditUserController {
+public class NewEditUserController extends BaseController{
 
     @FXML private TextField txtFirstNU;
     @FXML private TextField txtLastNU;
@@ -56,10 +56,10 @@ public class NewEditUserController {
 
     @FXML
     public void onUserCEClick(ActionEvent actionEvent) {
-        String firstName = txtFirstNU != null ? txtFirstNU.getText() : "";
-        String lastName = txtLastNU != null ? txtLastNU.getText() : "";
-        String email = txtEmailU != null ? txtEmailU.getText() : "";
-        String phone = txtPhoneU != null ? txtPhoneU.getText() : "";
+        String firstName = Method(txtFirstNU);
+        String lastName = Method(txtLastNU);
+        String email = Method(txtEmailU);
+        String phone = Method(txtPhoneU);
 
 
         if (selectedRole == null) {
