@@ -1,17 +1,17 @@
 package com.example.tickets_app.GUI.Controller;
 
-import com.example.tickets_app.BE.Event;
 import com.example.tickets_app.BLL.EventManager;
 import com.example.tickets_app.BLL.Interface.IEventManager;
 import com.example.tickets_app.DAL.DAO.EventDAO;
 import com.example.tickets_app.GUI.util.AlertUtil;
 import com.example.tickets_app.GUI.util.SceneUtil;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
-public class NewEditEventController{
+public class NewEditEventController {
 
     @FXML private TextField txtExtra;
     @FXML private TextField txtEventName;
