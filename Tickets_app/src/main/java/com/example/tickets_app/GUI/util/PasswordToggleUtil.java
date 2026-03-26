@@ -13,7 +13,7 @@ public class PasswordToggleUtil {
             visibleField.setVisible(true);
             passwordField.setManaged(false);
             passwordField.setVisible(false);
-            toggleButton.setText("Hide");
+            toggleButton.setText("-_-");
             return true;
         } else {
             passwordField.setText(visibleField.getText());
@@ -21,7 +21,7 @@ public class PasswordToggleUtil {
             passwordField.setVisible(true);
             visibleField.setManaged(false);
             visibleField.setVisible(false);
-            toggleButton.setText("Show");
+            toggleButton.setText("⊙_⊙");
             return false;
         }
     }
