@@ -27,6 +27,10 @@ public class MainController {
 
         User user = SessionManager.getLoggedInUser();
         String role = user.getRole();
+        String firstName = user.getFirstName();
+        String lastName = user.getLastName();
+
+        lblUser.setText(firstName + " " + lastName);
 
         if (role.equals("Admin")) {
             btnCreateU.setVisible(true);
@@ -53,6 +57,8 @@ public class MainController {
             btnCreateT.setManaged(true);
         }
     }
+
+
 
     public void onCreateUClick(ActionEvent actionEvent) {
         SceneUtil.switchScene(actionEvent, "Views/Create-Edit-Users.fxml");
