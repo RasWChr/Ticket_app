@@ -6,10 +6,10 @@ import com.example.tickets_app.DAL.DAO.EventDAO;
 import com.example.tickets_app.GUI.util.AlertUtil;
 import com.example.tickets_app.GUI.util.SceneUtil;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import com.example.tickets_app.BE.Event;
 
 public class NewEditEventController {
 
