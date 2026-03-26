@@ -67,8 +67,8 @@ public class EventController {
     }
 
     private void handleEdit(Event event) {
-        //TODO: Implement edit functionality
-         AlertUtil.showInfo("Edit Event", "Edit functionality is not implemented yet.");
+        SceneUtil.switchSceneWithController(listViewEvents, "Views/New-Edit-Events.fxml",(NewEditEventController c) -> c.setEvent(event));
+        //AlertUtil.showInfo("Edit Event", "Edit functionality is not implemented yet.");
     }
 
     @FXML
