@@ -17,9 +17,9 @@
             <children>
                 <Label fx:id="lblEventName" styleClass="title" />
                 <Label fx:id="lblEventDetails" styleClass="section-label" />
+                <Label fx:id="lblStatus" />
             </children>
         </VBox>
-        <Button fx:id="btnDelete" text="Delete" onAction="#onDeleteClick" styleClass="button-danger" />
-        <Button fx:id="btnAssign" text="Assign" onAction="#onAssignClick" />
+        <Button fx:id="btnOptions" text="⋮" onAction="#onOptionsClick" />
     </children>
 </HBox>
