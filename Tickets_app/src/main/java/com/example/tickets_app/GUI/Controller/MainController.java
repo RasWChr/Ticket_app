@@ -30,7 +30,7 @@ public class MainController {
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
 
-        lblUser.setText(firstName + " " + lastName);
+        lblUser.setText(firstName + " " + lastName + " (" + role + ")");
 
         if (role.equals("Admin")) {
             btnCreateU.setVisible(true);
