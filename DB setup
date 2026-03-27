@@ -54,16 +54,16 @@ CREATE TABLE Tickets
 
 INSERT INTO Users (ID,FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
 VALUES
-    (2, 'Rasmus', 'Christensen', 'goraser12@gmail.com', 51430743, 'nja63kpy', 'Coordinator', 'false')
+    (2, 'Rasmus', 'Christensen', 'goraser12@gmail.com', 51430743, '$2a$10$4dHkP134a/7uBR0MsSZmyO5IVoIL.69dGMJsw3/uDXn75R9//UXd2', 'Coordinator', 'false')
 INSERT INTO Users (ID, FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
 VALUES
-    (1,'Admin', 'User', 'admin@easv.dk', 0000000, 'admin123', 'Admin', 'true')
+    (1,'Admin', 'User', 'admin@easv.dk', 0000000, '$2a$10$TzT35KoAd0k5.iTyzJksK.C3bkgifa.JMF41IhkN2p2YHRiQhlr5G', 'Admin', 'true')
 INSERT INTO Users (ID, FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
 VALUES
-    (3, 'Jon', 'Linnet', 'jon.linnet@hotmail.com', 51935127, 'Junker10', 'Coordinator', 'false')
+    (3, 'Jon', 'Linnet', 'jon.linnet@hotmail.com', 51935127, '$2a$10$EgbQ/c/TlZ3HwmXT5EJrYuW7WHaRLCpGLASC635y307kJ60GQcUUy', 'Coordinator', 'false')
 INSERT INTO Users (ID, FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
 VALUES
-    (4, 'Felix', 'Runge', 'felix@funworld.dk', 0000000, '1234', 'Coordinator', 'false')
+    (4, 'Felix', 'Runge', 'felix@funworld.dk', 0000000, '$2a$10$wNGiav7cxmAauH41MaJ3aOe/dxtlhrOKhRp/b5bhrMSG1ORe5U8tu', 'Coordinator', 'false')
 
 
 SET IDENTITY_INSERT Events ON
