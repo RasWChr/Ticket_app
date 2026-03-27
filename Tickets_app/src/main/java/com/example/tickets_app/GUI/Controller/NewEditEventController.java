@@ -23,6 +23,8 @@ public class NewEditEventController {
     @FXML private TextField txtLocationGuidance;
     @FXML private TextField txtInformation;
 
+    private Event eventToEdit = null;
+
     private final IEventManager eventManager = new EventManager(new EventDAO());
 
     @FXML
@@ -68,5 +70,11 @@ public class NewEditEventController {
     }
 
     public void setEvent(Event event) {
+        this.eventToEdit = event;
+        txtEventName.setText(event.getName());
+        cBoxStartTime.setValue(event.getStartDateTime());
+        cBoxEndTime.setValue(event.getEndDateTime());
+        txtLocation.setText(event.getLocation());
+        txtLocationGuidance.setText(event.getLocationGuidance());
     }
 }
