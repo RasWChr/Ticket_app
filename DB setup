@@ -47,7 +47,7 @@ CREATE TABLE felnie01_TicketApp.dbo.EventCoordinators (
 CREATE TABLE Tickets
 (
     [ID] int IDENTITY NOT NULL PRIMARY KEY,
-    [Event ID] int NOT NULL FOREIGN KEY REFERENCES Events(ID),
+    [Event ID] int NULL FOREIGN KEY REFERENCES Events(ID),
     [Price] int NOT NULL,
     [Ticket type] varchar(50) NULL,
 )

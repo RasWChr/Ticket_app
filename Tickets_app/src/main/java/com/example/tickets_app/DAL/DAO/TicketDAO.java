@@ -15,7 +15,7 @@ import java.util.List;
 public class TicketDAO implements ITicketDAO {
     @Override
     public List<Ticket> getAllTickets() throws ExceptionHandler {
-        String sql = "SELECT Id, Event Name, Price, Image, Ticket type  FROM Tickets";
+        String sql = "SELECT Id, Event ID, Price, Ticket type  FROM Tickets";
         List<Ticket> tickets = new ArrayList<>();
 
             try (Connection conn = DBConnector.getConnection();
@@ -25,9 +25,8 @@ public class TicketDAO implements ITicketDAO {
                 while (rs.next()) {
                     Ticket ticket = new Ticket(
                             rs.getInt("Id"),
-                            rs.getString("Event name"),
+                            rs.getInt("Event ID"),
                             rs.getInt("Price"),
-                            rs.getString("Image"),
                             rs.getString("Ticket type")
                     );
                     tickets.add(ticket);
