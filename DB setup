@@ -1,3 +1,15 @@
+USE master;
+GO
+IF EXISTS(SELECT * FROM sys.databases WHERE name = 'felnie01_TicketApp')
+    BEGIN
+        DROP DATABASE felnie01_TicketApp;
+    END
+
+CREATE DATABASE felnie01_TicketApp;
+GO
+USE felnie01_TicketApp;
+GO
+
 -- Create Events table with IDENTITY for Id column
 CREATE TABLE felnie01_TicketApp.dbo.Events (
                                                Id INT PRIMARY KEY IDENTITY(1,1),
@@ -7,15 +19,6 @@ CREATE TABLE felnie01_TicketApp.dbo.Events (
                                                Location VARCHAR(200) NOT NULL,
                                                LocationGuidance VARCHAR(200),
                                                Notes VARCHAR(2000)
-);
-
--- Create EventCoordinators table to link events and coordinators
-CREATE TABLE felnie01_TicketApp.dbo.EventCoordinators (
-                                                          EventId INT NOT NULL,
-                                                          UserId INT NOT NULL,
-                                                          PRIMARY KEY (EventId, UserId),
-                                                          FOREIGN KEY (EventId) REFERENCES Events(Id) ON DELETE CASCADE,
-                                                          FOREIGN KEY (UserId) REFERENCES Users(ID) ON DELETE CASCADE
 );
 
 -- Create Users table
@@ -30,3 +33,41 @@ create table felnie01_TicketApp.dbo.Users (
                                               Role varchar(20),
                                               IsSeeded bit default ((0)) not null
 );
+
+
+-- Create EventCoordinators table to link events and coordinators
+CREATE TABLE felnie01_TicketApp.dbo.EventCoordinators (
+                                                          EventId INT NOT NULL,
+                                                          UserId INT NOT NULL,
+                                                          PRIMARY KEY (EventId, UserId),
+                                                          FOREIGN KEY (EventId) REFERENCES Events(Id) ON DELETE CASCADE,
+                                                          FOREIGN KEY (UserId) REFERENCES Users(ID) ON DELETE CASCADE
+);
+
+CREATE TABLE Tickets
+(
+    [ID] int IDENTITY NOT NULL PRIMARY KEY,
+    [Event ID] int NULL FOREIGN KEY REFERENCES Events(ID),
+    [Price] int NOT NULL,
+    [Ticket type] varchar(50) NULL,
+)
+
+INSERT INTO Users (ID,FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
+VALUES
+    (2, 'Rasmus', 'Christensen', 'goraser12@gmail.com', 51430743, '$2a$10$4dHkP134a/7uBR0MsSZmyO5IVoIL.69dGMJsw3/uDXn75R9//UXd2', 'Coordinator', 'false')
+INSERT INTO Users (ID, FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
+VALUES
+    (1,'Admin', 'User', 'admin@easv.dk', 0000000, '$2a$10$TzT35KoAd0k5.iTyzJksK.C3bkgifa.JMF41IhkN2p2YHRiQhlr5G', 'Admin', 'true')
+INSERT INTO Users (ID, FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
+VALUES
+    (3, 'Jon', 'Linnet', 'jon.linnet@hotmail.com', 51935127, '$2a$10$EgbQ/c/TlZ3HwmXT5EJrYuW7WHaRLCpGLASC635y307kJ60GQcUUy', 'Coordinator', 'false')
+INSERT INTO Users (ID, FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
+VALUES
+    (4, 'Felix', 'Runge', 'felix@funworld.dk', 0000000, '$2a$10$wNGiav7cxmAauH41MaJ3aOe/dxtlhrOKhRp/b5bhrMSG1ORe5U8tu', 'Coordinator', 'false')
+
+
+SET IDENTITY_INSERT Events ON
+INSERT INTO Events (Id, Name, StartDateTime, EndDateTime, Location, LocationGuidance, Notes)
+Values
+    (1,'Disco', '01-06-2026 11:00', '01-06-2026 16:00', 'Vor Frelsers Kirke', 'Kirkegade 24, 6700 Esbjerg', 'tippy tippy tap tippy tippy tap')
+SET IDENTITY_INSERT Events OFF
