@@ -13,4 +13,6 @@ public interface IEventManager {
     void assignCoordinator(int eventId, int userId) throws ExceptionHandler;
     void removeCoordinator(int eventId, int userId) throws ExceptionHandler;
     List<User> getCoordinatorsForEvent(int eventId) throws ExceptionHandler;
+
+    void editEvent(int id, String name, String startDateTime, String endDateTime, String location, String locationGuidance, String notes);
 }

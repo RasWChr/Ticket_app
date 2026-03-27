@@ -97,4 +97,9 @@ public class EventManager implements IEventManager {
             throw new ExceptionHandler("Could not retrieve coordinators for event: " + e.getMessage(), e);
         }
     }
+
+    @Override
+    public void editEvent(int id, String name, String startDateTime, String endDateTime, String location, String locationGuidance, String notes) {
+
+    }
 }
