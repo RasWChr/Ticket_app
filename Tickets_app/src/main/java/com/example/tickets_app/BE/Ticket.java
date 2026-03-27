@@ -2,23 +2,20 @@ package com.example.tickets_app.BE;
 
 public class Ticket {
     private int id;
-    private String eventName;
+    private int eventID;
     private int price;
-    private String image;
     private String ticketType;
 
-    public Ticket(int id, String eventName, int price, String image, String ticketType){
+    public Ticket(int id, int eventID, int price, String ticketType){
         this.id = id;
-        this.eventName = eventName;
+        this.eventID = eventID;
         this.price = price;
-        this.image = image;
         this.ticketType = ticketType;
     }
 
-    public Ticket(String eventName, int price, String image, String ticketType){
-        this.eventName = eventName;
+    public Ticket(int eventID, int price, String ticketType){
+        this.eventID = eventID;
         this.price = price;
-        this.image = image;
         this.ticketType = ticketType;
     }
 
@@ -30,12 +27,12 @@ public class Ticket {
         this.id = id;
     }
 
-    public String getEventName() {
-        return eventName;
+    public int getEventID() {
+        return eventID;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
     }
 
     public int getPrice() {
@@ -44,14 +41,6 @@ public class Ticket {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getTicketType() {
