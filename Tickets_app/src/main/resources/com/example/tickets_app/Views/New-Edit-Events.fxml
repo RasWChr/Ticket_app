@@ -2,10 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" prefHeight="600.0" prefWidth="400.0" spacing="8.0"
@@ -16,25 +14,25 @@
     </padding>
     <children>
         <Label text="Event Information" styleClass="title" />
+
         <Label text="Name of Event" />
         <TextField fx:id="txtEventName" maxWidth="Infinity" />
-        <Label text="Start Time / End Time (Optional)" />
-        <HBox spacing="5.0">
-            <children>
-                <ChoiceBox fx:id="cBoxStartTime" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-                <ChoiceBox fx:id="cBoxEndTime" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-                <ChoiceBox fx:id="cBoxDay" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-                <ChoiceBox fx:id="cBoxMonth" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-            </children>
-        </HBox>
+
+        <Label text="Start Date and Time" />
+        <fx:include fx:id="startPicker" source="DateTimePicker.fxml" />
+
+        <Label text="End Date and Time" />
+        <fx:include fx:id="endPicker" source="DateTimePicker.fxml" />
+
         <Label text="Location" />
         <TextField fx:id="txtLocation" maxWidth="Infinity" />
+
         <Label text="Location Guidance (Optional)" />
         <TextField fx:id="txtLocationGuidance" maxWidth="Infinity" />
-        <Label text="Extra" />
-        <TextField fx:id="txtExtra" maxWidth="Infinity" />
+
         <Label text="Notes" />
         <TextField fx:id="txtInformation" maxWidth="Infinity" />
+
         <Label />
         <Button fx:id="btnSaveEvent" mnemonicParsing="false" onAction="#onSaveEventClick"
                 text="Save Event" maxWidth="Infinity" />
