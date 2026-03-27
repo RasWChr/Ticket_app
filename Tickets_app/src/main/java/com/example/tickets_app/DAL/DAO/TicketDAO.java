@@ -45,14 +45,5 @@ public class TicketDAO implements ITicketDAO {
 
     }
 
-    @Override
-    public void deleteTicket(int ticketId) throws ExceptionHandler {
-
-    }
-
-    @Override
-    public void editTicket(int ticketId, String eventName, int price, String image, String ticketType) {
-
-    }
 
 }
