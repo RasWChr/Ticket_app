@@ -257,3 +257,65 @@
 .date-picker-popup .day-name-cell {
     -fx-text-fill: #AAAAAA;
 }
+
+/* Dialog / Alert styling
+ */
+.dark-dialog {
+    -fx-background-color: #20262D;
+    -fx-border-color: #444C56;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+/* Main content area */
+.dark-dialog .content.label {
+    -fx-text-fill: WHITE;
+    -fx-font-size: 13px;
+}
+
+/* The area containing the icon + text */
+.dark-dialog .header-panel {
+    -fx-background-color: #2C333B;
+    -fx-padding: 10 15 10 15;
+}
+
+.dark-dialog .header-panel .label {
+    -fx-text-fill: WHITE;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Hide the default graphic/icon to keep it clean */
+.dark-dialog .graphic-container {
+    -fx-padding: 0;
+}
+
+/* Button bar at the bottom */
+.dark-dialog .button-bar {
+    -fx-background-color: #2C333B;
+    -fx-padding: 10 15 10 15;
+}
+
+.dark-dialog .button-bar .button {
+    -fx-background-color: #369F97;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 13px;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-pref-height: 35px;
+    -fx-min-width: 80px;
+}
+
+.dark-dialog .button-bar .button:hover {
+    -fx-background-color: #2E8A82;
+}
+
+/* Cancel / No button in confirmation dialogs */
+.dark-dialog .button-bar .button.cancel-button {
+    -fx-background-color: #444C56;
+}
+
+.dark-dialog .button-bar .button.cancel-button:hover {
+    -fx-background-color: #555E6A;
+}

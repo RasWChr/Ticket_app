@@ -1,7 +1,9 @@
 package com.example.tickets_app.GUI.util;
 
+import com.example.tickets_app.Main;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 
 import java.util.Optional;
 
@@ -24,6 +26,7 @@ public class AlertUtil {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+        applyStyle(alert);
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
@@ -33,6 +36,14 @@ public class AlertUtil {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+        applyStyle(alert);
         alert.showAndWait();
+    }
+
+    private static void applyStyle(Alert alert) {
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(
+                Main.class.getResource("styles.css").toExternalForm());
+        dialogPane.getStyleClass().add("dark-dialog");
     }
 }
