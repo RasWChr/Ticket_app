@@ -319,3 +319,94 @@
 .dark-dialog .button-bar .button.cancel-button:hover {
     -fx-background-color: #555E6A;
 }
+
+.ticket-root {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 3);
+}
+
+.ticket-header {
+    -fx-background-color: #20262D;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.ticket-event-title {
+    -fx-text-fill: WHITE;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-wrap-text: true;
+}
+
+.ticket-type-badge {
+    -fx-text-fill: #369F97;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 2px;
+}
+
+.ticket-body {
+    -fx-background-color: #FFFFFF;
+}
+
+.ticket-section-label {
+    -fx-text-fill: #888888;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.ticket-value {
+    -fx-text-fill: #1A1A1A;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.ticket-guidance {
+    -fx-text-fill: #555555;
+    -fx-font-size: 12px;
+}
+
+.ticket-separator {
+    -fx-background-color: #DDDDDD;
+    -fx-padding: 2 0 2 0;
+}
+
+.ticket-tearline {
+    -fx-background-color: #F5F5F5;
+}
+
+.ticket-tearline-text {
+    -fx-text-fill: #BBBBBB;
+    -fx-font-size: 11px;
+}
+
+.ticket-footer {
+    -fx-background-color: #20262D;
+    -fx-background-radius: 0 0 8 8;
+}
+
+.ticket-price {
+    -fx-text-fill: #369F97;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.ticket-uuid {
+    -fx-text-fill: #AAAAAA;
+    -fx-font-size: 10px;
+}
+
+/* ScrollPane inside ticket preview */
+.ticket-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.ticket-scroll .viewport {
+    -fx-background-color: transparent;
+}
