@@ -11,6 +11,7 @@ public interface IEventDAO {
     List<Event> getEventsByCoordinator (int userId) throws ExceptionHandler;
     void createEvent(Event event) throws ExceptionHandler;
     void deleteEvent(int eventId) throws ExceptionHandler;
+    void editEvent(int eventId, String name, String startDateTime, String endDateTime, String location, String locationGuidance, String notes) throws ExceptionHandler;
     void assignCoordinator(int eventId, int userId) throws ExceptionHandler;
     void removeCoordinator(int eventId, int userId) throws ExceptionHandler;
     List<User> getCoordinatorForEvent(int eventId) throws ExceptionHandler;

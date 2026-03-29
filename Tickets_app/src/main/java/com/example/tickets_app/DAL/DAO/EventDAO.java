@@ -103,6 +103,26 @@ public class EventDAO implements IEventDAO {
             ExceptionHandler.handleDAOException("deleteEvent", e);
         }
     }
+    @Override
+    public void editEvent(int eventId, String name, String startDateTime, String endDateTime, String location, String locationGuidance, String notes) throws ExceptionHandler {
+        String sql = "UPDATE Events SET Name = ?, StartDateTime = ?, EndDateTime = ?, Location = ?, LocationGuidance = ?, Notes = ? WHERE Id = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, name);
+            ps.setString(2, startDateTime);
+            ps.setString(3, endDateTime);
+            ps.setString(4, location);
+            ps.setString(5, locationGuidance);
+            ps.setString(6, notes);
+            ps.setInt(7, eventId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("editEvent", e);
+        }
+    }
 
     @Override
     public void assignCoordinator(int eventId, int userId) throws ExceptionHandler {

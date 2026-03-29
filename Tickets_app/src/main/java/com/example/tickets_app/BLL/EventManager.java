@@ -99,7 +99,20 @@ public class EventManager implements IEventManager {
     }
 
     @Override
-    public void editEvent(int id, String name, String startDateTime, String endDateTime, String location, String locationGuidance, String notes) {
+    public void editEvent(int id, String name, String startDateTime, String endDateTime, String location, String locationGuidance, String notes) throws ExceptionHandler {
+        if (!ValidationUtil.isValidEventName(name))
+            throw new IllegalArgumentException("Event name cannot be empty.");
+        if (!ValidationUtil.isValidDateTime(startDateTime))
+            throw new IllegalArgumentException("Start date/time must be in format dd-MM-yyyy HH:mm.");
+        if (!ValidationUtil.isValidDateTime(endDateTime))
+            throw new IllegalArgumentException("End date/time must be in format dd-MM-yyyy HH:mm.");
+        if (location == null || location.isBlank())
+            throw new IllegalArgumentException("Location cannot be empty.");
 
+        try {
+            eventDAO.editEvent(id, name, startDateTime, endDateTime, location, locationGuidance, notes);
+        } catch (ExceptionHandler e) {
+            throw new ExceptionHandler("Could not edit event: " + e.getMessage(), e);
+        }
     }
 }
