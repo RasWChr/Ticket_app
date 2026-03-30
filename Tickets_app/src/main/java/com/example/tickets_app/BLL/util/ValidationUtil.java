@@ -23,4 +23,21 @@ public class ValidationUtil {
         // Forvented format: dd-MM-yyyy HH:mm
         return dateTime.matches("^\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}$");
     }
+
+    public static boolean isValidEventId(int eventId){
+        return (eventId != 0);
+    }
+
+    public static boolean isValidTicketType(String ticketType) {
+        return (ticketType != null || ticketType.isBlank());
+    }
+
+    public static boolean isValidPrice(double price){
+        return (price != 0);
+    }
+
+    public static boolean isValidDiscount(double discount){
+        return (discount < 1);
+    }
+
 }

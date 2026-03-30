@@ -48,7 +48,8 @@ CREATE TABLE Tickets
 (
     [ID] int IDENTITY NOT NULL PRIMARY KEY,
     [Event ID] int NULL FOREIGN KEY REFERENCES Events(ID),
-    [Price] int NOT NULL,
+    [Price] double precision,
+    [Discount] double precision,
     [Ticket type] varchar(50) NULL,
 )
 

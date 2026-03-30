@@ -41,8 +41,51 @@ public class TicketDAO implements ITicketDAO {
 
     @Override
     public void createTicket(Ticket ticket) throws ExceptionHandler {
+        String sql = "INSERT INTO Tickets (Event ID, Price, Discount, Ticket type) VALUES (?, ?, ?, ?)";
 
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, ticket.getEventID());
+            ps.setDouble(2, ticket.getPrice());
+            ps.setDouble(3, ticket.getDiscount());
+            ps.setString(4, ticket.getTicketType());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("createUser", e);
+        }
     }
 
+    @Override
+    public void deleteTicket(int ticketId) throws ExceptionHandler {
+        String sql = "DELETE FROM Tickets WHERE Id = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, ticketId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("deleteUser", e);
+        }
+    }
+
+    @Override
+    public void editTicket(int ticektId, int eventId, double price, double discount, String ticketType) throws ExceptionHandler {
+        String sql = "UPDATE Ticekts SET Event ID = ?, Price = ?, Discount = ?, Ticket type = ?";
+
+        try (Connection conn = DBConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, eventId);
+            ps.setDouble(2, price);
+            ps.setDouble(3, discount);
+            ps.setString(4, ticketType);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("editUser", e);
+        }
+    }
 
 }
