@@ -2,8 +2,6 @@ package com.example.tickets_app.GUI.Controller;
 
 import com.example.tickets_app.BE.Event;
 import com.example.tickets_app.BE.Ticket;
-import com.example.tickets_app.BLL.EventManager;
-import com.example.tickets_app.BLL.Interface.IEventManager;
 import com.example.tickets_app.BLL.Interface.ITicketManager;
 import com.example.tickets_app.BLL.TicketManager;
 import com.example.tickets_app.DAL.DAO.EventDAO;
@@ -48,8 +46,10 @@ public class TicketCreatorController {
     }
 
     public void onCreateTicketClick(ActionEvent actionEvent) {
+        Event selectedEvent       = cBoxEvent.getValue() != null ? (Event) cBoxEvent.getValue() : null;
         int eventId               = cBoxEvent.getValue() != null ? ((Event) cBoxEvent.getValue()).getId() : 0;
         String ticketType         = txtType         != null ? txtType.getText()         : "";
+        String eventName          = selectedEvent != null ? selectedEvent.getName() : "Unknown Event";
         double price              = Double.parseDouble(txtPrice != null ? txtPrice.getText() : "");
         double discount           = Double.parseDouble(txtDiscount      != null ? txtDiscount.getText()      : "");
 
@@ -57,10 +57,10 @@ public class TicketCreatorController {
         try {
             if (ticketToEdit == null) {
                 ticketManager.createTicket(eventId, price, discount, ticketType);
-                AlertUtil.showInfo("Ticket saved", "Ticket \"" + eventId + ticketType + "\" has been created.");
+                AlertUtil.showInfo("Ticket saved", "Ticket \"" + eventName + " " + ticketType + "\" has been created.");
             } else {
                 ticketManager.editTicket(ticketToEdit.getId(), eventId, price, discount, ticketType);
-                AlertUtil.showInfo("Ticket updated", "Event \"" + eventId + ticketType + "\" has been updated.");
+                AlertUtil.showInfo("Ticket updated", "Ticket \"" + eventName + " " + ticketType + "\" has been updated.");
             }
             SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");
         } catch (IllegalArgumentException e) {
