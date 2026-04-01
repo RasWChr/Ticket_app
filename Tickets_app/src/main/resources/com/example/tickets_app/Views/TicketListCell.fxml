@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox alignment="CENTER_LEFT" spacing="12.0" prefHeight="64.0"
+      style="-fx-background-color: #2C333B; -fx-background-radius: 4; -fx-border-color: #444C56; -fx-border-radius: 4; -fx-border-width: 1;"
+      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.tickets_app.GUI.Controller.TicketListCellController">
+    <padding>
+        <Insets top="10.0" right="12.0" bottom="10.0" left="12.0"/>
+    </padding>
+
+    <!-- Teal accent bar -->
+    <Region prefWidth="4.0" prefHeight="44.0"
+            style="-fx-background-color: #369F97; -fx-background-radius: 2;"/>
+
+    <!-- Ticket info -->
+    <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+        <Label fx:id="lblEventName"
+               style="-fx-text-fill: WHITE; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <HBox spacing="8.0" alignment="CENTER_LEFT">
+            <Label fx:id="lblTicketType"
+                   style="-fx-text-fill: #369F97; -fx-font-size: 11px; -fx-font-weight: bold;"/>
+            <Label text="·" style="-fx-text-fill: #888888;"/>
+            <Label fx:id="lblPrice"
+                   style="-fx-text-fill: #AAAAAA; -fx-font-size: 12px;"/>
+            <Label text="·" style="-fx-text-fill: #888888;"/>
+            <Label fx:id="lblDiscount"
+                   style="-fx-text-fill: #FF9800; -fx-font-size: 11px;"/>
+        </HBox>
+    </VBox>
+
+    <!-- Options button (⋮) — same pattern as EventListCell -->
+    <Button fx:id="btnOptions" text="⋮" onAction="#onOptionsClick"
+            prefWidth="36.0" prefHeight="36.0"
+            style="-fx-background-color: #364049; -fx-text-fill: WHITE; -fx-font-size: 16px; -fx-background-radius: 4; -fx-cursor: hand;"/>
+
+</HBox>
