@@ -11,6 +11,8 @@ import javafx.scene.control.Label;
 
 public class MainController {
 
+
+    @FXML private Button btnPrintT;
     @FXML private Label lblUser;
     @FXML private Button btnCreateU;
     @FXML private Button btnManageU;
@@ -43,6 +45,7 @@ public class MainController {
             btnCreateE.setManaged(false);
             btnCreateT.setVisible(false); // Admin cannot create tickets
             btnCreateT.setManaged(false);
+            btnPrintT.setVisible(false);
 
         } else if (role.equals("Coordinator")) {
             btnCreateU.setVisible(false); // Coordinator cannot manage users
@@ -55,6 +58,7 @@ public class MainController {
             btnCreateE.setManaged(true);
             btnCreateT.setVisible(true);
             btnCreateT.setManaged(true);
+            btnPrintT.setVisible(true);
         }
     }
 
@@ -76,7 +80,10 @@ public class MainController {
         SceneUtil.switchScene(actionEvent, "Views/New-Edit-Events.fxml");
     }
 
-    public void onCreateTClick(ActionEvent actionEvent) {
+    public void onCreateTClick(ActionEvent actionEvent) {SceneUtil.switchScene(actionEvent, "Views/TicketList.fxml");
+    }
+
+    public void onPrintTClick(ActionEvent actionEvent) {
         SceneUtil.switchScene(actionEvent, "Views/Tickets.fxml");
     }
 
@@ -84,4 +91,6 @@ public class MainController {
         SessionManager.clearSession();
         SceneUtil.switchScene(actionEvent, "Views/Log-in.fxml");
     }
+
+
 }

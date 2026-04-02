@@ -6,6 +6,7 @@ public class Ticket {
     private double price;
     private String ticketType;
     private double discount;
+    private String eventName;
 
     public Ticket(int id, int eventID, double price, double discount, String ticketType){
         this.id = id;
@@ -21,6 +22,9 @@ public class Ticket {
         this.discount = discount;
         this.ticketType = ticketType;
     }
+
+    public String getEventName() { return eventName; }
+    public void setEventName(String eventName) { this.eventName = eventName; }
 
     public int getId() {
         return id;

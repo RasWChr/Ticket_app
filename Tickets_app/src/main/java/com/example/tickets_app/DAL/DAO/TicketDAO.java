@@ -15,7 +15,8 @@ import java.util.List;
 public class TicketDAO implements ITicketDAO {
     @Override
     public List<Ticket> getAllTickets() throws ExceptionHandler {
-        String sql = "SELECT Id, Event ID, Price, Ticket type  FROM Tickets";
+        String sql = "SELECT t.Id, t.EventID, t.Price, t.Discount, t.Tickettype, e.Name AS EventName " +
+                "FROM Tickets t JOIN Events e ON t.EventID = e.Id";
         List<Ticket> tickets = new ArrayList<>();
 
             try (Connection conn = DBConnector.getConnection();
@@ -25,10 +26,12 @@ public class TicketDAO implements ITicketDAO {
                 while (rs.next()) {
                     Ticket ticket = new Ticket(
                             rs.getInt("Id"),
-                            rs.getInt("Event ID"),
-                            rs.getInt("Price"),
-                            rs.getString("Ticket type")
+                            rs.getInt("EventID"),
+                            rs.getDouble("Price"),
+                            rs.getDouble("Discount"),
+                            rs.getString("Tickettype")
                     );
+                    ticket.setEventName(rs.getString("EventName")); // add this line
                     tickets.add(ticket);
                 }
 
@@ -41,7 +44,7 @@ public class TicketDAO implements ITicketDAO {
 
     @Override
     public void createTicket(Ticket ticket) throws ExceptionHandler {
-        String sql = "INSERT INTO Tickets (Event ID, Price, Discount, Ticket type) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Tickets (EventID, Price, Discount, Tickettype) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -58,7 +61,7 @@ public class TicketDAO implements ITicketDAO {
 
     @Override
     public void deleteTicket(int ticketId) throws ExceptionHandler {
-        String sql = "DELETE FROM Tickets WHERE Id = ?";
+        String sql = "DELETE FROM Tickets WHERE ID = ?";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -67,13 +70,13 @@ public class TicketDAO implements ITicketDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            ExceptionHandler.handleDAOException("deleteUser", e);
+            ExceptionHandler.handleDAOException("deleteTicket", e);
         }
     }
 
     @Override
-    public void editTicket(int ticektId, int eventId, double price, double discount, String ticketType) throws ExceptionHandler {
-        String sql = "UPDATE Ticekts SET Event ID = ?, Price = ?, Discount = ?, Ticket type = ?";
+    public void editTicket(int ticketId, int eventId, double price, double discount, String ticketType) throws ExceptionHandler {
+        String sql = "UPDATE Tickets SET EventID = ?, Price = ?, Discount = ?, Tickettype = ? WHERE ID = ?";
 
         try (Connection conn = DBConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -81,10 +84,11 @@ public class TicketDAO implements ITicketDAO {
             ps.setDouble(2, price);
             ps.setDouble(3, discount);
             ps.setString(4, ticketType);
+            ps.setInt(5, ticketId);
 
             ps.executeUpdate();
         } catch (SQLException e) {
-            ExceptionHandler.handleDAOException("editUser", e);
+            ExceptionHandler.handleDAOException("editTicket", e);
         }
     }
 

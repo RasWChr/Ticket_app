@@ -36,13 +36,23 @@ public class TicketCreatorController {
     public void setTicketToEdit(Ticket ticket) {
         this.ticketToEdit = ticket;
 
+        if (cBoxEvent.getItems().isEmpty()) {
+            List<Event> events = ticketManager.getAllEvents();
+            cBoxEvent.setItems(FXCollections.observableArrayList(events));
+        }
+
         cBoxEvent.getItems().stream()
                 .filter(e -> ((Event) e).getId() == ticket.getEventID())
                 .findFirst()
                 .ifPresent(cBoxEvent::setValue);
+
         txtType.setText(ticket.getTicketType());
         txtPrice.setText(String.valueOf(ticket.getPrice()));
         txtDiscount.setText(String.valueOf(ticket.getDiscount()));
+    }
+
+    public void setTicket(Ticket ticket) {
+        setTicketToEdit(ticket);
     }
 
     public void onCreateTicketClick(ActionEvent actionEvent) {
@@ -62,7 +72,7 @@ public class TicketCreatorController {
                 ticketManager.editTicket(ticketToEdit.getId(), eventId, price, discount, ticketType);
                 AlertUtil.showInfo("Ticket updated", "Ticket \"" + eventName + " " + ticketType + "\" has been updated.");
             }
-            SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");
+            SceneUtil.switchScene(actionEvent, "Views/TicketList.fxml");
         } catch (IllegalArgumentException e) {
             AlertUtil.showWarning("Invalid input", e.getMessage());
         } catch (Exception e) {
@@ -70,6 +80,6 @@ public class TicketCreatorController {
         }
     }
 
-    public void onBtnCancelClick(ActionEvent actionEvent) { SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");
+    public void onBtnCancelClick(ActionEvent actionEvent) { SceneUtil.switchScene(actionEvent, "Views/TicketList.fxml");
     }
 }

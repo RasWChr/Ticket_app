@@ -24,8 +24,8 @@ public class ValidationUtil {
         return dateTime.matches("^\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}$");
     }
 
-    public static boolean isValidEventId(int eventId){
-        return (eventId != 0);
+    public static boolean isValidEventId(String eventId){
+        return (eventId != null);
     }
 
     public static boolean isValidTicketType(String ticketType) {
@@ -37,7 +37,7 @@ public class ValidationUtil {
     }
 
     public static boolean isValidDiscount(double discount){
-        return (discount < 1);
+        return (discount > 0 && discount < 100);
     }
 
 }

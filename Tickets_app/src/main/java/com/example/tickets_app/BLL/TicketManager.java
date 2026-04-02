@@ -41,7 +41,7 @@ public class TicketManager implements ITicketManager {
 
     @Override
     public void createTicket(int eventId, double price, double discount, String ticketType) throws ExceptionHandler {
-        if (!ValidationUtil.isValidEventId(eventId))
+       if (!ValidationUtil.isValidEventId((String.valueOf(eventId))))
             throw new IllegalArgumentException("Must choose an Event.");
         if (!ValidationUtil.isValidTicketType(ticketType))
             throw new IllegalArgumentException("Must be a valid ticket type.");
@@ -61,15 +61,15 @@ public class TicketManager implements ITicketManager {
     @Override
     public void deleteTicket(int ticketId) throws ExceptionHandler {
         try {
-            eventDAO.deleteEvent(ticketId);
+            ticketDAO.deleteTicket(ticketId);
         } catch (ExceptionHandler e) {
             throw new ExceptionHandler("Could not delete ticket: " + e.getMessage(), e);
         }
     }
 
     @Override
-    public void editTicket(int eventId, double price, double discount, double v, String ticketType) throws ExceptionHandler {
-        if (!ValidationUtil.isValidEventId(eventId))
+    public void editTicket(int ID, int eventId, double price, double discount, String ticketType) throws ExceptionHandler {
+        if (!ValidationUtil.isValidEventId((String.valueOf(eventId))))
             throw new IllegalArgumentException("Must choose an Event.");
         if (!ValidationUtil.isValidTicketType(ticketType))
             throw new IllegalArgumentException("Must be a valid ticket type.");
@@ -79,10 +79,9 @@ public class TicketManager implements ITicketManager {
             throw new IllegalArgumentException("Must be a valid discount.");
 
         try {
-            Ticket ticket = new Ticket(eventId, price, discount, ticketType);
-            ticketDAO.createTicket(ticket);
+            ticketDAO.editTicket(ID, eventId, price, discount, ticketType);
         } catch (ExceptionHandler e) {
-            throw new ExceptionHandler("Could not create ticket: " + e.getMessage(), e);
+            throw new ExceptionHandler("Could not edit ticket: " + e.getMessage(), e);
         }
     }
 }
