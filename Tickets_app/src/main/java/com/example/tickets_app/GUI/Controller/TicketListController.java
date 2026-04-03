@@ -1,5 +1,6 @@
 package com.example.tickets_app.GUI.Controller;
 
+import com.example.tickets_app.BE.Event;
 import com.example.tickets_app.BE.Ticket;
 import com.example.tickets_app.BLL.Interface.ITicketManager;
 import com.example.tickets_app.BLL.TicketManager;
@@ -12,17 +13,27 @@ import com.example.tickets_app.GUI.util.SessionManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.util.StringConverter;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TicketListController {
 
     @FXML private ListView<Ticket> listViewTickets;
+    @FXML private ChoiceBox<Event> cBoxEventFilter;
 
     private final ITicketManager ticketManager = new TicketManager(new EventDAO(), new TicketDAO());
     private final ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
+    private FilteredList<Ticket> filteredList;
+
+    private static final Event ALL_EVENTS = new Event(0, "All Events", "", "", "", "", "");
 
     @FXML
     public void initialize() {
@@ -30,11 +41,50 @@ public class TicketListController {
             Platform.runLater(SessionManager::redirectToLogin);
             return;
         }
-
-        listViewTickets.setItems(ticketList);
+        filteredList = new FilteredList<>(ticketList, t -> true);
+        listViewTickets.setItems(filteredList);
         listViewTickets.setCellFactory(lv ->
                 new TicketListCell(this::handleDelete, this::handleEdit));
-        loadTickets();
+
+        cBoxEventFilter.setConverter(new StringConverter<>() {
+            @Override public String toString(Event e) { return e != null ? e.getName() : ""; }
+            @Override public Event fromString(String s) { return null; }
+        });
+
+        loadData();
+
+        cBoxEventFilter.valueProperty().addListener((obs, oldVal, newVal) -> applyFilter(newVal));
+    }
+
+    private void loadData() {
+        try {
+            List<Event> events = ticketManager.getAllEvents();
+            Map<Integer, String> eventNameMap = events.stream()
+                    .collect(Collectors.toMap(Event::getId, Event::getName));
+
+            List<Ticket> tickets = ticketManager.getAllTickets();
+            tickets.forEach(t -> t.setEventName(
+                    eventNameMap.getOrDefault(t.getEventID(), "Unknown Event")));
+            ticketList.setAll(tickets);
+
+            ObservableList<Event> eventOptions = FXCollections.observableArrayList();
+            eventOptions.add(ALL_EVENTS);
+            eventOptions.addAll(events);
+            cBoxEventFilter.setItems(eventOptions);
+            cBoxEventFilter.setValue(ALL_EVENTS);
+
+        } catch (ExceptionHandler e) {
+            AlertUtil.showError("Database error", "Could not load data: " + e.getMessage());
+        }
+    }
+
+    private void applyFilter(Event selected) {
+        if (selected == null || selected == ALL_EVENTS) {
+            filteredList.setPredicate(null);
+        } else {
+            int selectedId = selected.getId();
+            filteredList.setPredicate(t -> t.getEventID() == selectedId);
+        }
     }
 
     private void loadTickets() {
