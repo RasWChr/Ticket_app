@@ -15,11 +15,14 @@ public class TicketListCell extends ListCell<Ticket> {
 
     private final Consumer<Ticket> onDelete;
     private final Consumer<Ticket> onEdit;
+    private final Consumer<Ticket> onPreview;
 
 
-    public TicketListCell(Consumer<Ticket> onDelete, Consumer<Ticket> onEdit) {
+
+    public TicketListCell(Consumer<Ticket> onDelete, Consumer<Ticket> onEdit, Consumer<Ticket> onPreview) {
         this.onDelete = onDelete;
         this.onEdit = onEdit;
+        this.onPreview = onPreview;
     }
 
 
@@ -37,7 +40,7 @@ public class TicketListCell extends ListCell<Ticket> {
                         Main.class.getResource("Views/TicketListCell.fxml"));
                 HBox root = loader.load();
                 TicketListCellController controller = loader.getController();
-                controller.setTicket(onDelete, onEdit, ticket);
+                controller.setTicket(onDelete, onEdit, onPreview, ticket);
                 setGraphic(root);
                 setText(null);
             } catch (IOException e) {

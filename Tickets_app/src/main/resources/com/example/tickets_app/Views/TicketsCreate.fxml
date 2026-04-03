@@ -27,7 +27,7 @@
           <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="175.0">
               <children>
                   <Label text="Discount" />
-                  <TextField fx:id="txtDiscount" maxWidth="Infinity" prefHeight="25.0" prefWidth="123.0" />
+                  <TextField fx:id="txtDiscount" maxWidth="Infinity" prefHeight="25.0" prefWidth="78.0" promptText="\%" />
               </children>
           </VBox>
         </children>

@@ -41,10 +41,6 @@ public class TicketListController {
             Platform.runLater(SessionManager::redirectToLogin);
             return;
         }
-        filteredList = new FilteredList<>(ticketList, t -> true);
-        listViewTickets.setItems(filteredList);
-        listViewTickets.setCellFactory(lv ->
-                new TicketListCell(this::handleDelete, this::handleEdit));
 
         cBoxEventFilter.setConverter(new StringConverter<>() {
             @Override public String toString(Event e) { return e != null ? e.getName() : ""; }
@@ -52,6 +48,11 @@ public class TicketListController {
         });
 
         loadData();
+
+        filteredList = new FilteredList<>(ticketList, t -> true);
+        listViewTickets.setItems(filteredList);
+        listViewTickets.setCellFactory(lv ->
+                new TicketListCell(this::handleDelete, this::handleEdit, this::handlePreview));
 
         cBoxEventFilter.valueProperty().addListener((obs, oldVal, newVal) -> applyFilter(newVal));
     }
@@ -111,6 +112,11 @@ public class TicketListController {
     private void handleEdit(Ticket ticket) {
         SceneUtil.switchSceneWithController(listViewTickets, "Views/TicketsCreate.fxml",(TicketCreatorController c) -> c.setTicket(ticket));
         //AlertUtil.showInfo("Edit Ticket", "Edit functionality is not implemented yet.");
+    }
+
+    private void handlePreview(Ticket ticket) {
+        SceneUtil.switchSceneWithController(listViewTickets, "Views/TicketPreview.fxml",
+                (TicketPreviewController c) -> c.setTicket(ticket));
     }
 
     public void onReturnClick(ActionEvent actionEvent) {SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");

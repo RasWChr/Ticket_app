@@ -18,19 +18,36 @@ public class TicketListCellController {
 
     private Consumer<Ticket> onDelete;
     private Consumer<Ticket> onEdit;
+    private Consumer<Ticket> onPreview;
     private Ticket ticket;
 
     public void setTicket(Consumer<Ticket> onDelete,
                           Consumer<Ticket> onEdit,
+                          Consumer<Ticket> onPreview,
                           Ticket ticket) {
         this.ticket = ticket;
         this.onDelete = onDelete;
         this.onEdit = onEdit;
+        this.onPreview = onPreview;
+
 
         lblTicketName.setText(ticket.getEventName());
-        lblTicketDetails.setText(ticket.getPrice() + " | " + ticket.getTicketType());
+        lblTicketDetails.setText(formatDetails(ticket));
 
         buildContextMenu();
+    }
+
+    private String formatDetails(Ticket ticket) {
+        double price = ticket.getPrice();
+        double discount = ticket.getDiscount();
+        String type = ticket.getTicketType();
+
+        if (discount > 0) {
+            double discountedPrice = price - (price * (discount / 100));
+            return String.format("%.2f → %.2f kr (%.0f%% off)", price, discountedPrice, discount);
+        } else {
+            return String.format("%.2f kr | %s", price, type);
+        }
     }
 
     private void buildContextMenu() {
@@ -38,6 +55,9 @@ public class TicketListCellController {
         menu.getStyleClass().add("dark-context-menu");
 
         String role = SessionManager.getLoggedInUser().getRole();
+
+        MenuItem itemPreview = new MenuItem("👁 Preview");
+        itemPreview.setOnAction(e -> { if (onPreview != null) onPreview.accept(ticket); });
 
         MenuItem itemDelete = new MenuItem("🗑 Delete");
         itemDelete.setOnAction(e -> { if (onDelete != null) onDelete.accept(ticket); });

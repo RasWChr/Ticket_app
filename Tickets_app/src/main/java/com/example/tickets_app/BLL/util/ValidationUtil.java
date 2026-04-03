@@ -37,7 +37,7 @@ public class ValidationUtil {
     }
 
     public static boolean isValidDiscount(double discount){
-        return (discount > 0 && discount < 100);
+        return (discount >= 0 && discount <= 100);
     }
 
 }
