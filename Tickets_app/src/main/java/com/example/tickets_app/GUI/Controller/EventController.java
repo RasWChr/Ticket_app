@@ -11,16 +11,20 @@ import com.example.tickets_app.GUI.util.SessionManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 public class EventController {
 
     @FXML private ListView<Event> listViewEvents;
+    @FXML private TextField txtSearch;
 
     private final IEventManager eventManager = new EventManager(new EventDAO());
     private final ObservableList<Event> eventList = FXCollections.observableArrayList();
+    private FilteredList<Event> filteredList;
 
     @FXML
     public void initialize() {
@@ -29,9 +33,19 @@ public class EventController {
             return;
         }
 
-        listViewEvents.setItems(eventList);
+        filteredList = new FilteredList<>(eventList, e -> true);
+        listViewEvents.setItems(filteredList);
         listViewEvents.setCellFactory(lv ->
-                new EventListCell(this::handleDelete, this::handleAssign, this::handleInfo, this::handleEdit));
+                new EventListCell(this::handleDelete, this::handleAssign,
+                        this::handleInfo, this::handleEdit));
+
+        txtSearch.textProperty().addListener((obs, oldVal, newVal) -> {
+            String search = newVal == null ? "" : newVal.toLowerCase();
+            filteredList.setPredicate(event -> search.isBlank()
+                    || event.getName().toLowerCase().contains(search)
+                    || event.getLocation().toLowerCase().contains(search));
+        });
+
         loadEvents();
     }
 
@@ -67,8 +81,8 @@ public class EventController {
     }
 
     private void handleEdit(Event event) {
-        SceneUtil.switchSceneWithController(listViewEvents, "Views/New-Edit-Events.fxml",(NewEditEventController c) -> c.setEvent(event));
-        //AlertUtil.showInfo("Edit Event", "Edit functionality is not implemented yet.");
+        SceneUtil.switchSceneWithController(listViewEvents, "Views/New-Edit-Events.fxml",
+                (NewEditEventController c) -> c.setEvent(event));
     }
 
     @FXML
