@@ -62,7 +62,8 @@ public class TicketListCellController {
         MenuItem itemDelete = new MenuItem("🗑 Delete");
         itemDelete.setOnAction(e -> { if (onDelete != null) onDelete.accept(ticket); });
 
-        menu.getItems().addAll(itemDelete);
+        menu.getItems().addAll(itemPreview, itemDelete);
+
 
         // Coordinator-only options
         if (role.equals("Coordinator")) {
