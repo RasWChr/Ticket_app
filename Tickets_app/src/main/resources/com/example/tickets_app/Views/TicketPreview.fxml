@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="480.0" spacing="12.0"
+<VBox alignment="TOP_CENTER" prefHeight="620.0" prefWidth="480.0" spacing="12.0"
       xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.tickets_app.GUI.Controller.TicketPreviewController">
     <padding>
@@ -15,14 +15,23 @@
     </padding>
     <children>
         <Label text="Ticket Preview" styleClass="title" />
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="ticket-scroll" VBox.vgrow="ALWAYS">
+
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS"
+                    styleClass="ticket-scroll">
             <content>
-                <VBox fx:id="ticketContainer" alignment="TOP_CENTER" spacing="0.0" />
+                <VBox fx:id="ticketContainer" alignment="TOP_CENTER" spacing="0.0">
+                    <padding>
+                        <Insets top="10.0" bottom="10.0" />
+                    </padding>
+                </VBox>
             </content>
         </ScrollPane>
+
         <HBox spacing="10.0">
-            <Button text="🖨 Print" onAction="#onPrintClick" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
-            <Button text="⬅ Back" onAction="#onBackClick" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+            <Button text="Save as PDF" onAction="#onSaveAsPdfClick"
+                    maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+            <Button text="Close" onAction="#onBackClick"
+                    maxWidth="Infinity" HBox.hgrow="ALWAYS" />
         </HBox>
     </children>
 </VBox>

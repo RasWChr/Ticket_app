@@ -115,14 +115,12 @@ public class TicketListController {
     }
 
     private void handlePreview(Ticket ticket) {
-        // Find the matching event from the already-loaded list
         Event matchingEvent = cBoxEventFilter.getItems().stream()
                 .filter(e -> e != ALL_EVENTS && e.getId() == ticket.getEventID())
                 .findFirst()
                 .orElse(null);
 
-        SceneUtil.switchSceneWithController(listViewTickets, "Views/TicketPreview.fxml",
-                (TicketPreviewController c) -> c.setTicket(ticket, matchingEvent));
+        TicketPreviewController.openAsWindow(ticket, matchingEvent);
     }
 
     public void onReturnClick(ActionEvent actionEvent) {SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");

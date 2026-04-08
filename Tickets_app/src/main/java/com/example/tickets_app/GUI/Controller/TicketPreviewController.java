@@ -5,16 +5,14 @@ import com.example.tickets_app.BE.Ticket;
 import com.example.tickets_app.Main;
 import com.example.tickets_app.GUI.util.AlertUtil;
 import com.example.tickets_app.GUI.util.SceneUtil;
+import com.example.tickets_app.GUI.util.TicketPrintUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.print.PageLayout;
-import javafx.print.PageOrientation;
-import javafx.print.Paper;
-import javafx.print.Printer;
-import javafx.print.PrinterJob;
+import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import javafx.scene.transform.Scale;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -40,56 +38,47 @@ public class TicketPreviewController {
         }
     }
 
-    @FXML
-    public void onPrintClick(ActionEvent actionEvent) {
-        if (ticketNode == null) {
-            AlertUtil.showWarning("Nothing to print", "No ticket is loaded.");
-            return;
-        }
+    /**
+     * Opens the ticket in a standalone popup window.
+     * Called from TicketListController instead of switchSceneWithController.
+     */
+    public static void openAsWindow(Ticket ticket, Event event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("Views/TicketPreview.fxml"));
+            VBox root = loader.load();
 
-        PrinterJob job = PrinterJob.createPrinterJob();
-        if (job == null) {
-            AlertUtil.showError("Print error", "No printer found on this machine.");
-            return;
-        }
+            TicketPreviewController controller = loader.getController();
+            controller.setTicket(ticket, event);
 
-        // Show the system print dialog
-        boolean proceed = job.showPrintDialog(ticketNode.getScene().getWindow());
-        if (!proceed) return;
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Main.class.getResource("styles.css").toExternalForm());
 
-        Printer printer = job.getPrinter();
-        PageLayout pageLayout = printer.createPageLayout(
-                Paper.A4, PageOrientation.PORTRAIT,
-                Printer.MarginType.DEFAULT);
+            Stage stage = new Stage();
+            stage.setTitle("Ticket Preview");
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
 
-        // Scale the ticket to fit the printable area
-        double printWidth  = pageLayout.getPrintableWidth();
-        double printHeight = pageLayout.getPrintableHeight();
-        double ticketWidth  = ticketNode.getBoundsInParent().getWidth();
-        double ticketHeight = ticketNode.getBoundsInParent().getHeight();
-
-        double scaleX = printWidth  / ticketWidth;
-        double scaleY = printHeight / ticketHeight;
-        double scale  = Math.min(scaleX, scaleY);
-
-        Scale transform = new Scale(scale, scale);
-        ticketNode.getTransforms().add(transform);
-
-        boolean printed = job.printPage(pageLayout, ticketNode);
-
-        // Remove the transform after printing so the UI looks normal
-        ticketNode.getTransforms().remove(transform);
-
-        if (printed) {
-            job.endJob();
-            AlertUtil.showInfo("Print successful", "Ticket sent to printer.");
-        } else {
-            AlertUtil.showError("Print failed", "The ticket could not be printed.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     @FXML
+    public void onSaveAsPdfClick(ActionEvent actionEvent) {
+        if (ticketNode == null) {
+            AlertUtil.showWarning("Nothing to print", "No ticket is loaded.");
+            return;
+        }
+        TicketPrintUtil.saveAsPdf(ticketNode,
+                ticketContainer.getScene().getWindow());
+    }
+
+    @FXML
     public void onBackClick(ActionEvent actionEvent) {
-        SceneUtil.switchScene(actionEvent, "Views/TicketList.fxml");
+        // Close this window if opened as popup, otherwise navigate back
+        Stage stage = (Stage) ticketContainer.getScene().getWindow();
+        stage.close();
     }
 }
