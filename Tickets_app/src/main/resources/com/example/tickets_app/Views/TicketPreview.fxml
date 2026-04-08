@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" prefHeight="620.0" prefWidth="480.0" spacing="12.0"
+<VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="480.0" spacing="12.0"
       xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.tickets_app.GUI.Controller.TicketPreviewController">
     <padding>
@@ -27,10 +27,12 @@
             </content>
         </ScrollPane>
 
-        <HBox spacing="10.0">
-            <Button text="Save as PDF" onAction="#onSaveAsPdfClick"
+        <HBox spacing="8.0">
+            <Button text="Save as PDF"  onAction="#onSaveAsPdfClick"
                     maxWidth="Infinity" HBox.hgrow="ALWAYS" />
-            <Button text="Close" onAction="#onBackClick"
+            <Button text="Send by Email" onAction="#onSendEmailClick"
+                    maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+            <Button text="Close"        onAction="#onBackClick"
                     maxWidth="Infinity" HBox.hgrow="ALWAYS" />
         </HBox>
     </children>

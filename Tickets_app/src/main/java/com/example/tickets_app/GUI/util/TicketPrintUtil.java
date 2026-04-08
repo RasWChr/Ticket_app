@@ -14,7 +14,6 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,20 +21,12 @@ import java.io.IOException;
 public class TicketPrintUtil {
 
     /**
-     * Snapshots the given JavaFX node, embeds it into a PDF sized to fit,
-     * and saves it to a location chosen by the user via a file dialog.
+     * Snapshots the ticket node and saves it as a PDF chosen by the user.
+     * Returns the saved File so it can be reused for email attachment.
      */
-    public static void saveAsPdf(Node ticketNode, Window ownerWindow) {
-        // 1. Snapshot the ticket node to a high-res image
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.WHITE);
+    public static File saveAsPdf(Node ticketNode, Window ownerWindow) {
+        BufferedImage bufferedImage = snapshot(ticketNode);
 
-        // 2x scale for crisp output
-        params.setTransform(javafx.scene.transform.Transform.scale(2, 2));
-        WritableImage fxImage = ticketNode.snapshot(params, null);
-        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(fxImage, null);
-
-        // 2. Let user choose where to save
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Ticket as PDF");
         fileChooser.setInitialFileName("ticket.pdf");
@@ -43,33 +34,55 @@ public class TicketPrintUtil {
                 new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
         File file = fileChooser.showSaveDialog(ownerWindow);
 
-        if (file == null) return; // user cancelled
+        if (file == null) return null;
 
-        // 3. Build the PDF
+        return writePdf(bufferedImage, file);
+    }
+
+    /**
+     * Saves directly to a temp file without a dialog — used for email.
+     */
+    public static File saveAsTempPdf(Node ticketNode, String eventName) {
+        BufferedImage bufferedImage = snapshot(ticketNode);
+        try {
+            File temp = File.createTempFile(
+                    "ticket-" + eventName.replaceAll("\\s+", "_"), ".pdf");
+            temp.deleteOnExit();
+            return writePdf(bufferedImage, temp);
+        } catch (IOException e) {
+            AlertUtil.showError("Error", "Could not create temporary file: " + e.getMessage());
+            return null;
+        }
+    }
+
+    private static BufferedImage snapshot(Node ticketNode) {
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.WHITE);
+        params.setTransform(javafx.scene.transform.Transform.scale(2, 2));
+        WritableImage fxImage = ticketNode.snapshot(params, null);
+        return SwingFXUtils.fromFXImage(fxImage, null);
+    }
+
+    private static File writePdf(BufferedImage image, File file) {
+        float pageWidth  = 420f;
+        float pageHeight = pageWidth * ((float) image.getHeight() / image.getWidth());
+
         try (PDDocument doc = new PDDocument()) {
-            // Page sized to match the ticket image
-            float imgWidth  = bufferedImage.getWidth();
-            float imgHeight = bufferedImage.getHeight();
-
-            // Scale to a reasonable page width (A5-ish)
-            float pageWidth  = 420f;
-            float pageHeight = pageWidth * (imgHeight / imgWidth);
-
-            PDRectangle pageSize = new PDRectangle(pageWidth, pageHeight);
-            PDPage page = new PDPage(pageSize);
+            PDPage page = new PDPage(new PDRectangle(pageWidth, pageHeight));
             doc.addPage(page);
 
-            PDImageXObject pdImage = LosslessFactory.createFromImage(doc, bufferedImage);
+            PDImageXObject pdImage = LosslessFactory.createFromImage(doc, image);
 
             try (PDPageContentStream cs = new PDPageContentStream(doc, page)) {
                 cs.drawImage(pdImage, 0, 0, pageWidth, pageHeight);
             }
 
             doc.save(file);
-            AlertUtil.showInfo("Saved", "Ticket saved to:\n" + file.getAbsolutePath());
+            return file;
 
         } catch (IOException e) {
             AlertUtil.showError("Save failed", "Could not save PDF: " + e.getMessage());
+            return null;
         }
     }
 }
