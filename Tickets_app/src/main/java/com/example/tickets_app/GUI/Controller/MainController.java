@@ -65,31 +65,31 @@ public class MainController {
 
 
     public void onCreateUClick(ActionEvent actionEvent) {
-        SceneUtil.switchScene(actionEvent, "Views/Create-Edit-Users.fxml");
+        SceneUtil.switchScene(actionEvent, "Views/User/Create-Edit-Users.fxml");
     }
 
     public void onManageUClick(ActionEvent actionEvent) {
-        SceneUtil.switchScene(actionEvent, "Views/Users.fxml");
+        SceneUtil.switchScene(actionEvent, "Views/User/Users.fxml");
     }
 
     public void onEventClick(ActionEvent actionEvent) {
-        SceneUtil.switchScene(actionEvent, "Views/Events.fxml");
+        SceneUtil.switchScene(actionEvent, "Views/Event/Events.fxml");
     }
 
     public void onCreateEClick(ActionEvent actionEvent) {
-        SceneUtil.switchScene(actionEvent, "Views/New-Edit-Events.fxml");
+        SceneUtil.switchScene(actionEvent, "Views/Event/New-Edit-Events.fxml");
     }
 
-    public void onCreateTClick(ActionEvent actionEvent) {SceneUtil.switchScene(actionEvent, "Views/TicketList.fxml");
+    public void onCreateTClick(ActionEvent actionEvent) {SceneUtil.switchScene(actionEvent, "Views/Ticket/TicketList.fxml");
     }
 
     public void onPrintTClick(ActionEvent actionEvent) {
-        SceneUtil.switchScene(actionEvent, "Views/Tickets.fxml");
+        SceneUtil.switchScene(actionEvent, "Views/Ticket/Tickets.fxml");
     }
 
     public void onLogOutClick(ActionEvent actionEvent) {
         SessionManager.clearSession();
-        SceneUtil.switchScene(actionEvent, "Views/Log-in.fxml");
+        SceneUtil.switchScene(actionEvent, "Views/Misc/Log-in.fxml");
     }
 
 

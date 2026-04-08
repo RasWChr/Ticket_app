@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="ticketRoot" prefWidth="420.0" spacing="0.0"
+      styleClass="ticket-root"
+      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.tickets_app.GUI.Controller.Ticket.TicketLayoutController">
+
+    <VBox styleClass="ticket-header" spacing="4.0">
+        <padding>
+            <Insets top="20.0" bottom="20.0" left="24.0" right="24.0" />
+        </padding>
+        <Label fx:id="lblEventTitle" styleClass="ticket-event-title" wrapText="true" />
+        <Label fx:id="lblTicketType" styleClass="ticket-type-badge" />
+    </VBox>
+
+    <VBox styleClass="ticket-body" spacing="14.0">
+        <padding>
+            <Insets top="20.0" bottom="20.0" left="24.0" right="24.0" />
+        </padding>
+
+        <VBox spacing="4.0">
+            <Label text="DATE &amp; TIME" styleClass="ticket-section-label" />
+            <Label fx:id="lblDate" styleClass="ticket-value" wrapText="true" />
+        </VBox>
+
+        <VBox spacing="4.0">
+            <Label text="LOCATION" styleClass="ticket-section-label" />
+            <Label fx:id="lblLocation" styleClass="ticket-value" wrapText="true" />
+            <Label fx:id="lblLocationGuidance" styleClass="ticket-guidance" wrapText="true" />
+        </VBox>
+
+        <Separator styleClass="ticket-separator" />
+
+        <!-- Hidden customer section — ready for Sprint 3 -->
+        <VBox fx:id="customerSection" spacing="4.0" visible="false" managed="false">
+            <Label text="TICKET HOLDER" styleClass="ticket-section-label" />
+            <Label fx:id="lblCustomerName" styleClass="ticket-value" />
+            <Label fx:id="lblCustomerEmail" styleClass="ticket-guidance" />
+        </VBox>
+
+    </VBox>
+
+    <HBox styleClass="ticket-tearline" alignment="CENTER">
+        <padding>
+            <Insets top="6.0" bottom="6.0" left="24.0" right="24.0" />
+        </padding>
+        <Label text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+               styleClass="ticket-tearline-text" HBox.hgrow="ALWAYS" />
+    </HBox>
+
+    <HBox styleClass="ticket-footer" alignment="CENTER_LEFT" spacing="12.0">
+        <padding>
+            <Insets top="14.0" bottom="14.0" left="24.0" right="24.0" />
+        </padding>
+        <VBox HBox.hgrow="ALWAYS" spacing="2.0">
+            <Label fx:id="lblUuid" styleClass="ticket-uuid" />
+        </VBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <Label fx:id="lblPrice" styleClass="ticket-price" />
+    </HBox>
+
+</VBox>
