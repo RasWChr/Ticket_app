@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
@@ -38,7 +39,6 @@
 
         <Separator styleClass="ticket-separator" />
 
-        <!-- Hidden customer section — ready for Sprint 3 -->
         <VBox fx:id="customerSection" spacing="4.0" visible="false" managed="false">
             <Label text="TICKET HOLDER" styleClass="ticket-section-label" />
             <Label fx:id="lblCustomerName" styleClass="ticket-value" />
@@ -59,11 +59,14 @@
         <padding>
             <Insets top="14.0" bottom="14.0" left="24.0" right="24.0" />
         </padding>
-        <VBox HBox.hgrow="ALWAYS" spacing="2.0">
+        <VBox HBox.hgrow="ALWAYS" spacing="4.0">
             <Label fx:id="lblUuid" styleClass="ticket-uuid" />
+            <Label fx:id="lblPrice" styleClass="ticket-price" />
         </VBox>
         <Region HBox.hgrow="ALWAYS" />
-        <Label fx:id="lblPrice" styleClass="ticket-price" />
+        <ImageView fx:id="imgQrCode"
+                   fitWidth="100.0" fitHeight="100.0"
+                   preserveRatio="true" smooth="true" />
     </HBox>
 
 </VBox>
