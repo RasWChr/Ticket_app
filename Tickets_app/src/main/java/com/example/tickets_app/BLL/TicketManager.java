@@ -40,6 +40,11 @@ public class TicketManager implements ITicketManager {
     }
 
     @Override
+    public List<Ticket> getTicketsByEventId(int eventId) throws ExceptionHandler {
+        return ticketDAO.getTicketsByEventId(eventId);
+    }
+
+    @Override
     public void createTicket(int eventId, double price, double discount, String ticketType) throws ExceptionHandler {
        if (!ValidationUtil.isValidEventId((String.valueOf(eventId))))
             throw new IllegalArgumentException("Must choose an Event.");

@@ -12,5 +12,6 @@ public interface ITicketManager {
     void createTicket(int eventId, double price, double discount, String ticketType) throws ExceptionHandler;
     void deleteTicket(int ticketId) throws ExceptionHandler;
     void editTicket(int ID, int eventId, double price, double discount, String ticketType) throws ExceptionHandler;
+    List<Ticket> getTicketsByEventId(int eventId) throws ExceptionHandler;
 
 }

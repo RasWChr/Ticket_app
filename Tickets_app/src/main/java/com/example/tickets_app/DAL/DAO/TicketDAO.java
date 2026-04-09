@@ -43,6 +43,34 @@ public class TicketDAO implements ITicketDAO {
 
 
     @Override
+    public List<Ticket> getTicketsByEventId(int eventId) throws ExceptionHandler {
+        String sql = "SELECT t.Id, t.EventID, t.Price, t.Discount, t.Tickettype, e.Name AS EventName " +
+                "FROM Tickets t JOIN Events e ON t.EventID = e.Id WHERE t.EventID = ?";
+        List<Ticket> tickets = new ArrayList<>();
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, eventId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Ticket ticket = new Ticket(
+                        rs.getInt("Id"),
+                        rs.getInt("EventID"),
+                        rs.getDouble("Price"),
+                        rs.getDouble("Discount"),
+                        rs.getString("Tickettype")
+                );
+                ticket.setEventName(rs.getString("EventName"));
+                tickets.add(ticket);
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("getTicketsByEventId", e);
+        }
+        return tickets;
+    }
+
+    @Override
     public void createTicket(Ticket ticket) throws ExceptionHandler {
         String sql = "INSERT INTO Tickets (EventID, Price, Discount, Tickettype) VALUES (?, ?, ?, ?)";
 

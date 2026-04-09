@@ -20,38 +20,42 @@ import java.io.IOException;
 public class TicketPreviewController {
 
     @FXML private VBox ticketContainer;
+    @FXML private VBox customerSection;
 
     private VBox   ticketNode;
     private Ticket ticket;
     private Event  event;
 
-    public void setTicket(Ticket ticket) {
-        setTicket(ticket, null);
-    }
+    private String customerName;
+    private String customerEmail;
 
-    public void setTicket(Ticket ticket, Event event) {
+    public void setTicket(Ticket ticket, Event event, String customerName, String customerEmail) {
         this.ticket = ticket;
         this.event  = event;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+
         try {
             FXMLLoader loader = new FXMLLoader(
                     Main.class.getResource("Views/Ticket/TicketLayout.fxml"));
             ticketNode = loader.load();
             TicketLayoutController controller = loader.getController();
-            controller.setTicket(ticket, event);
+            controller.setTicket(ticket, event, customerName, customerEmail);
             ticketContainer.getChildren().setAll(ticketNode);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
-    public static void openAsWindow(Ticket ticket, Event event) {
+    public static void openAsWindow(Ticket ticket, Event event, String customerName, String customerEmail) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     Main.class.getResource("Views/Ticket/TicketPreview.fxml"));
             VBox root = loader.load();
 
             TicketPreviewController controller = loader.getController();
-            controller.setTicket(ticket, event);
+            controller.setTicket(ticket, event, customerName, customerEmail);
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(
@@ -67,6 +71,11 @@ public class TicketPreviewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static void openAsWindow(Ticket ticket, Event event) {
+        openAsWindow(ticket, event, null, null);
     }
 
     @FXML

@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,8 +29,10 @@ public class TicketLayoutController {
     @FXML private Label lblPrice;
     @FXML private Label lblUuid;
     @FXML private ImageView imgQrCode;
+    @FXML private VBox customerSection;
 
-    public void setTicket(Ticket ticket, Event event) {
+
+    public void setTicket(Ticket ticket, Event event, String customerName, String customerEmail) {
         lblEventTitle.setText(event != null ? event.getName() : ticket.getEventName());
         lblTicketType.setText(ticket.getTicketType().toUpperCase());
 
@@ -64,11 +67,12 @@ public class TicketLayoutController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        lblCustomerName.setText(customerName != null ? customerName : "");
+        lblCustomerEmail.setText(customerEmail != null ? customerEmail : "");
+
     }
 
-    public void setTicket(Ticket ticket) {
-        setTicket(ticket, null);
-    }
+
 
     private String buildQrContent(Ticket ticket, Event event) {
         StringBuilder sb = new StringBuilder();

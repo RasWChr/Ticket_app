@@ -61,4 +61,9 @@ public class Ticket {
     public void setTicketType(String ticketType) {
         this.ticketType = ticketType;
     }
+
+    @Override
+    public String toString() {
+        return discount > 0 ? ticketType + "(" + price + " kr, " + discount + "%)" : ticketType;
+    }
 }
