@@ -28,7 +28,7 @@ public class UserListCell extends ListCell<User> {
             setGraphic(null);
         } else {
             try {
-                FXMLLoader loader = new FXMLLoader(Main.class.getResource("ViewsUser//UserListCell.fxml"));
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("Views/User/UserListCell.fxml"));
                 HBox root = loader.load();
                 UserListCellController controller = loader.getController();
                 controller.setUser(user, onEdit, onDelete);
