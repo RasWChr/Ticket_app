@@ -7,6 +7,7 @@ import com.example.tickets_app.BLL.TicketManager;
 import com.example.tickets_app.BLL.util.ExceptionHandler;
 import com.example.tickets_app.DAL.DAO.EventDAO;
 import com.example.tickets_app.DAL.DAO.TicketDAO;
+import com.example.tickets_app.GUI.Controller.Misc.MenuBarController;
 import com.example.tickets_app.GUI.util.AlertUtil;
 import com.example.tickets_app.GUI.util.SceneUtil;
 import com.example.tickets_app.GUI.util.SessionManager;
@@ -18,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
 import javafx.util.StringConverter;
 
 import java.util.List;
@@ -34,6 +36,8 @@ public class TicketListController {
     private FilteredList<Ticket> filteredList;
 
     private static final Event ALL_EVENTS = new Event(0, "All Events", "", "", "", "", "");
+    @FXML private MenuBarController menuBarController;
+    @FXML private StackPane rootStack;
 
     @FXML
     public void initialize() {
@@ -41,6 +45,9 @@ public class TicketListController {
             Platform.runLater(SessionManager::redirectToLogin);
             return;
         }
+        // Wire the hamburger menu
+        menuBarController.setup(rootStack, "Ticket List");
+
 
         cBoxEventFilter.setConverter(new StringConverter<>() {
             @Override public String toString(Event e) { return e != null ? e.getName() : ""; }
@@ -121,9 +128,6 @@ public class TicketListController {
                 .orElse(null);
 
         TicketPreviewController.openAsWindow(ticket, matchingEvent);
-    }
-
-    public void onReturnClick(ActionEvent actionEvent) {SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");
     }
 
     public void onBtnCreateTicketClick(ActionEvent actionEvent) {

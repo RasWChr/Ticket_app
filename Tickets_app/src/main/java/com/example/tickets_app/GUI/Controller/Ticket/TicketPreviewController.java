@@ -22,16 +22,16 @@ public class TicketPreviewController {
     @FXML private VBox ticketContainer;
     @FXML private VBox customerSection;
 
-    private VBox   ticketNode;
+    private VBox ticketNode;
     private Ticket ticket;
-    private Event  event;
+    private Event event;
 
     private String customerName;
     private String customerEmail;
 
     public void setTicket(Ticket ticket, Event event, String customerName, String customerEmail) {
         this.ticket = ticket;
-        this.event  = event;
+        this.event = event;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
 
@@ -45,7 +45,6 @@ public class TicketPreviewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void openAsWindow(Ticket ticket, Event event, String customerName, String customerEmail) {
@@ -71,7 +70,6 @@ public class TicketPreviewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void openAsWindow(Ticket ticket, Event event) {
@@ -105,6 +103,9 @@ public class TicketPreviewController {
 
             SendEmailController controller = loader.getController();
             controller.setData(ticketNode, ticket, event);
+
+            // Auto‑fill email
+            controller.setEmail(customerEmail);
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(
