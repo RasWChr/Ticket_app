@@ -7,15 +7,16 @@ import com.example.tickets_app.BLL.TicketManager;
 import com.example.tickets_app.BLL.util.ExceptionHandler;
 import com.example.tickets_app.DAL.DAO.EventDAO;
 import com.example.tickets_app.DAL.DAO.TicketDAO;
-import com.example.tickets_app.GUI.util.AlertUtil;
-import com.example.tickets_app.GUI.util.SceneUtil;
+import com.example.tickets_app.GUI.Controller.Misc.MenuBarController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import java.util.List;
+import javafx.scene.layout.StackPane;
 
+import java.util.List;
 
 public class TicketController {
 
@@ -25,8 +26,13 @@ public class TicketController {
     @FXML private TextField txtLastNT;
     @FXML private TextField txtEmailT;
     @FXML private TextField txtPhoneT;
+    @FXML private Label lblError;
 
-    private final ITicketManager ticketManager = new TicketManager(new EventDAO(), new TicketDAO());
+    private final ITicketManager ticketManager =
+            new TicketManager(new EventDAO(), new TicketDAO());
+
+    @FXML private MenuBarController menuBarController;
+    @FXML private StackPane rootStack;
 
     @FXML
     public void initialize() {
@@ -34,46 +40,102 @@ public class TicketController {
             List<Event> events = ticketManager.getAllEvents();
             cBoxEvent.setItems(FXCollections.observableArrayList(events));
         } catch (Exception e) {
-            AlertUtil.showError("Database error", "Could not load events: " + e.getMessage());
+            showError("Could not load events: " + e.getMessage());
         }
 
-        // When an event is selected, load its tickets
+        menuBarController.setup(rootStack, "Ticket List");
+
         cBoxEvent.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 try {
                     List<Ticket> tickets = ticketManager.getTicketsByEventId(newVal.getId());
                     cBoxTickets.setItems(FXCollections.observableArrayList(tickets));
                 } catch (ExceptionHandler e) {
-                    AlertUtil.showError("Database error", "Could not load tickets: " + e.getMessage());
+                    showError("Could not load tickets: " + e.getMessage());
                 }
             }
         });
     }
 
     @FXML
-    public void onBtnCancelClick(ActionEvent actionEvent) {
-        SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");
-    }
-
-    @FXML
     public void onPTicketClick(ActionEvent actionEvent) {
-        String firstName = txtFirstNT != null ? txtFirstNT.getText() : "";
-        String lastName = txtLastNT != null ? txtLastNT.getText() : "";
-        String email = txtEmailT != null ? txtEmailT.getText() : "";
+        clearErrors();
 
-        if (firstName.isBlank() || lastName.isBlank() || email.isBlank()) {
-            AlertUtil.showWarning("Missing information", "Please fill in first name, last name and email before printing the ticket.");
+        String firstName = txtFirstNT.getText().trim();
+        String lastName  = txtLastNT.getText().trim();
+        String email     = txtEmailT.getText().trim();
+
+        boolean hasError = false;
+
+        if (firstName.isBlank()) {
+            setFieldError(txtFirstNT, true);
+            hasError = true;
+        }
+
+        if (lastName.isBlank()) {
+            setFieldError(txtLastNT, true);
+            hasError = true;
+        }
+
+        if (email.isBlank()) {
+            setFieldError(txtEmailT, true);
+            hasError = true;
+        } else {
+            String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+            if (!email.matches(emailRegex)) {
+                setFieldError(txtEmailT, true);
+                showError("Please enter a valid email address.");
+                return;
+            }
+        }
+
+        if (hasError) {
+            showError("Please fill in all required fields.");
             return;
         }
 
         Ticket selectedTicket = cBoxTickets.getValue();
-        Event selectedEvent = cBoxEvent.getValue();
+        Event selectedEvent   = cBoxEvent.getValue();
 
         if (selectedTicket == null) {
-            AlertUtil.showWarning("Missing information", "Please select a ticket.");
+            showError("Please select a ticket.");
             return;
         }
 
-        TicketPreviewController.openAsWindow(selectedTicket, selectedEvent, firstName + " " + lastName, email);
+        TicketPreviewController.openAsWindow(
+                selectedTicket,
+                selectedEvent,
+                firstName + " " + lastName,
+                email
+        );
+    }
+
+    private void showError(String message) {
+        lblError.setText(message);
+        lblError.setVisible(true);
+        lblError.setManaged(true);
+    }
+
+    private void clearErrors() {
+        lblError.setVisible(false);
+        lblError.setManaged(false);
+        lblError.setText("");
+
+        setFieldError(txtFirstNT, false);
+        setFieldError(txtLastNT, false);
+        setFieldError(txtEmailT, false);
+        setFieldError(txtPhoneT, false);
+    }
+
+    private void setFieldError(javafx.scene.control.Control field, boolean error) {
+        if (field == null) return;
+
+        if (error) {
+            if (!field.getStyleClass().contains("field-error")) {
+                field.getStyleClass().add("field-error");
+            }
+        } else {
+            field.getStyleClass().remove("field-error");
+        }
     }
 }

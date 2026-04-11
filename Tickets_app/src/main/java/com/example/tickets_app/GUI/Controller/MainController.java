@@ -1,6 +1,7 @@
 package com.example.tickets_app.GUI.Controller;
 
 import com.example.tickets_app.BE.User;
+import com.example.tickets_app.GUI.Controller.Misc.MenuBarController;
 import com.example.tickets_app.GUI.util.SceneUtil;
 import com.example.tickets_app.GUI.util.SessionManager;
 import javafx.application.Platform;
@@ -8,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 
 public class MainController {
 
@@ -20,19 +22,23 @@ public class MainController {
     @FXML private Button btnCreateE;
     @FXML private Button btnCreateT;
 
+    @FXML private StackPane rootStack;
+    @FXML private MenuBarController menuBarController;
+
     @FXML
     public void initialize() {
         if (!SessionManager.isLoggedIn()) {
             Platform.runLater(SessionManager::redirectToLogin);
             return;
         }
+        menuBarController.setup(rootStack, "Home");
+        // Hide back button on main screen
+        menuBarController.hideBackButton();
+
+
 
         User user = SessionManager.getLoggedInUser();
         String role = user.getRole();
-        String firstName = user.getFirstName();
-        String lastName = user.getLastName();
-
-        lblUser.setText(firstName + " " + lastName + " (" + role + ")");
 
         if (role.equals("Admin")) {
             btnCreateU.setVisible(true);

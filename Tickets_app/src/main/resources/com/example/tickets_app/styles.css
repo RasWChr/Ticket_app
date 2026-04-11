@@ -410,3 +410,140 @@
 .ticket-scroll .viewport {
     -fx-background-color: transparent;
 }
+/* ============================================================
+   TOP BAR (hamburger menu bar)
+   ============================================================ */
+
+.top-bar {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-border-width: 0 0 1 0;
+    -fx-pref-height: 48px;
+    -fx-min-height: 48px;
+}
+
+.hamburger-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 18px;
+    -fx-pref-width: 36px;
+    -fx-pref-height: 36px;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+    -fx-background-radius: 6;
+}
+
+.hamburger-btn:hover {
+    -fx-background-color: #21262D;
+}
+
+.top-bar-title {
+    -fx-text-fill: WHITE;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.top-bar-user {
+    -fx-text-fill: #6E7681;
+    -fx-font-size: 12px;
+}
+
+/*
+   DROPDOWN MENU OVERLAY
+*/
+
+.menu-overlay {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-border-width: 1;
+    -fx-border-radius: 0 0 8 0;
+    -fx-background-radius: 0 0 8 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 16, 0, 4, 4);
+}
+
+.menu-overlay-username {
+    -fx-text-fill: WHITE;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 2 4 0 4;
+}
+
+.menu-overlay-role {
+    -fx-text-fill: #369F97;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 4 4 4;
+}
+
+.menu-overlay-section {
+    -fx-text-fill: #6E7681;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 4 2 4;
+}
+
+.menu-overlay-sep .line {
+    -fx-border-color: #30363D;
+}
+
+.menu-overlay-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #C9D1D9;
+    -fx-font-size: 13px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 8 12 8 12;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-pref-height: 36px;
+}
+
+.menu-overlay-btn:hover {
+    -fx-background-color: #21262D;
+    -fx-text-fill: WHITE;
+}
+
+.menu-overlay-logout {
+    -fx-text-fill: #F85149;
+}
+
+.menu-overlay-logout:hover {
+    -fx-background-color: #3D1A1A;
+    -fx-text-fill: #FF7B72;
+}
+
+/*
+   INLINE FORM ERRORS
+ */
+
+.field-error {
+    -fx-border-color: #C0392B !important;
+    -fx-border-width: 1.5;
+    -fx-effect: dropshadow(gaussian, rgba(192, 57, 43, 0.55), 8, 0, 0, 0);
+}
+
+.login-error-label {
+    -fx-text-fill: #FF7B72;
+    -fx-font-size: 12px;
+    -fx-background-color: rgba(192, 57, 43, 0.15);
+    -fx-background-radius: 6;
+    -fx-border-color: rgba(192, 57, 43, 0.4);
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-padding: 8 12 8 12;
+    -fx-wrap-text: true;
+}
+.password-field-with-button {
+    -fx-padding: 0 36 0 8; /* space for eye button */
+}
+
+.password-eye-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #cccccc;
+    -fx-font-size: 14px;
+    -fx-padding: 0 8 0 8;
+    -fx-cursor: hand;
+}
+
+.password-eye-btn:hover {
+    -fx-text-fill: white;
+}

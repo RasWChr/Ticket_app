@@ -6,33 +6,35 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="400.0" spacing="8.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.Ticket.TicketCreatorController">
-    <padding>
-        <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
-    </padding>
-    <Label text="Which Event?" />
-    <ChoiceBox fx:id="cBoxEvent" maxWidth="Infinity" />
-    <Label text="Ticket type" />
-    <TextField fx:id="txtType" maxWidth="Infinity" />
-    <HBox prefHeight="46.0" prefWidth="320.0">
-        <children>
-          <VBox alignment="TOP_CENTER" prefHeight="46.0" prefWidth="355.0">
-              <children>
-                  <Label text="Price" />
-                  <TextField fx:id="txtPrice" maxWidth="Infinity" prefHeight="25.0" prefWidth="123.0" />
-              </children>
-          </VBox>
-          <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="175.0">
-              <children>
-                  <Label text="Discount" />
-                  <TextField fx:id="txtDiscount" maxWidth="Infinity" prefHeight="25.0" prefWidth="78.0" promptText="\%" />
-              </children>
-          </VBox>
-        </children>
-    </HBox>
-    <Label />
-    <Button fx:id="btnCreateTicket" maxWidth="Infinity" mnemonicParsing="false" onAction="#onCreateTicketClick" text="Create Ticket" />
-    <Button fx:id="btnCancel" maxWidth="Infinity" mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" />
-</VBox>
+<StackPane fx:id="rootStack" prefHeight="600.0" prefWidth="400.0"
+           xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.tickets_app.GUI.Controller.Ticket.TicketCreatorController">
+
+    <VBox spacing="8.0">
+        <fx:include fx:id="menuBar" source="../Misc/MenuBar.fxml" />
+        <VBox spacing="8.0">
+            <padding><Insets bottom="20.0" left="40.0" right="40.0" top="10.0" /></padding>
+            <Label text="Create Ticket" styleClass="title" />
+            <Label text="Which Event?" />
+            <ChoiceBox fx:id="cBoxEvent" maxWidth="Infinity" />
+            <Label text="Ticket type" />
+            <TextField fx:id="txtType" maxWidth="Infinity" />
+            <HBox spacing="12.0">
+                <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                    <Label text="Price" />
+                    <TextField fx:id="txtPrice" maxWidth="Infinity" />
+                </VBox>
+                <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                    <Label text="Discount %" />
+                    <TextField fx:id="txtDiscount" maxWidth="Infinity" promptText="\%" />
+                </VBox>
+            </HBox>
+            <Label />
+            <Button fx:id="btnCreateTicket" maxWidth="Infinity" mnemonicParsing="false" onAction="#onCreateTicketClick" text="Save Ticket" />
+        </VBox>
+    </VBox>
+
+</StackPane>

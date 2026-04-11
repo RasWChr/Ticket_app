@@ -15,9 +15,12 @@ public class SceneUtil {
 
     public static void switchScene(ActionEvent event, String fxmlPath) {
         try {
-            Parent root = FXMLLoader.load(Main.class.getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(fxmlPath));
+            Parent root = loader.load();
+
             Scene scene = new Scene(root);
             scene.getStylesheets().add(Main.class.getResource("styles.css").toExternalForm());
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
@@ -25,6 +28,7 @@ public class SceneUtil {
             e.printStackTrace();
         }
     }
+
 
     public static <C> void switchSceneWithController(Node source, String fxmlPath, Consumer<C> controllerSetup) {
         try {

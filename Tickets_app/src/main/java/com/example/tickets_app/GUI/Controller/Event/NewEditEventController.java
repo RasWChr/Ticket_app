@@ -5,11 +5,15 @@ import com.example.tickets_app.BLL.EventManager;
 import com.example.tickets_app.BLL.Interface.IEventManager;
 import com.example.tickets_app.DAL.DAO.EventDAO;
 import com.example.tickets_app.GUI.Controller.Misc.DateTimePickerController;
+import com.example.tickets_app.GUI.Controller.Misc.MenuBarController;
 import com.example.tickets_app.GUI.util.AlertUtil;
 import com.example.tickets_app.GUI.util.SceneUtil;
+import com.example.tickets_app.GUI.util.SessionManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 
 public class NewEditEventController {
 
@@ -25,8 +29,21 @@ public class NewEditEventController {
 
     private final IEventManager eventManager = new EventManager(new EventDAO());
     private Event eventToEdit = null;
+    @FXML private MenuBarController menuBarController;
+    @FXML private StackPane rootStack;
 
-    public void setEventToEdit(Event event) {
+    @FXML
+    public void initialize() {
+        if (!SessionManager.isLoggedIn()) {
+            Platform.runLater(SessionManager::redirectToLogin);
+            return;
+        }
+
+        // Wire the hamburger menu
+        menuBarController.setup(rootStack, "Create Event");
+    }
+
+        public void setEventToEdit(Event event) {
         this.eventToEdit = event;
         txtEventName.setText(event.getName());
         txtLocation.setText(event.getLocation());
@@ -81,8 +98,4 @@ public class NewEditEventController {
         }
     }
 
-    @FXML
-    public void onCancelEventClick(ActionEvent actionEvent) {
-        SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");
-    }
 }

@@ -5,28 +5,54 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="400.0" spacing="8.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tickets_app.GUI.Controller.Ticket.TicketController">
-    <padding>
-        <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
-    </padding>
-    <children>
-        <Label styleClass="title" text="Ticket Information" />
-        <Label text="Event" />
-        <ChoiceBox fx:id="cBoxEvent" maxWidth="Infinity" />
-      <Label text="Tickets" />
-      <ChoiceBox fx:id="cBoxTickets" maxWidth="Infinity" />
-        <Label text="First Name" />
-        <TextField fx:id="txtFirstNT" maxWidth="Infinity" />
-        <Label text="Last Name" />
-        <TextField fx:id="txtLastNT" maxWidth="Infinity" />
-        <Label text="Email" />
-        <TextField fx:id="txtEmailT" maxWidth="Infinity" />
-        <Label text="Phone Number" />
-        <TextField fx:id="txtPhoneT" maxWidth="Infinity" />
-        <Label />
-        <Button fx:id="btnPTicket" maxWidth="Infinity" mnemonicParsing="false" onAction="#onPTicketClick" text="Print Ticket" />
-        <Button fx:id="btnCancel" maxWidth="Infinity" mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" />
-    </children>
-</VBox>
+<StackPane fx:id="rootStack" prefHeight="600.0" prefWidth="400.0"
+           xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.tickets_app.GUI.Controller.Ticket.TicketController">
+
+    <VBox spacing="8.0">
+        <fx:include fx:id="menuBar" source="../Misc/MenuBar.fxml" />
+
+        <VBox spacing="8.0">
+            <padding>
+                <Insets bottom="20.0" left="40.0" right="40.0" top="10.0" />
+            </padding>
+
+            <Label styleClass="title" text="Print Ticket" />
+
+            <Label text="Event" />
+            <ChoiceBox fx:id="cBoxEvent" maxWidth="Infinity" />
+
+            <Label text="Ticket" />
+            <ChoiceBox fx:id="cBoxTickets" maxWidth="Infinity" />
+
+            <Label text="First Name" />
+            <TextField fx:id="txtFirstNT" maxWidth="Infinity" />
+
+            <Label text="Last Name" />
+            <TextField fx:id="txtLastNT" maxWidth="Infinity" />
+
+            <Label text="Email" />
+            <TextField fx:id="txtEmailT" maxWidth="Infinity" />
+
+            <Label text="Phone Number" />
+            <TextField fx:id="txtPhoneT" maxWidth="Infinity" />
+
+            <!-- Inline error label -->
+            <Label fx:id="lblError"
+                   style="-fx-text-fill: #FF7B72;"
+                   wrapText="true"
+                   visible="false"
+                   managed="false" />
+
+            <Button fx:id="btnPTicket"
+                    maxWidth="Infinity"
+                    mnemonicParsing="false"
+                    onAction="#onPTicketClick"
+                    text="Print Ticket" />
+        </VBox>
+    </VBox>
+
+</StackPane>

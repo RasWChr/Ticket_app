@@ -6,14 +6,18 @@ import com.example.tickets_app.BLL.UserManager;
 import com.example.tickets_app.BLL.util.ExceptionHandler;
 import com.example.tickets_app.DAL.DAO.UserDAO;
 import com.example.tickets_app.GUI.Controller.Misc.BaseController;
+import com.example.tickets_app.GUI.Controller.Misc.MenuBarController;
 import com.example.tickets_app.GUI.util.AlertUtil;
 import com.example.tickets_app.GUI.util.PasswordToggleUtil;
 import com.example.tickets_app.GUI.util.SceneUtil;
+import com.example.tickets_app.GUI.util.SessionManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 
 public class NewEditUserController extends BaseController {
 
@@ -32,6 +36,19 @@ public class NewEditUserController extends BaseController {
     private final IUserManager userManager = new UserManager(new UserDAO());
     private User userToEdit = null; // null = create mode, non-null = edit mode
 
+    @FXML private MenuBarController menuBarController;
+    @FXML private StackPane rootStack;
+
+    @FXML
+    public void initialize() {
+        if (!SessionManager.isLoggedIn()) {
+            Platform.runLater(SessionManager::redirectToLogin);
+            return;
+        }
+
+        // Wire the hamburger menu
+        menuBarController.setup(rootStack, "Create User");
+    }
     //Kaldet på af userController når man laver om på en existerene user
     public void setUserToEdit(User user) {
         this.userToEdit = user;
@@ -48,11 +65,6 @@ public class NewEditUserController extends BaseController {
         txtPasswordVisible.setVisible(false);
         btnShowPassword.setManaged(false);
         btnShowPassword.setVisible(false);
-    }
-
-    @FXML
-    public void onCancelUClick(ActionEvent actionEvent) {
-        SceneUtil.switchScene(actionEvent, "Views/Main-Screen.fxml");
     }
 
     @FXML
