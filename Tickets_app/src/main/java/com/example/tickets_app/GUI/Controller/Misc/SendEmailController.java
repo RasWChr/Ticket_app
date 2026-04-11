@@ -18,17 +18,24 @@ import java.io.File;
 public class SendEmailController {
 
     @FXML private TextField txtEmail;
-    @FXML private Label     lblStatus;
-    @FXML private Button    btnSend;
+    @FXML private Label lblStatus;
+    @FXML private Button btnSend;
 
-    private VBox   ticketNode;
+    private VBox ticketNode;
     private Ticket ticket;
-    private Event  event;
+    private Event event;
 
     public void setData(VBox ticketNode, Ticket ticket, Event event) {
         this.ticketNode = ticketNode;
-        this.ticket     = ticket;
-        this.event      = event;
+        this.ticket = ticket;
+        this.event = event;
+    }
+
+    //Auto‑fill email support
+    public void setEmail(String email) {
+        if (email != null && !email.isBlank()) {
+            txtEmail.setText(email);
+        }
     }
 
     @FXML
@@ -53,7 +60,6 @@ public class SendEmailController {
 
         String eventName = event != null ? event.getName() : "Event";
 
-        // Step 1 — snapshot MUST happen on the FX thread
         File pdf = TicketPrintUtil.saveAsTempPdf(ticketNode, eventName);
 
         if (pdf == null) {
@@ -65,7 +71,6 @@ public class SendEmailController {
 
         lblStatus.setText("Sending email...");
 
-        // Step 2 — only the network call goes to a background thread
         File finalPdf = pdf;
         Task<Void> sendTask = new Task<>() {
             @Override
