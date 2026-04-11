@@ -5,6 +5,7 @@ import com.example.tickets_app.BLL.Interface.IUserManager;
 import com.example.tickets_app.BLL.UserManager;
 import com.example.tickets_app.BLL.util.ExceptionHandler;
 import com.example.tickets_app.DAL.DAO.UserDAO;
+import com.example.tickets_app.GUI.Controller.Misc.MenuBarController;
 import com.example.tickets_app.GUI.util.AlertUtil;
 import com.example.tickets_app.GUI.util.SceneUtil;
 import com.example.tickets_app.GUI.util.SessionManager;
@@ -17,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 
 public class UserController {
 
@@ -28,12 +30,18 @@ public class UserController {
     private final ObservableList<User> userList = FXCollections.observableArrayList();
     private FilteredList<User> filteredList;
 
+    @FXML private MenuBarController menuBarController;
+    @FXML private StackPane rootStack;
+
     @FXML
     public void initialize() {
         if (!SessionManager.isLoggedIn()) {
             Platform.runLater(SessionManager::redirectToLogin);
             return;
         }
+
+        // Wire the hamburger menu
+        menuBarController.setup(rootStack, "Manage Users");
 
         cBoxRoleFilter.getItems().addAll("All", "Admin", "Coordinator");
         cBoxRoleFilter.setValue("All");
