@@ -1,74 +1,77 @@
-USE master;
-GO
-IF EXISTS(SELECT * FROM sys.databases WHERE name = 'felnie01_TicketApp')
-    BEGIN
-        DROP DATABASE felnie01_TicketApp;
-    END
+Current db:
 
-CREATE DATABASE felnie01_TicketApp;
-GO
-USE felnie01_TicketApp;
-GO
+use felnie01_TicketApp
+go
 
--- Create Events table with IDENTITY for Id column
-CREATE TABLE felnie01_TicketApp.dbo.Events (
-                                               Id INT PRIMARY KEY IDENTITY(1,1),
-                                               Name VARCHAR(100) NOT NULL,
-                                               StartDateTime VARCHAR(50) NOT NULL,
-                                               EndDateTime VARCHAR(50),
-                                               Location VARCHAR(200) NOT NULL,
-                                               LocationGuidance VARCHAR(200),
-                                               Notes VARCHAR(2000)
-);
-
--- Create Users table
-create table felnie01_TicketApp.dbo.Users (
-
-                                              ID int primary key not null,
-                                              FirstName varchar(50),
-                                              LastName varchar(50),
-                                              Email varchar(100),
-                                              Phone varchar(20),
-                                              Password varchar(255),
-                                              Role varchar(20),
-                                              IsSeeded bit default ((0)) not null
-);
-
-
--- Create EventCoordinators table to link events and coordinators
-CREATE TABLE felnie01_TicketApp.dbo.EventCoordinators (
-                                                          EventId INT NOT NULL,
-                                                          UserId INT NOT NULL,
-                                                          PRIMARY KEY (EventId, UserId),
-                                                          FOREIGN KEY (EventId) REFERENCES Events(Id) ON DELETE CASCADE,
-                                                          FOREIGN KEY (UserId) REFERENCES Users(ID) ON DELETE CASCADE
-);
-
-CREATE TABLE Tickets
+create table dbo.Events
 (
-    [ID] int IDENTITY NOT NULL PRIMARY KEY,
-    [Event ID] int NULL FOREIGN KEY REFERENCES Events(ID),
-    [Price] double precision,
-    [Discount] double precision,
-    [Ticket type] varchar(50) NULL,
+    Id               int identity
+        primary key,
+    Name             varchar(100) not null,
+    StartDateTime    varchar(50)  not null,
+    EndDateTime      varchar(50),
+    Location         varchar(200) not null,
+    LocationGuidance varchar(200),
+    Notes            varchar(2000)
 )
+go
 
-INSERT INTO Users (ID,FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
-VALUES
-    (2, 'Rasmus', 'Christensen', 'goraser12@gmail.com', 51430743, '$2a$10$4dHkP134a/7uBR0MsSZmyO5IVoIL.69dGMJsw3/uDXn75R9//UXd2', 'Coordinator', 'false')
-INSERT INTO Users (ID, FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
-VALUES
-    (1,'Admin', 'User', 'admin@easv.dk', 0000000, '$2a$10$TzT35KoAd0k5.iTyzJksK.C3bkgifa.JMF41IhkN2p2YHRiQhlr5G', 'Admin', 'true')
-INSERT INTO Users (ID, FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
-VALUES
-    (3, 'Jon', 'Linnet', 'jon.linnet@hotmail.com', 51935127, '$2a$10$EgbQ/c/TlZ3HwmXT5EJrYuW7WHaRLCpGLASC635y307kJ60GQcUUy', 'Coordinator', 'false')
-INSERT INTO Users (ID, FirstName, LastName, Email, Phone, Password, Role, IsSeeded)
-VALUES
-    (4, 'Felix', 'Runge', 'felix@funworld.dk', 0000000, '$2a$10$wNGiav7cxmAauH41MaJ3aOe/dxtlhrOKhRp/b5bhrMSG1ORe5U8tu', 'Coordinator', 'false')
+create table dbo.Tickets
+(
+    ID         int identity
+        primary key,
+    EventID    int
+        references dbo.Events,
+    Price      float,
+    Discount   float,
+    Tickettype varchar(50),
+    UUID       nvarchar(36) default newid() not null,
+    IsGlobal   bit          default 0       not null
+)
+go
 
+create table dbo.CustomerTickets
+(
+    ID        int identity
+        primary key,
+    TicketID  int                        not null
+        references dbo.Tickets
+            on delete cascade,
+    EventID   int
+        references dbo.Events,
+    FirstName varchar(100)               not null,
+    LastName  varchar(100)               not null,
+    Email     varchar(200)               not null,
+    Phone     varchar(30),
+    IssuedAt  datetime default getdate() not null,
+    IsGlobal  bit      default 0         not null
+)
+go
 
-SET IDENTITY_INSERT Events ON
-INSERT INTO Events (Id, Name, StartDateTime, EndDateTime, Location, LocationGuidance, Notes)
-Values
-    (1,'Disco', '01-06-2026 11:00', '01-06-2026 16:00', 'Vor Frelsers Kirke', 'Kirkegade 24, 6700 Esbjerg', 'tippy tippy tap tippy tippy tap')
-SET IDENTITY_INSERT Events OFF
+create table dbo.Users
+(
+    ID        int identity
+        primary key,
+    FirstName varchar(50),
+    LastName  varchar(50),
+    Email     varchar(100),
+    Phone     varchar(20),
+    Password  varchar(255),
+    Role      varchar(20)
+        constraint chk_Role
+            check ([Role] = 'Coordinator' OR [Role] = 'Admin'),
+    IsSeeded  bit default 0 not null
+)
+go
+
+create table dbo.EventCoordinators
+(
+    EventId int not null
+        references dbo.Events
+            on delete cascade,
+    UserId  int not null
+        references dbo.Users
+            on delete cascade,
+    primary key (EventId, UserId)
+)
+go
