@@ -15,10 +15,12 @@
 
     <VBox styleClass="ticket-header" spacing="4.0">
         <padding>
-            <Insets top="20.0" bottom="20.0" left="24.0" right="24.0" />
+            <Insets top="20.0" bottom="14.0" left="24.0" right="24.0" />
         </padding>
         <Label fx:id="lblEventTitle" styleClass="ticket-event-title" wrapText="true" />
         <Label fx:id="lblTicketType" styleClass="ticket-type-badge" />
+        <!-- Scope badge: shows "All Events" or the specific event name -->
+        <Label fx:id="lblScope" styleClass="ticket-scope-global" wrapText="true" />
     </VBox>
 
     <VBox styleClass="ticket-body" spacing="14.0">
@@ -27,22 +29,32 @@
         </padding>
 
         <VBox spacing="4.0">
-            <Label text="DATE &amp; TIME" styleClass="ticket-section-label" style="-fx-text-fill: #888888" />
-            <Label fx:id="lblDate" styleClass="ticket-value" wrapText="true" style="-fx-text-fill: #1A1A1A" />
+            <Label text="DATE &amp; TIME" styleClass="ticket-section-label"
+                   style="-fx-text-fill: #888888" />
+            <Label fx:id="lblDate" styleClass="ticket-value"
+                   wrapText="true" style="-fx-text-fill: #1A1A1A" />
         </VBox>
 
         <VBox spacing="4.0">
-            <Label text="LOCATION" styleClass="ticket-section-label" style="-fx-text-fill: #888888" />
-            <Label fx:id="lblLocation" styleClass="ticket-value" wrapText="true" style="-fx-text-fill: #1A1A1A" />
-            <Label fx:id="lblLocationGuidance" styleClass="ticket-guidance" wrapText="true" style="-fx-text-fill: #555555"/>
+            <Label text="LOCATION" styleClass="ticket-section-label"
+                   style="-fx-text-fill: #888888" />
+            <Label fx:id="lblLocation" styleClass="ticket-value"
+                   wrapText="true" style="-fx-text-fill: #1A1A1A" />
+            <Label fx:id="lblLocationGuidance" styleClass="ticket-guidance"
+                   wrapText="true" style="-fx-text-fill: #555555" />
         </VBox>
 
         <Separator styleClass="ticket-separator" />
 
-        <VBox fx:id="customerSection" spacing="4.0" style="-fx-background-color: white;">
-            <Label text="TICKET HOLDER" styleClass="ticket-section-label" style="-fx-text-fill: #888888;" />
-            <Label fx:id="lblCustomerName" styleClass="ticket-value" style="-fx-text-fill: #1A1A1A;" />
-            <Label fx:id="lblCustomerEmail" styleClass="ticket-guidance" style="-fx-text-fill: #555555;"  />
+        <!-- Customer section (hidden when no customer info) -->
+        <VBox fx:id="customerSection" spacing="4.0"
+              style="-fx-background-color: white;">
+            <Label text="TICKET HOLDER" styleClass="ticket-section-label"
+                   style="-fx-text-fill: #888888;" />
+            <Label fx:id="lblCustomerName" styleClass="ticket-value"
+                   style="-fx-text-fill: #1A1A1A;" />
+            <Label fx:id="lblCustomerEmail" styleClass="ticket-guidance"
+                   style="-fx-text-fill: #555555;" />
         </VBox>
 
     </VBox>
@@ -60,7 +72,7 @@
             <Insets top="14.0" bottom="14.0" left="24.0" right="24.0" />
         </padding>
         <VBox HBox.hgrow="ALWAYS" spacing="4.0">
-            <Label fx:id="lblUuid" styleClass="ticket-uuid" />
+            <Label fx:id="lblUuid"  styleClass="ticket-uuid" />
             <Label fx:id="lblPrice" styleClass="ticket-price" />
         </VBox>
         <Region HBox.hgrow="ALWAYS" />

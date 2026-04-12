@@ -547,3 +547,67 @@
 .password-eye-btn:hover {
     -fx-text-fill: white;
 }
+
+/* Global badge — teal accent, stands out on dark header */
+.ticket-scope-global {
+    -fx-text-fill: #369F97;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(54, 159, 151, 0.18);
+    -fx-background-radius: 4;
+    -fx-padding: 3 8 3 8;
+    -fx-border-color: rgba(54, 159, 151, 0.45);
+    -fx-border-radius: 4;
+    -fx-border-width: 1;
+}
+
+/* Event-specific badge — muted amber */
+.ticket-scope-event {
+    -fx-text-fill: #E8A838;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(232, 168, 56, 0.15);
+    -fx-background-radius: 4;
+    -fx-padding: 3 8 3 8;
+    -fx-border-color: rgba(232, 168, 56, 0.4);
+    -fx-border-radius: 4;
+    -fx-border-width: 1;
+}
+
+/* CheckBox styling to match dark theme */
+.check-box {
+    -fx-text-fill: WHITE;
+    -fx-font-size: 13px;
+}
+
+.check-box .box {
+    -fx-background-color: #2C333B;
+    -fx-border-color: #444C56;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #369F97;
+    -fx-border-color: #369F97;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: WHITE;
+}
+
+.check-box:hover .box {
+    -fx-border-color: #369F97;
+}
+
+.scope-badge-global {
+    -fx-text-fill: #369F97;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.scope-badge-event {
+    -fx-text-fill: #E8A838;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}

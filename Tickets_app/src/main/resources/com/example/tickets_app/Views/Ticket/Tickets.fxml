@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -17,41 +18,47 @@
 
         <VBox spacing="8.0">
             <padding>
-                <Insets bottom="20.0" left="40.0" right="40.0" top="10.0" />
+                <Insets bottom="20.0" left="24.0" right="24.0" top="10.0" />
             </padding>
 
-            <Label styleClass="title" text="Print Ticket" />
+            <Label styleClass="title" text="Issue Ticket" />
 
             <Label text="Event" />
             <ChoiceBox fx:id="cBoxEvent" maxWidth="Infinity" />
 
-            <Label text="Ticket" />
+            <Label text="Ticket Type" />
             <ChoiceBox fx:id="cBoxTickets" maxWidth="Infinity" />
 
-            <Label text="First Name" />
-            <TextField fx:id="txtFirstNT" maxWidth="Infinity" />
+            <Label text="Customer Information" styleClass="section-label"
+                   style="-fx-padding: 6 0 2 0;" />
 
-            <Label text="Last Name" />
-            <TextField fx:id="txtLastNT" maxWidth="Infinity" />
+            <HBox spacing="8.0">
+                <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                    <Label text="First Name" />
+                    <TextField fx:id="txtFirstNT" maxWidth="Infinity" />
+                </VBox>
+                <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                    <Label text="Last Name" />
+                    <TextField fx:id="txtLastNT" maxWidth="Infinity" />
+                </VBox>
+            </HBox>
 
             <Label text="Email" />
-            <TextField fx:id="txtEmailT" maxWidth="Infinity" />
+            <TextField fx:id="txtEmailT" maxWidth="Infinity"
+                       promptText="customer@example.com" />
 
-            <Label text="Phone Number" />
-            <TextField fx:id="txtPhoneT" maxWidth="Infinity" />
+            <Label text="Phone (optional)" />
+            <TextField fx:id="txtPhoneT" maxWidth="Infinity" promptText="+45 ..." />
 
-            <!-- Inline error label -->
-            <Label fx:id="lblError"
-                   style="-fx-text-fill: #FF7B72;"
-                   wrapText="true"
-                   visible="false"
-                   managed="false" />
+            <Label fx:id="lblError" styleClass="login-error-label"
+                   text="" visible="false" managed="false"
+                   wrapText="true" maxWidth="Infinity" />
 
-            <Button fx:id="btnPTicket"
-                    maxWidth="Infinity"
-                    mnemonicParsing="false"
-                    onAction="#onPTicketClick"
-                    text="Print Ticket" />
+            <Label />
+            <Button fx:id="btnPTicket" maxWidth="Infinity" mnemonicParsing="false"
+                    onAction="#onPTicketClick" text="Issue and Preview Ticket" />
+            <Button fx:id="btnCancel" maxWidth="Infinity" mnemonicParsing="false"
+                    onAction="#onBtnCancelClick" text="Cancel" />
         </VBox>
     </VBox>
 

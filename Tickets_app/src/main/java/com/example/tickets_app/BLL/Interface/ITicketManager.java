@@ -9,9 +9,10 @@ import java.util.List;
 public interface ITicketManager {
     List<Event> getAllEvents();
     List<Ticket> getAllTickets() throws ExceptionHandler;
-    void createTicket(int eventId, double price, double discount, String ticketType) throws ExceptionHandler;
+    void createTicket(Integer eventId, double price, double discount,
+                      String ticketType, boolean isGlobal) throws ExceptionHandler;
     void deleteTicket(int ticketId) throws ExceptionHandler;
-    void editTicket(int ID, int eventId, double price, double discount, String ticketType) throws ExceptionHandler;
+    void editTicket(int id, Integer eventId, double price, double discount,
+                    String ticketType, boolean isGlobal) throws ExceptionHandler;
     List<Ticket> getTicketsByEventId(int eventId) throws ExceptionHandler;
-
 }

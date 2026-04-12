@@ -16,10 +16,9 @@ public class TicketManager implements ITicketManager {
     private final ITicketDAO ticketDAO;
 
     public TicketManager(IEventDAO eventDAO, ITicketDAO ticketDAO) {
-        this.eventDAO = eventDAO;
+        this.eventDAO  = eventDAO;
         this.ticketDAO = ticketDAO;
     }
-
 
     @Override
     public List<Event> getAllEvents() {
@@ -45,9 +44,10 @@ public class TicketManager implements ITicketManager {
     }
 
     @Override
-    public void createTicket(int eventId, double price, double discount, String ticketType) throws ExceptionHandler {
-       if (!ValidationUtil.isValidEventId((String.valueOf(eventId))))
-            throw new IllegalArgumentException("Must choose an Event.");
+    public void createTicket(Integer eventId, double price, double discount,
+                             String ticketType, boolean isGlobal) throws ExceptionHandler {
+        if (!isGlobal && eventId == null)
+            throw new IllegalArgumentException("Must choose an event, or mark as valid for all events.");
         if (!ValidationUtil.isValidTicketType(ticketType))
             throw new IllegalArgumentException("Must be a valid ticket type.");
         if (!ValidationUtil.isValidPrice(price))
@@ -56,7 +56,7 @@ public class TicketManager implements ITicketManager {
             throw new IllegalArgumentException("Must be a valid discount.");
 
         try {
-            Ticket ticket = new Ticket(eventId, price, discount, ticketType);
+            Ticket ticket = new Ticket(isGlobal ? null : eventId, price, discount, ticketType, isGlobal);
             ticketDAO.createTicket(ticket);
         } catch (ExceptionHandler e) {
             throw new ExceptionHandler("Could not create ticket: " + e.getMessage(), e);
@@ -73,9 +73,10 @@ public class TicketManager implements ITicketManager {
     }
 
     @Override
-    public void editTicket(int ID, int eventId, double price, double discount, String ticketType) throws ExceptionHandler {
-        if (!ValidationUtil.isValidEventId((String.valueOf(eventId))))
-            throw new IllegalArgumentException("Must choose an Event.");
+    public void editTicket(int id, Integer eventId, double price, double discount,
+                           String ticketType, boolean isGlobal) throws ExceptionHandler {
+        if (!isGlobal && eventId == null)
+            throw new IllegalArgumentException("Must choose an event, or mark as valid for all events.");
         if (!ValidationUtil.isValidTicketType(ticketType))
             throw new IllegalArgumentException("Must be a valid ticket type.");
         if (!ValidationUtil.isValidPrice(price))
@@ -84,7 +85,7 @@ public class TicketManager implements ITicketManager {
             throw new IllegalArgumentException("Must be a valid discount.");
 
         try {
-            ticketDAO.editTicket(ID, eventId, price, discount, ticketType);
+            ticketDAO.editTicket(id, isGlobal ? null : eventId, price, discount, ticketType, isGlobal);
         } catch (ExceptionHandler e) {
             throw new ExceptionHandler("Could not edit ticket: " + e.getMessage(), e);
         }

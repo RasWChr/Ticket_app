@@ -20,48 +20,53 @@ import java.io.IOException;
 public class TicketPreviewController {
 
     @FXML private VBox ticketContainer;
-    @FXML private VBox customerSection;
 
-    private VBox ticketNode;
+    private VBox   ticketNode;
     private Ticket ticket;
-    private Event event;
-
+    private Event  event;
     private String customerName;
     private String customerEmail;
+    private boolean isGlobal;
 
-    public void setTicket(Ticket ticket, Event event, String customerName, String customerEmail) {
-        this.ticket = ticket;
-        this.event = event;
+    public void setTicket(Ticket ticket, Event event,
+                          String customerName, String customerEmail,
+                          boolean isGlobal) {
+        this.ticket       = ticket;
+        this.event        = event;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
+        this.isGlobal     = isGlobal;
 
         try {
             FXMLLoader loader = new FXMLLoader(
                     Main.class.getResource("Views/Ticket/TicketLayout.fxml"));
             ticketNode = loader.load();
             TicketLayoutController controller = loader.getController();
-            controller.setTicket(ticket, event, customerName, customerEmail);
+            controller.setTicket(ticket, event, customerName, customerEmail, isGlobal);
             ticketContainer.getChildren().setAll(ticketNode);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void openAsWindow(Ticket ticket, Event event, String customerName, String customerEmail) {
+    /** Full opener with global flag. */
+    public static void openAsWindow(Ticket ticket, Event event,
+                                    String customerName, String customerEmail,
+                                    boolean isGlobal) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     Main.class.getResource("Views/Ticket/TicketPreview.fxml"));
             VBox root = loader.load();
 
             TicketPreviewController controller = loader.getController();
-            controller.setTicket(ticket, event, customerName, customerEmail);
+            controller.setTicket(ticket, event, customerName, customerEmail, isGlobal);
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(
                     Main.class.getResource("styles.css").toExternalForm());
 
             Stage stage = new Stage();
-            stage.setTitle("Ticket — " + (event != null ? event.getName() : "Preview"));
+            stage.setTitle("Ticket — " + (event != null ? event.getName() : "All Events"));
             stage.setScene(scene);
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -72,8 +77,15 @@ public class TicketPreviewController {
         }
     }
 
+    /** Backwards-compatible: no customer info, not global. */
+    public static void openAsWindow(Ticket ticket, Event event,
+                                    String customerName, String customerEmail) {
+        openAsWindow(ticket, event, customerName, customerEmail, false);
+    }
+
+    /** Backwards-compatible: preview-only (no customer), not global. */
     public static void openAsWindow(Ticket ticket, Event event) {
-        openAsWindow(ticket, event, null, null);
+        openAsWindow(ticket, event, null, null, false);
     }
 
     @FXML
@@ -85,8 +97,7 @@ public class TicketPreviewController {
         File saved = TicketPrintUtil.saveAsPdf(
                 ticketNode, ticketContainer.getScene().getWindow());
         if (saved != null) {
-            AlertUtil.showInfo("Saved",
-                    "Ticket saved to:\n" + saved.getAbsolutePath());
+            AlertUtil.showInfo("Saved", "Ticket saved to:\n" + saved.getAbsolutePath());
         }
     }
 
@@ -103,8 +114,6 @@ public class TicketPreviewController {
 
             SendEmailController controller = loader.getController();
             controller.setData(ticketNode, ticket, event);
-
-            // Auto‑fill email
             controller.setEmail(customerEmail);
 
             Scene scene = new Scene(root);

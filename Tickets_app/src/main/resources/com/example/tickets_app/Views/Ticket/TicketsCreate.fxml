@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -15,13 +16,35 @@
 
     <VBox spacing="8.0">
         <fx:include fx:id="menuBar" source="../Misc/MenuBar.fxml" />
+
         <VBox spacing="8.0">
-            <padding><Insets bottom="20.0" left="40.0" right="40.0" top="10.0" /></padding>
+            <padding>
+                <Insets bottom="20.0" left="40.0" right="40.0" top="10.0" />
+            </padding>
+
             <Label text="Create Ticket" styleClass="title" />
-            <Label text="Which Event?" />
+
+            <VBox spacing="6.0"
+                  style="-fx-background-color: #2C333B; -fx-background-radius: 6; -fx-padding: 12;">
+
+                <CheckBox fx:id="chkGlobal"
+                          text="Valid for ALL events"
+                          style="-fx-text-fill: WHITE; -fx-font-size: 13px;" />
+
+                <Label fx:id="lblEventScope"
+                       text="Select an event to lock this ticket to."
+                       styleClass="section-label"
+                       wrapText="true"
+                       maxWidth="Infinity" />
+            </VBox>
+
+
+            <Label text="Event" />
             <ChoiceBox fx:id="cBoxEvent" maxWidth="Infinity" />
+
             <Label text="Ticket type" />
             <TextField fx:id="txtType" maxWidth="Infinity" />
+
             <HBox spacing="12.0">
                 <VBox spacing="4.0" HBox.hgrow="ALWAYS">
                     <Label text="Price" />
@@ -32,8 +55,16 @@
                     <TextField fx:id="txtDiscount" maxWidth="Infinity" promptText="\%" />
                 </VBox>
             </HBox>
+
+            <Label fx:id="lblError" styleClass="login-error-label"
+                   text="" visible="false" managed="false"
+                   wrapText="true" maxWidth="Infinity" />
+
             <Label />
-            <Button fx:id="btnCreateTicket" maxWidth="Infinity" mnemonicParsing="false" onAction="#onCreateTicketClick" text="Save Ticket" />
+            <Button fx:id="btnCreateTicket" maxWidth="Infinity" mnemonicParsing="false"
+                    onAction="#onCreateTicketClick" text="Save Ticket" />
+            <Button fx:id="btnCancel" maxWidth="Infinity" mnemonicParsing="false"
+                    onAction="#onBtnCancelClick" text="Cancel" />
         </VBox>
     </VBox>
 

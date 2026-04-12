@@ -10,11 +10,10 @@ import java.util.function.Consumer;
 
 public class TicketListCellController {
 
-    @FXML private Label lblTicketName;
-    @FXML private Label lblTicketDetails;
+    @FXML private Label  lblTicketName;
+    @FXML private Label  lblTicketDetails;
+    @FXML private Label  lblScope;       // shows "All Events" or event name
     @FXML private Button btnOptions;
-
-    private String eventName;
 
     private Consumer<Ticket> onDelete;
     private Consumer<Ticket> onEdit;
@@ -25,28 +24,40 @@ public class TicketListCellController {
                           Consumer<Ticket> onEdit,
                           Consumer<Ticket> onPreview,
                           Ticket ticket) {
-        this.ticket = ticket;
-        this.onDelete = onDelete;
-        this.onEdit = onEdit;
+        this.ticket    = ticket;
+        this.onDelete  = onDelete;
+        this.onEdit    = onEdit;
         this.onPreview = onPreview;
 
-
-        lblTicketName.setText(ticket.getEventName());
+        lblTicketName.setText(ticket.getTicketType());
         lblTicketDetails.setText(formatDetails(ticket));
+
+        // Scope badge
+        if (ticket.isGlobal()) {
+            lblScope.setText("✦ All Events");
+            lblScope.getStyleClass().setAll("scope-badge-global");
+        } else {
+            String eventLabel = ticket.getEventName() != null
+                    ? ticket.getEventName() : "Unknown Event";
+            lblScope.setText("📅 " + eventLabel);
+            lblScope.getStyleClass().setAll("scope-badge-event");
+        }
 
         buildContextMenu();
     }
 
     private String formatDetails(Ticket ticket) {
-        double price = ticket.getPrice();
+        double price    = ticket.getPrice();
         double discount = ticket.getDiscount();
-        String type = ticket.getTicketType();
+        String type     = ticket.getTicketType();
 
         if (discount > 0) {
-            double discountedPrice = price - (price * (discount / 100));
-            return String.format("%.2f → %.2f kr (%.0f%% off)", price, discountedPrice, discount);
+            double final_ = price - (price * (discount / 100));
+            return String.format("%.2f kr → %.2f kr  (%.0f%% off)", price, final_, discount);
         } else {
-            return String.format("%.2f kr | %s", price, type);
+            return price == 0
+                    ? "FREE"
+                    : String.format("%.2f kr", price);
         }
     }
 
@@ -64,17 +75,12 @@ public class TicketListCellController {
 
         menu.getItems().addAll(itemPreview, itemDelete);
 
-
-        // Coordinator-only options
         if (role.equals("Coordinator")) {
             menu.getItems().add(new SeparatorMenuItem());
-
             MenuItem itemEdit = new MenuItem("✏ Edit");
             itemEdit.setOnAction(e -> { if (onEdit != null) onEdit.accept(ticket); });
-
             menu.getItems().add(itemEdit);
         }
-
 
         btnOptions.setOnAction(e ->
                 menu.show(btnOptions,
@@ -82,7 +88,5 @@ public class TicketListCellController {
                         btnOptions.localToScreen(0, 0).getY() + btnOptions.getHeight()));
     }
 
-
-    public void onOptionsClick(ActionEvent actionEvent) {
-    }
+    @FXML public void onOptionsClick(ActionEvent actionEvent) { }
 }

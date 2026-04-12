@@ -2,25 +2,54 @@ package com.example.tickets_app.BE;
 
 public class Ticket {
     private int id;
-    private int eventID;
+    private Integer eventID;   // nullable — null means global
     private double price;
     private String ticketType;
     private double discount;
     private String eventName;
+    private boolean isGlobal;
 
-    public Ticket(int id, int eventID, double price, double discount, String ticketType){
+    public Ticket(int id, Integer eventID, double price, double discount,
+                  String ticketType, boolean isGlobal) {
         this.id = id;
         this.eventID = eventID;
         this.price = price;
         this.discount = discount;
         this.ticketType = ticketType;
+        this.isGlobal = isGlobal;
     }
 
-    public Ticket(int eventID, double price, double discount, String ticketType){
+    public Ticket(Integer eventID, double price, double discount,
+                  String ticketType, boolean isGlobal) {
         this.eventID = eventID;
         this.price = price;
         this.discount = discount;
         this.ticketType = ticketType;
+        this.isGlobal = isGlobal;
+    }
+
+    public Ticket(int id, int eventID, double price, double discount, String ticketType) {
+        this(id, (Integer) eventID, price, discount, ticketType, false);
+    }
+
+    public Ticket(int eventID, double price, double discount, String ticketType) {
+        this((Integer) eventID, price, discount, ticketType, false);
+    }
+
+    public boolean isGlobal() {
+        return isGlobal;
+    }
+
+    public void setGlobal(boolean global) {
+        isGlobal = global;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setEventID(Integer eventID) {
+        this.eventID = eventID;
     }
 
     public String getEventName() { return eventName; }
@@ -34,12 +63,8 @@ public class Ticket {
         this.id = id;
     }
 
-    public int getEventID() {
+    public Integer getEventID() {
         return eventID;
-    }
-
-    public void setEventID(int eventID) {
-        this.eventID = eventID;
     }
 
     public double getPrice() {
@@ -62,8 +87,15 @@ public class Ticket {
         this.ticketType = ticketType;
     }
 
+    public String getScopeLabel() {
+        if (isGlobal) return "All Events";
+        return eventName != null ? eventName : (eventID != null ? "Event #" + eventID : "—");
+    }
+
     @Override
     public String toString() {
-        return discount > 0 ? ticketType + "(" + price + " kr, " + discount + "%)" : ticketType;
+        return discount > 0
+                ? ticketType + " (" + price + " kr, " + discount + "%)"
+                : ticketType;
     }
 }
