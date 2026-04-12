@@ -6,6 +6,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.oned.Code128Writer;
 import com.google.zxing.qrcode.QRCodeWriter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -30,6 +31,7 @@ public class TicketLayoutController {
     @FXML private Label lblUuid;
     @FXML private Label lblScope;
     @FXML private ImageView imgQrCode;
+    @FXML private ImageView imgBarcode;
     @FXML private VBox customerSection;
 
 
@@ -87,7 +89,8 @@ public class TicketLayoutController {
             lblPrice.setText(price == 0 ? "FREE" : String.format("%.2f kr", price));
         }
 
-        // UUID
+        // Use the UUID stored in DB — fallback if somehow null
+        String uuid = ticket.getUuid() != null ? ticket.getUuid() : "NO-UUID";
         lblUuid.setText("ID: " + ticket.getId());
 
         // QR code
@@ -97,6 +100,12 @@ public class TicketLayoutController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        try {
+            imgBarcode.setImage(generateBarcode(uuid, 400, 80));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         // Customer
         lblCustomerName.setText(customerName != null ? customerName : "");
@@ -120,28 +129,19 @@ public class TicketLayoutController {
     private String buildQrContent(Ticket ticket, Event event, boolean isGlobal) {
         StringBuilder sb = new StringBuilder();
         sb.append("TICKET ID: ").append(ticket.getId()).append("\n");
-
-        if (isGlobal) {
-            sb.append("SCOPE: ALL EVENTS\n");
-        } else {
-            sb.append("EVENT: ").append(
-                    event != null ? event.getName() : ticket.getEventName()).append("\n");
-        }
-
+        sb.append("EVENT: ").append(event != null ? event.getName() : ticket.getEventName()).append("\n");
         sb.append("TYPE: ").append(ticket.getTicketType()).append("\n");
 
         double price    = ticket.getPrice();
         double discount = ticket.getDiscount();
         if (discount > 0) {
             double finalPrice = price - (price * (discount / 100));
-            sb.append("PRICE: ")
-                    .append(String.format("%.2f kr (%.0f%% off)", finalPrice, discount))
-                    .append("\n");
+            sb.append("PRICE: ").append(String.format("%.2f kr (%.0f%% off)", finalPrice, discount)).append("\n");
         } else {
             sb.append("PRICE: ").append(String.format("%.2f kr", price)).append("\n");
         }
 
-        if (!isGlobal && event != null) {
+        if (event != null) {
             sb.append("DATE: ").append(event.getStartDateTime()).append("\n");
             sb.append("LOCATION: ").append(event.getLocation()).append("\n");
             if (event.getLocationGuidance() != null && !event.getLocationGuidance().isBlank()) {
@@ -156,6 +156,15 @@ public class TicketLayoutController {
             throws WriterException, IOException {
         QRCodeWriter writer = new QRCodeWriter();
         BitMatrix matrix = writer.encode(content, BarcodeFormat.QR_CODE, width, height);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(matrix, "PNG", out);
+        return new Image(new ByteArrayInputStream(out.toByteArray()));
+    }
+
+    private Image generateBarcode(String content, int width, int height)
+            throws WriterException, IOException {
+        Code128Writer writer = new Code128Writer();
+        BitMatrix matrix = writer.encode(content, BarcodeFormat.CODE_128, width, height);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         MatrixToImageWriter.writeToStream(matrix, "PNG", out);
         return new Image(new ByteArrayInputStream(out.toByteArray()));

@@ -8,6 +8,7 @@ public class Ticket {
     private double discount;
     private String eventName;
     private boolean isGlobal;
+    private String uuid;
 
     public Ticket(int id, Integer eventID, double price, double discount,
                   String ticketType, boolean isGlobal) {
@@ -27,6 +28,9 @@ public class Ticket {
         this.ticketType = ticketType;
         this.isGlobal = isGlobal;
     }
+    public String getUuid() { return uuid; }
+
+    public void setUuid(String uuid) { this.uuid = uuid; }
 
     public Ticket(int id, int eventID, double price, double discount, String ticketType) {
         this(id, (Integer) eventID, price, discount, ticketType, false);

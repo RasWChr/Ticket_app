@@ -12,4 +12,6 @@ public interface ITicketDAO {
     void editTicket(int ticketId, Integer eventId, double price, double discount,
                     String ticketType, boolean isGlobal) throws ExceptionHandler;
     List<Ticket> getTicketsByEventId(int eventId) throws ExceptionHandler;
+    boolean uuidExists(String uuid) throws ExceptionHandler;
+
 }

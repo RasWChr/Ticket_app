@@ -80,5 +80,17 @@
                    fitWidth="100.0" fitHeight="100.0"
                    preserveRatio="true" smooth="true" />
     </HBox>
+    <VBox alignment="CENTER" spacing="4.0"
+          style="-fx-background-color: #FFFFFF;">
+        <padding>
+            <Insets top="12.0" bottom="12.0" left="24.0" right="24.0" />
+        </padding>
+        <ImageView fx:id="imgBarcode"
+                   fitWidth="360.0" fitHeight="70.0"
+                   preserveRatio="false" smooth="true" />
+        <Label text="SCAN TO VALIDATE"
+               style="-fx-text-fill: #888888; -fx-font-size: 10px; -fx-font-weight: bold;" />
+    </VBox>
+
 
 </VBox>

@@ -8,6 +8,7 @@ import com.example.tickets_app.DAL.Interface.ITicketDAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TicketDAO implements ITicketDAO {
     @Override
@@ -129,5 +130,35 @@ public class TicketDAO implements ITicketDAO {
             list.add(ticket);
         }
         return list;
+    }
+    @Override
+    public boolean uuidExists(String uuid) throws ExceptionHandler {
+        String sql = "SELECT COUNT(*) FROM Tickets WHERE UUID = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, uuid);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("uuidExists", e);
+        }
+        return false;
+    }
+
+    /**
+     * Generates a UUID and checks the database to ensure it doesn't already exist.
+     * Retries until a unique one is found (in practice this will always succeed on first try).
+     */
+    private String generateUniqueUUID() throws ExceptionHandler {
+        String uuid;
+        do {
+            uuid = UUID.randomUUID().toString();
+        } while (uuidExists(uuid));
+        return uuid;
     }
 }
