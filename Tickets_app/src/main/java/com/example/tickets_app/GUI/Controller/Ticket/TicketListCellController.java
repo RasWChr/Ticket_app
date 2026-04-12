@@ -12,8 +12,10 @@ public class TicketListCellController {
 
     @FXML private Label  lblTicketName;
     @FXML private Label  lblTicketDetails;
-    @FXML private Label  lblScope;       // shows "All Events" or event name
-    @FXML private Button btnOptions;
+    @FXML private Label  lblScope;
+    @FXML private Button btnPreview;
+    @FXML private Button btnEdit;
+    @FXML private Button btnDelete;
 
     private Consumer<Ticket> onDelete;
     private Consumer<Ticket> onEdit;
@@ -32,7 +34,7 @@ public class TicketListCellController {
         lblTicketName.setText(ticket.getTicketType());
         lblTicketDetails.setText(formatDetails(ticket));
 
-        // Scope badge
+        //Scope
         if (ticket.isGlobal()) {
             lblScope.setText("✦ All Events");
             lblScope.getStyleClass().setAll("scope-badge-global");
@@ -43,13 +45,20 @@ public class TicketListCellController {
             lblScope.getStyleClass().setAll("scope-badge-event");
         }
 
-        buildContextMenu();
+        // Wire buttons directly
+        btnPreview.setOnAction(e -> { if (onPreview != null) onPreview.accept(ticket); });
+        btnDelete.setOnAction(e -> { if (onDelete != null) onDelete.accept(ticket); });
+        btnEdit.setOnAction(e -> { if (onEdit != null) onEdit.accept(ticket); });
+
+        // Show Edit only for Coordinators
+        String role = SessionManager.getLoggedInUser().getRole();
+        btnEdit.setVisible(role.equals("Coordinator"));
+        btnEdit.setManaged(role.equals("Coordinator"));
     }
 
     private String formatDetails(Ticket ticket) {
         double price    = ticket.getPrice();
         double discount = ticket.getDiscount();
-        String type     = ticket.getTicketType();
 
         if (discount > 0) {
             double final_ = price - (price * (discount / 100));
@@ -60,33 +69,4 @@ public class TicketListCellController {
                     : String.format("%.2f kr", price);
         }
     }
-
-    private void buildContextMenu() {
-        ContextMenu menu = new ContextMenu();
-        menu.getStyleClass().add("dark-context-menu");
-
-        String role = SessionManager.getLoggedInUser().getRole();
-
-        MenuItem itemPreview = new MenuItem("👁 Preview");
-        itemPreview.setOnAction(e -> { if (onPreview != null) onPreview.accept(ticket); });
-
-        MenuItem itemDelete = new MenuItem("🗑 Delete");
-        itemDelete.setOnAction(e -> { if (onDelete != null) onDelete.accept(ticket); });
-
-        menu.getItems().addAll(itemPreview, itemDelete);
-
-        if (role.equals("Coordinator")) {
-            menu.getItems().add(new SeparatorMenuItem());
-            MenuItem itemEdit = new MenuItem("✏ Edit");
-            itemEdit.setOnAction(e -> { if (onEdit != null) onEdit.accept(ticket); });
-            menu.getItems().add(itemEdit);
-        }
-
-        btnOptions.setOnAction(e ->
-                menu.show(btnOptions,
-                        btnOptions.localToScreen(0, 0).getX(),
-                        btnOptions.localToScreen(0, 0).getY() + btnOptions.getHeight()));
-    }
-
-    @FXML public void onOptionsClick(ActionEvent actionEvent) { }
 }

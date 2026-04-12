@@ -6,16 +6,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox spacing="10.0" alignment="CENTER_LEFT"
+<HBox spacing="8.0" alignment="CENTER_LEFT"
       xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.tickets_app.GUI.Controller.Ticket.TicketListCellController">
     <padding>
-        <Insets top="6.0" bottom="6.0" left="8.0" right="8.0" />
+        <Insets top="8.0" bottom="8.0" left="8.0" right="8.0" />
     </padding>
+
+    <!-- Ticket info -->
     <VBox spacing="3.0" HBox.hgrow="ALWAYS">
         <Label fx:id="lblTicketName" styleClass="title" />
         <Label fx:id="lblTicketDetails" styleClass="section-label" />
         <Label fx:id="lblScope" />
     </VBox>
-    <Button fx:id="btnOptions" text="⋮" onAction="#onOptionsClick" />
+
+    <!-- Action buttons -->
+    <Button fx:id="btnPreview" text="👁"
+            style="-fx-background-color: #2C333B; -fx-text-fill: WHITE; -fx-font-size: 13px; -fx-background-radius: 4; -fx-cursor: hand; -fx-pref-width: 36; -fx-pref-height: 36;" />
+    <Button fx:id="btnEdit" text="✏"
+            style="-fx-background-color: #2C333B; -fx-text-fill: WHITE; -fx-font-size: 13px; -fx-background-radius: 4; -fx-cursor: hand; -fx-pref-width: 36; -fx-pref-height: 36;" />
+    <Button fx:id="btnDelete" text="🗑"
+            style="-fx-background-color: #C0392B; -fx-text-fill: WHITE; -fx-font-size: 13px; -fx-background-radius: 4; -fx-cursor: hand; -fx-pref-width: 36; -fx-pref-height: 36;" />
+
 </HBox>
