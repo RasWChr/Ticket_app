@@ -34,17 +34,19 @@ public class TicketLayoutController {
     @FXML private ImageView imgBarcode;
     @FXML private VBox customerSection;
 
-
+    /**
+     * @param issuedUUID  The CustomerTicket-specific UUID.
+     *                    If null, falls back to the Ticket template UUID.
+     *                    This is what the QR code and barcode encode — unique per issued ticket.
+     */
     public void setTicket(Ticket ticket, Event event,
                           String customerName, String customerEmail,
-                          boolean isGlobal) {
+                          boolean isGlobal, String issuedUUID) {
 
         // Title
-        if (isGlobal) {
-            lblEventTitle.setText("🎟 Multi-Event Ticket");
-        } else {
-            lblEventTitle.setText(event != null ? event.getName() : ticket.getEventName());
-        }
+        lblEventTitle.setText(isGlobal
+                ? "🎟 Multi-Event Ticket"
+                : (event != null ? event.getName() : ticket.getEventName()));
 
         lblTicketType.setText(ticket.getTicketType() != null
                 ? ticket.getTicketType().toUpperCase() : "");
@@ -89,47 +91,62 @@ public class TicketLayoutController {
             lblPrice.setText(price == 0 ? "FREE" : String.format("%.2f kr", price));
         }
 
-        // Use the UUID stored in DB — fallback if somehow null
-        String uuid = ticket.getUuid() != null ? ticket.getUuid() : "NO-UUID";
-        lblUuid.setText("ID: " + ticket.getId());
+        // The barcode/QR encodes the issued UUID (unique per customer ticket).
+        // Falls back to template UUID if no issued UUID available (preview mode).
+        String barcodeContent = issuedUUID != null ? issuedUUID
+                : (ticket.getUuid() != null ? ticket.getUuid() : "TKT-" + ticket.getId());
 
-        // QR code
+        lblUuid.setText("ID: " + barcodeContent.substring(0, Math.min(8, barcodeContent.length())).toUpperCase());
+
+        // QR code: encodes full ticket info + UUID
         try {
             imgQrCode.setImage(generateQRCode(
-                    buildQrContent(ticket, event, isGlobal), 200, 200));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                    buildQrContent(ticket, event, isGlobal, barcodeContent), 200, 200));
+        } catch (Exception e) { e.printStackTrace(); }
+
+        // Barcode: encodes UUID only (for quick scanning)
         try {
-            imgBarcode.setImage(generateBarcode(uuid, 400, 80));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            imgBarcode.setImage(generateBarcode(barcodeContent, 400, 80));
+        } catch (Exception e) { e.printStackTrace(); }
 
-
-        // Customer
+        // Customer info
         lblCustomerName.setText(customerName != null ? customerName : "");
         lblCustomerEmail.setText(customerEmail != null ? customerEmail : "");
 
-        // Hide customer section if no customer info
         if (customerSection != null) {
-            boolean hasCustomer = (customerName != null && !customerName.isBlank());
+            boolean hasCustomer = customerName != null && !customerName.isBlank();
             customerSection.setVisible(hasCustomer);
             customerSection.setManaged(hasCustomer);
         }
     }
 
-    /** Backwards-compatible overload (no isGlobal — defaults to false). */
+    // Backwards-compat: no issuedUUID.
     public void setTicket(Ticket ticket, Event event,
-                          String customerName, String customerEmail) {
-        setTicket(ticket, event, customerName, customerEmail, false);
+                          String customerName, String customerEmail,
+                          boolean isGlobal) {
+        setTicket(ticket, event, customerName, customerEmail, isGlobal, null);
     }
 
+    // Backwards-compat: no isGlobal, no issuedUUID.
+    public void setTicket(Ticket ticket, Event event,
+                          String customerName, String customerEmail) {
+        setTicket(ticket, event, customerName, customerEmail, false, null);
+    }
 
-    private String buildQrContent(Ticket ticket, Event event, boolean isGlobal) {
+    private String buildQrContent(Ticket ticket, Event event,
+                                  boolean isGlobal, String uuid) {
         StringBuilder sb = new StringBuilder();
+        sb.append("UUID: ").append(uuid).append("\n");
         sb.append("TICKET ID: ").append(ticket.getId()).append("\n");
-        sb.append("EVENT: ").append(event != null ? event.getName() : ticket.getEventName()).append("\n");
+
+        if (isGlobal) {
+            sb.append("SCOPE: ALL EVENTS\n");
+        } else {
+            sb.append("EVENT: ")
+                    .append(event != null ? event.getName() : ticket.getEventName())
+                    .append("\n");
+        }
+
         sb.append("TYPE: ").append(ticket.getTicketType()).append("\n");
 
         double price    = ticket.getPrice();
@@ -138,15 +155,12 @@ public class TicketLayoutController {
             double finalPrice = price - (price * (discount / 100));
             sb.append("PRICE: ").append(String.format("%.2f kr (%.0f%% off)", finalPrice, discount)).append("\n");
         } else {
-            sb.append("PRICE: ").append(String.format("%.2f kr", price)).append("\n");
+            sb.append("PRICE: ").append(price == 0 ? "FREE" : String.format("%.2f kr", price)).append("\n");
         }
 
-        if (event != null) {
+        if (!isGlobal && event != null) {
             sb.append("DATE: ").append(event.getStartDateTime()).append("\n");
             sb.append("LOCATION: ").append(event.getLocation()).append("\n");
-            if (event.getLocationGuidance() != null && !event.getLocationGuidance().isBlank()) {
-                sb.append("GUIDANCE: ").append(event.getLocationGuidance()).append("\n");
-            }
         }
 
         return sb.toString();
@@ -154,8 +168,8 @@ public class TicketLayoutController {
 
     private Image generateQRCode(String content, int width, int height)
             throws WriterException, IOException {
-        QRCodeWriter writer = new QRCodeWriter();
-        BitMatrix matrix = writer.encode(content, BarcodeFormat.QR_CODE, width, height);
+        BitMatrix matrix = new QRCodeWriter()
+                .encode(content, BarcodeFormat.QR_CODE, width, height);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         MatrixToImageWriter.writeToStream(matrix, "PNG", out);
         return new Image(new ByteArrayInputStream(out.toByteArray()));
@@ -163,8 +177,8 @@ public class TicketLayoutController {
 
     private Image generateBarcode(String content, int width, int height)
             throws WriterException, IOException {
-        Code128Writer writer = new Code128Writer();
-        BitMatrix matrix = writer.encode(content, BarcodeFormat.CODE_128, width, height);
+        BitMatrix matrix = new Code128Writer()
+                .encode(content, BarcodeFormat.CODE_128, width, height);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         MatrixToImageWriter.writeToStream(matrix, "PNG", out);
         return new Image(new ByteArrayInputStream(out.toByteArray()));
