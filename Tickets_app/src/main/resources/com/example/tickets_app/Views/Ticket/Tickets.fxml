@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -49,6 +50,15 @@
 
             <Label text="Phone (optional)" />
             <TextField fx:id="txtPhoneT" maxWidth="Infinity" promptText="+45 ..." />
+
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                <Label text="Quantity" />
+                <Spinner fx:id="spinnerQty"
+                         min="1" max="100" initialValue="1"
+                         editable="true"
+                         prefWidth="80.0" />
+                <Label text="(1–100 tickets at once)" styleClass="section-label" />
+            </HBox>
 
             <Label fx:id="lblError" styleClass="login-error-label"
                    text="" visible="false" managed="false"
