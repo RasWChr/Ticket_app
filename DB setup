@@ -1,6 +1,35 @@
-Current db:
-
 use felnie01_TicketApp
+go
+
+create table dbo.Users
+(
+    ID        int           not null
+        primary key,
+    FirstName varchar(50),
+    LastName  varchar(50),
+    Email     varchar(100),
+    Phone     varchar(20),
+    Password  varchar(255),
+    Role      varchar(20)
+        constraint chk_Role
+            check ([Role] = 'Coordinator' OR [Role] = 'Admin'),
+    IsSeeded  bit default 0 not null
+)
+go
+
+-- Cyclic dependencies found
+
+create table dbo.Events
+(
+    Id               int identity,
+    Name             varchar(100) not null,
+    StartDateTime    varchar(50)  not null,
+    EndDateTime      varchar(50),
+    Location         varchar(200) not null,
+    LocationGuidance varchar(200),
+    Notes            varchar(2000),
+    primary key ()
+)
 go
 
 create table dbo.Events
@@ -32,35 +61,37 @@ go
 
 create table dbo.CustomerTickets
 (
-    ID        int identity
+    ID         int identity
         primary key,
-    TicketID  int                        not null
+    TicketID   int                            not null
         references dbo.Tickets
             on delete cascade,
-    EventID   int
+    EventID    int
         references dbo.Events,
-    FirstName varchar(100)               not null,
-    LastName  varchar(100)               not null,
-    Email     varchar(200)               not null,
-    Phone     varchar(30),
-    IssuedAt  datetime default getdate() not null,
-    IsGlobal  bit      default 0         not null
+    FirstName  varchar(100)                   not null,
+    LastName   varchar(100)                   not null,
+    Email      varchar(200)                   not null,
+    Phone      varchar(30),
+    IssuedAt   datetime     default getdate() not null,
+    IsGlobal   bit          default 0         not null,
+    TicketUUID nvarchar(36) default newid()   not null
+        constraint UQ_CustomerTickets_UUID
+            unique,
+    IsUsed     bit          default 0         not null
 )
 go
 
-create table dbo.Users
+-- Cyclic dependencies found
+
+create table dbo.EventCoordinators
 (
-    ID        int identity
-        primary key,
-    FirstName varchar(50),
-    LastName  varchar(50),
-    Email     varchar(100),
-    Phone     varchar(20),
-    Password  varchar(255),
-    Role      varchar(20)
-        constraint chk_Role
-            check ([Role] = 'Coordinator' OR [Role] = 'Admin'),
-    IsSeeded  bit default 0 not null
+    EventId int not null
+        references dbo.Events (Id)
+            on delete cascade,
+    UserId  int not null
+        references dbo.Users
+            on delete cascade,
+    primary key ()
 )
 go
 
@@ -75,3 +106,4 @@ create table dbo.EventCoordinators
     primary key (EventId, UserId)
 )
 go
+
