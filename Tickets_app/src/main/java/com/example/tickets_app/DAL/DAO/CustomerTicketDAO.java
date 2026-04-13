@@ -9,6 +9,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CustomerTicketDAO implements ICustomerTicketDAO {
 
@@ -115,6 +116,87 @@ public class CustomerTicketDAO implements ICustomerTicketDAO {
             ExceptionHandler.handleDAOException("getIssuedTicketsByTicketId", e);
         }
         return result;
+    }
+
+    @Override
+    public List<CustomerTicket> getIssuedTicketsByEmail(String email) throws ExceptionHandler {
+        String sql = """
+                SELECT ct.ID, ct.TicketID, ct.EventID, ct.FirstName, ct.LastName, ct.Email,
+                       ct.Phone, ct.IssuedAt, ct.IsGlobal, ct.TicketUUID, ct.IsUsed,
+                       t.Tickettype, t.Price, t.Discount, e.Name AS EventName
+                FROM CustomerTickets ct
+                JOIN  Tickets t    ON ct.TicketID = t.ID
+                LEFT JOIN Events e ON ct.EventID  = e.Id
+                WHERE ct.Email = ?
+                ORDER BY ct.IssuedAt DESC
+                """;
+        List<CustomerTicket> result = new ArrayList<>();
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            result = mapResults(ps.executeQuery());
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("getIssuedTicketsByEmail", e);
+        }
+        return result;
+    }
+
+    @Override
+    public CustomerTicket getByUUID(String uuid) throws ExceptionHandler {
+        String sql = """
+                SELECT ct.ID, ct.TicketID, ct.EventID, ct.FirstName, ct.LastName, ct.Email,
+                       ct.Phone, ct.IssuedAt, ct.IsGlobal, ct.TicketUUID, ct.IsUsed,
+                       t.Tickettype, t.Price, t.Discount, e.Name AS EventName
+                FROM CustomerTickets ct
+                JOIN  Tickets t    ON ct.TicketID = t.ID
+                LEFT JOIN Events e ON ct.EventID  = e.Id
+                WHERE ct.TicketUUID = ?
+                """;
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, uuid);
+            List<CustomerTicket> r = mapResults(ps.executeQuery());
+            return r.isEmpty() ? null : r.get(0);
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("getByUUID", e);
+            return null;
+        }
+    }
+
+    @Override
+    public boolean markAsUsed(String uuid) throws ExceptionHandler {
+        // Only updates if IsUsed is still 0
+        String sql = "UPDATE CustomerTickets SET IsUsed = 1 WHERE TicketUUID = ? AND IsUsed = 0";
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, uuid);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("markAsUsed", e);
+            return false;
+        }
+    }
+
+    @Override
+    public String generateUniqueUUID() throws ExceptionHandler {
+        String uuid;
+        do {
+            uuid = UUID.randomUUID().toString();
+        } while (uuidExistsInDB(uuid));
+        return uuid;
+    }
+
+    private boolean uuidExistsInDB(String uuid) throws ExceptionHandler {
+        String sql = "SELECT COUNT(*) FROM CustomerTickets WHERE TicketUUID = ?";
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, uuid);
+            ResultSet rs = ps.executeQuery();
+            return rs.next() && rs.getInt(1) > 0;
+        } catch (SQLException e) {
+            ExceptionHandler.handleDAOException("uuidExistsInDB", e);
+            return false;
+        }
     }
 
     @Override

@@ -18,7 +18,20 @@ public interface ICustomerTicketDAO {
 
     /** Issued tickets for a specific base ticket template. */
     List<CustomerTicket> getIssuedTicketsByTicketId(int ticketId) throws ExceptionHandler;
+    /** All issued tickets for a given email — supports multiple tickets per customer. */
+    List<CustomerTicket> getIssuedTicketsByEmail(String email) throws ExceptionHandler;
 
+    /** Lookup by the issued ticket's unique UUID (for scan/validate). */
+    CustomerTicket getByUUID(String uuid) throws ExceptionHandler;
+
+    /**
+     * Atomically marks the ticket as used if it hasn't been used yet.
+     * @return true if successfully marked used; false if already used.
+     */
+    boolean markAsUsed(String uuid) throws ExceptionHandler;
+
+    /** Generates a UUID guaranteed unique in the CustomerTickets table. */
+    String generateUniqueUUID() throws ExceptionHandler;
     /** Delete an issued customer ticket record. */
     void deleteIssuedTicket(int customerTicketId) throws ExceptionHandler;
 }
