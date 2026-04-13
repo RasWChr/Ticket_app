@@ -122,13 +122,24 @@ public class TicketListController {
     }
 
     private void handlePreview(Ticket ticket) {
+
+        // Global tickets have no eventId → skip lookup
+        if (ticket.isGlobal() || ticket.getEventID() == null) {
+            TicketPreviewController.openAsWindow(ticket, null);
+            return;
+        }
+
+        Integer eventId = ticket.getEventID();
+
         Event matchingEvent = cBoxEventFilter.getItems().stream()
-                .filter(e -> e != ALL_EVENTS && e.getId() == ticket.getEventID())
+                .filter(e -> e != ALL_EVENTS
+                        && e.getId() == eventId)
                 .findFirst()
                 .orElse(null);
 
         TicketPreviewController.openAsWindow(ticket, matchingEvent);
     }
+
 
     public void onBtnCreateTicketClick(ActionEvent actionEvent) {
         SceneUtil.switchScene(actionEvent, "Views/Ticket/TicketsCreate.fxml");
