@@ -18,6 +18,9 @@ public class CustomerTicket{
     private String phone;
     private LocalDateTime issuedAt;
     private boolean isGlobal;
+    private String ticketUUID; // unique per issued ticket (QR/barcode content)
+    private boolean isUsed; // one-time-use flag
+
 
     // Joined fields (not stored — populated by DAO queries)
     private String ticketType;
@@ -46,7 +49,7 @@ public class CustomerTicket{
     public CustomerTicket(int ticketId, Integer eventId,
                           String firstName, String lastName,
                           String email, String phone,
-                          boolean isGlobal) {
+                          boolean isGlobal, String ticketUUID) {
         this.ticketId = ticketId;
         this.eventId = eventId;
         this.firstName = firstName;
@@ -54,6 +57,23 @@ public class CustomerTicket{
         this.email = email;
         this.phone = phone;
         this.isGlobal = isGlobal;
+        this.ticketUUID = ticketUUID;
+    }
+
+    public String getTicketUUID() {
+        return ticketUUID;
+    }
+
+    public void setTicketUUID(String ticketUUID) {
+        this.ticketUUID = ticketUUID;
+    }
+
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
     }
 
     public boolean isGlobal() {
