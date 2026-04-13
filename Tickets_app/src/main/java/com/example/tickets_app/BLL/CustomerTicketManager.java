@@ -57,7 +57,11 @@ public class CustomerTicketManager implements ICustomerTicketManager {
     }
 
     @Override
-    public List<Integer> issueMultipleTickets(int ticketId, Integer eventId, String firstName, String lastName, String email, String phone, boolean isGlobal, int quantity) throws ExceptionHandler {
+    public List<Integer> issueMultipleTickets(int ticketId, Integer eventId,
+                                              String firstName, String lastName,
+                                              String email, String phone,
+                                              boolean isGlobal,
+                                              int quantity) throws ExceptionHandler {
         if (quantity < 1)
             throw new IllegalArgumentException("Quantity must be at least 1.");
         if (quantity > 100)
@@ -89,39 +93,28 @@ public class CustomerTicketManager implements ICustomerTicketManager {
 
     @Override
     public List<CustomerTicket> getAllIssuedTickets() throws ExceptionHandler {
-        try {
-            return dao.getAllIssuedTickets();
-        } catch (ExceptionHandler e) {
-            throw new ExceptionHandler("Could not retrieve issued tickets: " + e.getMessage(), e);
-        }
+        try { return dao.getAllIssuedTickets(); }
+        catch (ExceptionHandler e) { throw new ExceptionHandler("Could not retrieve issued tickets: " + e.getMessage(), e); }
     }
 
     @Override
     public List<CustomerTicket> getIssuedTicketsForEvent(int eventId) throws ExceptionHandler {
-        try {
-            return dao.getIssuedTicketsForEvent(eventId);
-        } catch (ExceptionHandler e) {
-            throw new ExceptionHandler("Could not retrieve tickets for event: " + e.getMessage(), e);
-        }
+        try { return dao.getIssuedTicketsForEvent(eventId); }
+        catch (ExceptionHandler e) { throw new ExceptionHandler("Could not retrieve tickets for event: " + e.getMessage(), e); }
     }
 
     @Override
     public List<CustomerTicket> getIssuedTicketsByTicketId(int ticketId) throws ExceptionHandler {
-        try {
-            return dao.getIssuedTicketsByTicketId(ticketId);
-        } catch (ExceptionHandler e) {
-            throw new ExceptionHandler("Could not retrieve issued tickets: " + e.getMessage(), e);
-        }
+        try { return dao.getIssuedTicketsByTicketId(ticketId); }
+        catch (ExceptionHandler e) { throw new ExceptionHandler("Could not retrieve issued tickets: " + e.getMessage(), e); }
     }
 
     @Override
     public List<CustomerTicket> getIssuedTicketsByEmail(String email) throws ExceptionHandler {
         if (email == null || email.isBlank())
-            throw new IllegalArgumentException("Email address cannot be empty.");
-        try { return dao.getIssuedTicketsByEmail(email);
-        } catch (ExceptionHandler e) {
-            throw new ExceptionHandler("Could not retrieve tickets by email: " + e.getMessage(), e);
-        }
+            throw new IllegalArgumentException("Email cannot be empty.");
+        try { return dao.getIssuedTicketsByEmail(email); }
+        catch (ExceptionHandler e) { throw new ExceptionHandler("Could not retrieve tickets by email: " + e.getMessage(), e); }
     }
 
     @Override
@@ -135,27 +128,23 @@ public class CustomerTicketManager implements ICustomerTicketManager {
                 return null; // not found
 
             if (ct.isUsed())
-                throw new IllegalStateException("Ticket has already been used.");
+                throw new IllegalStateException("This ticket has already been used.");
 
             boolean marked = dao.markAsUsed(uuid);
             if (!marked)
-                // This should never/rarely happen because we check isUsed() first — but if it does, it means the ticket was just marked used by another process after we checked.
-                throw new IllegalStateException("Ticket has already been used.");
+                // Race condition: another process marked it used between getByUUID and markAsUsed
+                throw new IllegalStateException("This ticket has already been used.");
 
             ct.setUsed(true);
             return ct;
         } catch (ExceptionHandler e) {
-            throw new ExceptionHandler("Could not validate ticket: " + e.getMessage(), e);
+            throw new ExceptionHandler("Validation failed: " + e.getMessage(), e);
         }
-
     }
 
     @Override
     public void deleteIssuedTicket(int customerTicketId) throws ExceptionHandler {
-        try {
-            dao.deleteIssuedTicket(customerTicketId);
-        } catch (ExceptionHandler e) {
-            throw new ExceptionHandler("Could not delete issued ticket: " + e.getMessage(), e);
-        }
+        try { dao.deleteIssuedTicket(customerTicketId); }
+        catch (ExceptionHandler e) { throw new ExceptionHandler("Could not delete issued ticket: " + e.getMessage(), e); }
     }
 }
