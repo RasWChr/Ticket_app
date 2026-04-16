@@ -91,18 +91,38 @@ public class EventDAO implements IEventDAO {
 
     @Override
     public void deleteEvent(int eventId) throws ExceptionHandler {
-        String sql = "DELETE FROM Events WHERE Id = ?";
+        String deleteCustomerTickets =
+                "DELETE FROM CustomerTickets WHERE EventID = ?";
+        String deleteTickets =
+                "DELETE FROM Tickets WHERE EventID = ?";
+        String deleteEvent =
+                "DELETE FROM Events WHERE Id = ?";
 
-        try (Connection conn = DBConnector.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, eventId);
-            ps.executeUpdate();
-
+        try (Connection conn = DBConnector.getConnection()) {
+            conn.setAutoCommit(false); // transaction — all or nothing
+            try {
+                try (PreparedStatement ps = conn.prepareStatement(deleteCustomerTickets)) {
+                    ps.setInt(1, eventId);
+                    ps.executeUpdate();
+                }
+                try (PreparedStatement ps = conn.prepareStatement(deleteTickets)) {
+                    ps.setInt(1, eventId);
+                    ps.executeUpdate();
+                }
+                try (PreparedStatement ps = conn.prepareStatement(deleteEvent)) {
+                    ps.setInt(1, eventId);
+                    ps.executeUpdate();
+                }
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                ExceptionHandler.handleDAOException("deleteEvent", e);
+            }
         } catch (SQLException e) {
             ExceptionHandler.handleDAOException("deleteEvent", e);
         }
     }
+
     @Override
     public void editEvent(int eventId, String name, String startDateTime, String endDateTime, String location, String locationGuidance, String notes) throws ExceptionHandler {
         String sql = "UPDATE Events SET Name = ?, StartDateTime = ?, EndDateTime = ?, Location = ?, LocationGuidance = ?, Notes = ? WHERE Id = ?";
